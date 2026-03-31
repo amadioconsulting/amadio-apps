@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hr Onboarding Checklist - AMADIO Premium Odoo Apps</title>
+    <meta name="description" content="Structured onboarding workflows for new hires — HR tasks, IT provisioning, document collection, policy acknowledgments. Auto-launch on employee creation.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+        .header {
+            background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+            color: white;
+            padding: 20px 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        .hero {
+            background: linear-gradient(135deg, #27ae6022 0%, #27ae6011 100%);
+            padding: 60px 40px;
+            text-align: center;
+            border-bottom: 4px solid #27ae60;
+        }
+        .hero h2 {
+            font-size: 42px;
+            color: #0f3460;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        .hero p {
+            font-size: 18px;
+            color: #555;
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 500;
+        }
+        .features {
+            padding: 60px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .features h3 {
+            text-align: center;
+            font-size: 32px;
+            color: #0f3460;
+            margin-bottom: 40px;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        .feature-card {
+            padding: 30px;
+            border-left: 4px solid #27ae60;
+            background: #f9f9f9;
+            border-radius: 4px;
+            transition: transform 0.2s;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        .feature-card h4 {
+            color: #0f3460;
+            margin-bottom: 12px;
+            font-size: 18px;
+        }
+        .feature-card p {
+            color: #666;
+            font-size: 14px;
+        }
+        .how-it-works {
+            background: #f5f5f5;
+            padding: 60px 40px;
+        }
+        .how-it-works h3 {
+            text-align: center;
+            font-size: 32px;
+            color: #0f3460;
+            margin-bottom: 40px;
+        }
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .step {
+            text-align: center;
+            padding: 20px;
+        }
+        .step-number {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background: #27ae60;
+            color: white;
+            border-radius: 50%;
+            line-height: 50px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+        .step h4 {
+            color: #0f3460;
+            margin-bottom: 10px;
+        }
+        .step p {
+            color: #666;
+            font-size: 14px;
+        }
+        .use-cases {
+            padding: 60px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .use-cases h3 {
+            text-align: center;
+            font-size: 32px;
+            color: #0f3460;
+            margin-bottom: 40px;
+        }
+        .case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        .case-card {
+            padding: 30px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .case-card h4 {
+            color: #27ae60;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        .case-card p {
+            color: #666;
+            font-size: 14px;
+        }
+        .specs {
+            background: #0f3460;
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .specs h3 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .spec-item {
+            padding: 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+        }
+        .spec-item strong {
+            color: #27ae60;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #999;
+            font-size: 12px;
+        }
+        @media (max-width: 768px) {
+            .steps {
+                grid-template-columns: 1fr;
+            }
+            .hero h2 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>AMADIO</h1>
+        <p>Premium Odoo 18.0 Applications</p>
+    </div>
+
+    <div class="hero">
+        <h2>Hr Onboarding Checklist</h2>
+        <p>Structured onboarding workflows for new hires — HR tasks, IT provisioning, document collection, policy acknowledgments. Auto-launch on employee creation.</p>
+    </div>
+
+    <div class="features">
+        <h3>Key Features</h3>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h4>Automated Workflows</h4>
+                <p>Streamline processes with intelligent automation and scheduled tasks.</p>
+            </div>
+            <div class="feature-card">
+                <h4>Real-Time Alerts</h4>
+                <p>Stay informed with instant notifications and proactive monitoring.</p>
+            </div>
+            <div class="feature-card">
+                <h4>Comprehensive Reporting</h4>
+                <p>Data-driven insights with beautiful dashboards and analytics.</p>
+            </div>
+            <div class="feature-card">
+                <h4>Seamless Integration</h4>
+                <p>Works natively with Odoo modules for unified operations.</p>
+            </div>
+            <div class="feature-card">
+                <h4>Audit & Compliance</h4>
+                <p>Complete audit trails and compliance tracking for governance.</p>
+            </div>
+            <div class="feature-card">
+                <h4>Easy Configuration</h4>
+                <p>No-code setup with intuitive interfaces for business users.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="how-it-works">
+        <h3>How It Works</h3>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h4>Install & Configure</h4>
+                <p>Quick setup with guided configuration wizards.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h4>Activate Rules</h4>
+                <p>Define your business rules and approval workflows.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h4>Monitor & Optimize</h4>
+                <p>Track performance and refine settings based on KPIs.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="use-cases">
+        <h3>Use Cases</h3>
+        <div class="case-grid">
+            <div class="case-card">
+                <h4>Enterprise Operations</h4>
+                <p>Scale operations with centralized control and compliance.</p>
+            </div>
+            <div class="case-card">
+                <h4>SMB Optimization</h4>
+                <p>Grow faster with intelligent process automation.</p>
+            </div>
+            <div class="case-card">
+                <h4>Team Productivity</h4>
+                <p>Empower teams with clear workflows and accountability.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="specs">
+        <h3>Technical Specifications</h3>
+        <div class="specs-grid">
+            <div class="spec-item">
+                <strong>Version</strong>
+                Odoo 18.0+
+            </div>
+            <div class="spec-item">
+                <strong>Dependencies</strong>
+                hr, mail
+            </div>
+            <div class="spec-item">
+                <strong>License</strong>
+                OPL-1
+            </div>
+            <div class="spec-item">
+                <strong>Support</strong>
+                Professional support included
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 AMADIO Consulting. All rights reserved. | Made with care for Odoo.</p>
+    </div>
+</body>
+</html>
