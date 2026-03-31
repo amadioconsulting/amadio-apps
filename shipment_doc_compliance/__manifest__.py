@@ -2,24 +2,47 @@
     'name': 'Pre-Shipment Document Compliance',
     'version': '18.0.1.0.0',
     'category': 'Inventory/Warehouse',
-    'summary': 'Enforce document compliance on outgoing shipments before validation.',
+    'summary': 'Block outgoing shipment validation until required compliance documents are confirmed. Enforces customs declarations, SDS sheets, invoices, and certifications with a mandatory acknowledgment checkpoint and full audit trail.',
     'description': """
-Pre-Shipment Document Compliance for Odoo
-==========================================
+Pre-Shipment Document Compliance for Odoo 18
+=============================================
 
-Prevents warehouse staff from validating an outgoing shipment without explicitly
-confirming that required compliance documents (invoices, certifications, customs
-declarations, SDS sheets, etc.) are included.
+Stop non-compliant shipments before they leave your warehouse.
 
-Three enforcement layers:
-1. Visual alert banner on the Ship transfer form
-2. Mandatory acknowledgment checkbox that blocks Validate
-3. Automated post-validation notification (chatter + email) for audit trail
+This module enforces a mandatory document compliance checkpoint on all outgoing
+stock pickings (or specific operation types) before warehouse staff can validate
+a delivery. Used by exporters, chemical distributors, medical device companies,
+B2B wholesalers, and 3PLs who must ensure required documents accompany every shipment.
 
-Configurable per operation type or per customer/contact.
-Parent company flag inheritance supported.
+Key Features
+------------
+- Visual compliance alert banner on the stock picking form
+- Mandatory acknowledgment checkbox that hard-blocks the Validate button
+- Automated post-validation chatter note + email notification for audit trail
+- Per-operation-type configuration (apply only where needed)
+- Per-customer/contact compliance flag with parent company inheritance
+- Zero schema overhaul -- installs in under 2 minutes
 
-For Odoo.sh and self-hosted Odoo 18 only.
+Document Types Supported
+------------------------
+Commercial invoices, customs declarations, certificates of origin,
+SDS (Safety Data Sheets), hazmat declarations, quality certificates,
+packing lists, inspection reports, and any other shipment documentation.
+
+Use Cases
+---------
+- Export compliance and customs documentation control
+- Hazardous goods (WHMIS / GHS) SDS sheet enforcement
+- Pharmaceutical and medical device shipment documentation
+- B2B key account special document requirements
+- ISO/regulatory audit trail for outbound logistics
+- 3PL client-specific documentation workflows
+
+Technical
+---------
+Odoo 18.0 | On-Premise and Odoo.sh | LGPL-3
+Depends: stock, sale_stock, mail
+148 lines of code | Non-invasive installation
     """,
     'author': 'AMADIO',
     'website': 'https://amadio.io',
@@ -36,6 +59,7 @@ For Odoo.sh and self-hosted Odoo 18 only.
         'views/res_partner_views.xml',
         'views/stock_operation_type_views.xml',
     ],
+    'images': ['static/description/icon.png'],
     'installable': True,
     'application': False,
     'auto_install': False,
