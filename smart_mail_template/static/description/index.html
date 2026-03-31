@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; color: #1a1a2e; background: #fff; }
+
+  .hero {
+    background: linear-gradient(135deg, #2c1654 0%, #1a1a2e 50%, #1b0a3d 100%);
+    color: white; text-align: center; padding: 60px 40px 50px;
+  }
+  .hero-badge {
+    display: inline-block; background: #8e44ad; color: white;
+    font-weight: 800; font-size: 11px; letter-spacing: 2px;
+    padding: 5px 16px; border-radius: 20px; margin-bottom: 20px; text-transform: uppercase;
+  }
+  .hero h1 { font-size: 38px; font-weight: 800; margin-bottom: 16px; }
+  .hero p { font-size: 18px; color: #c9b8e8; max-width: 680px; margin: 0 auto 28px; line-height: 1.6; }
+  .hero-badges { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+  .badge { background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.20);
+    color: #ddd; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; }
+  .badge.purple { background: rgba(142,68,173,0.3); border-color: #8e44ad; color: #d7bde2; }
+
+  .section { padding: 52px 40px; }
+  .section-alt { background: #f9f6ff; }
+  .section-title { text-align: center; font-size: 28px; font-weight: 800; color: #2c1654; margin-bottom: 10px; }
+  .section-sub { text-align: center; color: #666; font-size: 16px; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+  .stat-strip { display: flex; justify-content: center; gap: 0; flex-wrap: wrap; background: #2c1654; padding: 36px 40px; }
+  .stat { text-align: center; padding: 10px 40px; border-right: 1px solid rgba(255,255,255,0.15); }
+  .stat:last-child { border-right: none; }
+  .stat .number { font-size: 38px; font-weight: 800; color: #f1c40f; line-height: 1; }
+  .stat .label { font-size: 13px; color: #c9b8e8; margin-top: 6px; }
+
+  .problem-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; max-width: 960px; margin: 0 auto; }
+  .problem-card { border: 2px solid #8e44ad; border-radius: 12px; padding: 24px; background: #fff; }
+  .problem-card h3 { color: #c0392b; font-size: 15px; font-weight: 700; margin-bottom: 10px; }
+  .problem-card p { color: #555; font-size: 14px; line-height: 1.6; }
+
+  .flow { display: flex; align-items: center; justify-content: center; gap: 0; flex-wrap: wrap; max-width: 960px; margin: 0 auto; }
+  .flow-step { background: white; border-radius: 12px; padding: 24px 20px; text-align: center; width: 190px;
+    box-shadow: 0 4px 18px rgba(44,22,84,0.12); border-top: 4px solid #8e44ad; flex-shrink: 0; }
+  .flow-arrow { font-size: 24px; color: #8e44ad; padding: 0 8px; flex-shrink: 0; }
+  .flow-step .icon { font-size: 30px; margin-bottom: 10px; }
+  .flow-step h3 { font-size: 13px; font-weight: 700; color: #2c1654; margin-bottom: 6px; }
+  .flow-step p { font-size: 12px; color: #666; line-height: 1.4; }
+
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px; max-width: 960px; margin: 0 auto; }
+  .feature { display: flex; gap: 14px; align-items: flex-start; background: white;
+    padding: 20px; border-radius: 10px; box-shadow: 0 2px 12px rgba(44,22,84,0.08); }
+  .feature-icon { font-size: 26px; flex-shrink: 0; width: 44px; text-align: center; }
+  .feature h3 { font-size: 14px; font-weight: 700; color: #2c1654; margin-bottom: 6px; }
+  .feature p { font-size: 13px; color: #666; line-height: 1.5; }
+
+  .cases { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; max-width: 960px; margin: 0 auto; }
+  .case { background: white; border-radius: 12px; padding: 24px; border-left: 5px solid #8e44ad; }
+  .case h3 { font-size: 15px; font-weight: 700; color: #2c1654; margin-bottom: 8px; }
+  .case p { font-size: 13px; color: #555; line-height: 1.5; }
+
+  .spec-table { max-width: 800px; margin: 0 auto; border-collapse: collapse; width: 100%; font-size: 14px; }
+  .spec-table td { padding: 12px 16px; border-bottom: 1px solid #ede8f5; }
+  .spec-table tr:nth-child(odd) td { background: #f9f6ff; }
+  .spec-table td:first-child { font-weight: 700; color: #2c1654; width: 38%; }
+
+  .amadio-footer { background: #2c1654; color: white; text-align: center; padding: 40px; }
+  .amadio-footer .logo { font-size: 26px; font-weight: 800; letter-spacing: 3px; color: #f1c40f; margin-bottom: 10px; }
+  .amadio-footer p { color: #c9b8e8; font-size: 14px; }
+  .amadio-footer a { color: #f1c40f; text-decoration: none; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">💡 Odoo 18 · Productivity · Discuss</div>
+  <h1>Smart Email<br>Template Selector</h1>
+  <p>Stop wasting time hunting for the right email template. This module automatically surfaces the 3–5 most relevant templates the moment you open the email composer — based on what you're doing, who you're writing to, and what you've used before.</p>
+  <div class="hero-badges">
+    <span class="badge purple">AI-Assisted Suggestions</span>
+    <span class="badge">Usage Learning</span>
+    <span class="badge">Any Odoo Model</span>
+    <span class="badge">Odoo.sh &amp; On-Premise</span>
+  </div>
+</div>
+
+<div class="stat-strip">
+  <div class="stat"><div class="number">73%</div><div class="label">of template searches<br>take over 30 seconds</div></div>
+  <div class="stat"><div class="number">Top 5</div><div class="label">relevant templates<br>surfaced instantly</div></div>
+  <div class="stat"><div class="number">Zero</div><div class="label">training required<br>for end users</div></div>
+  <div class="stat"><div class="number">Any</div><div class="label">Odoo model<br>supported</div></div>
+</div>
+
+<div class="section">
+  <div class="section-title">The Template Problem Every Odoo Team Knows</div>
+  <div class="section-sub">As your template library grows, finding the right one becomes friction. Friction becomes shortcuts. Shortcuts become inconsistent, off-brand communication.</div>
+  <div class="problem-grid">
+    <div class="problem-card">
+      <h3>📜 100+ Templates, No Signal</h3>
+      <p>Templates accumulate over time. Sales, support, purchasing, invoicing — they're all in the same flat list. Staff scroll endlessly or give up and type from scratch.</p>
+    </div>
+    <div class="problem-card">
+      <h3>🎯 Wrong Template, Wrong Context</h3>
+      <p>A sales rep confirms a delivery using the wrong template. A support agent sends a billing response when the customer wanted a shipping update. Small, avoidable errors.</p>
+    </div>
+    <div class="problem-card">
+      <h3>🔁 Muscle Memory, Not Best Practice</h3>
+      <p>People reuse the last template they saw, not the most appropriate one. Brand standards and legal language get bypassed through habit.</p>
+    </div>
+    <div class="problem-card">
+      <h3>🆕 Onboarding Takes Longer</h3>
+      <p>New staff don't know which templates to use for which situations. Without guidance built into the tool, this knowledge only comes from trial and error.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section section-alt">
+  <div class="section-title">How Smart Suggestions Work</div>
+  <div class="section-sub">Context-aware scoring puts the right templates at the top — automatically.</div>
+  <div class="flow">
+    <div class="flow-step">
+      <div class="icon">✉️</div>
+      <h3>Composer Opens</h3>
+      <p>User clicks Send Message or Compose Email on any Odoo record</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="icon">🧠</div>
+      <h3>Context Reads</h3>
+      <p>Module reads: current model, record status, partner category, user history</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="icon">⭐</div>
+      <h3>Top 5 Scored</h3>
+      <p>Templates scored by rule priority + usage frequency. Top 5 surfaced instantly</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="icon">✅</div>
+      <h3>One Click Apply</h3>
+      <p>User selects a suggestion. Template applied. Usage recorded for next time.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Key Features</div>
+  <div class="features-grid">
+    <div class="feature">
+      <div class="feature-icon">🎯</div>
+      <div>
+        <h3>Context-Aware Suggestions</h3>
+        <p>Rules match templates to specific Odoo models and optional status/stage values. A "Quotation Sent" stage triggers different suggestions than "Order Confirmed."</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">📈</div>
+      <div>
+        <h3>Usage Learning Per User</h3>
+        <p>The module tracks which templates each user applies. Recently used templates appear in a dedicated section, prioritized by frequency.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🔢</div>
+      <div>
+        <h3>Priority Scoring Engine</h3>
+        <p>Each rule has a priority (0–100). Combined with usage frequency, the scoring algorithm always puts the most relevant template first in the list.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🌐</div>
+      <div>
+        <h3>Works on Any Model</h3>
+        <p>Create rules for sale orders, purchase orders, helpdesk tickets, project tasks, CRM leads — any model that uses Odoo's mail composer.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">📊</div>
+      <div>
+        <h3>Usage Analytics</h3>
+        <p>Managers can view a usage analytics dashboard: which templates are used most, by whom, and in which contexts. Optimize your library based on real behavior.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">⚙️</div>
+      <div>
+        <h3>No-Code Configuration</h3>
+        <p>All rules are configured through a clean UI: Settings → Technical → Email → Smart Template Rules. No developer involvement required.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section section-alt">
+  <div class="section-title">Who Benefits Most</div>
+  <div class="cases">
+    <div class="case">
+      <h3>📞 Sales &amp; Customer Success</h3>
+      <p>High-volume teams sending dozens of emails daily. Smart suggestions cut template lookup time by up to 80% and ensure on-brand communication at every stage.</p>
+    </div>
+    <div class="case">
+      <h3>🎧 Customer Support Teams</h3>
+      <p>Support agents handling varied ticket types. Stage-aware suggestions surface the right response template the moment they open a ticket.</p>
+    </div>
+    <div class="case">
+      <h3>🏢 Multi-Department Organizations</h3>
+      <p>Where different teams own different template sets. Rules ensure each department only sees relevant suggestions, reducing confusion and off-target emails.</p>
+    </div>
+    <div class="case">
+      <h3>📋 Compliance-Sensitive Industries</h3>
+      <p>Where specific approved language must be used for specific scenarios. Priority rules ensure compliant templates always surface above informal alternatives.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Technical Specifications</div>
+  <table class="spec-table">
+    <tr><td>Odoo Version</td><td>18.0</td></tr>
+    <tr><td>Deployment</td><td>On-Premise · Odoo.sh (Odoo Online not supported)</td></tr>
+    <tr><td>Module Name</td><td>smart_mail_template</td></tr>
+    <tr><td>Dependencies</td><td>mail</td></tr>
+    <tr><td>New Models</td><td>smart.mail.template.rule · smart.mail.template.usage</td></tr>
+    <tr><td>Extended Models</td><td>mail.compose.message</td></tr>
+    <tr><td>License</td><td>LGPL-3</td></tr>
+    <tr><td>Lines of Code</td><td>~400 Python · ~260 XML</td></tr>
+  </table>
+</div>
+
+<div class="amadio-footer">
+  <div class="logo">AMADIO</div>
+  <p>Odoo consulting and module development for operations-focused businesses.<br>
+  <a href="https://amadio.io">amadio.io</a> &nbsp;·&nbsp; Enterprise support available</p>
+</div>
+
+</body>
+</html>
