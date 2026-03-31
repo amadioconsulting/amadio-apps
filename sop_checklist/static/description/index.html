@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOP Checklist Builder - Odoo Module</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1a1a3e 0%, #2d3a5f 100%);
+            color: white;
+            padding: 80px 40px;
+            text-align: center;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            opacity: 0.95;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 30px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #5b7dd5;
+            color: white;
+            padding: 14px 40px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin: 10px;
+            font-weight: 600;
+            transition: background 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .cta-button:hover {
+            background: #4a68b8;
+        }
+
+        .cta-button.secondary {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+        }
+
+        .cta-button.secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* Sections */
+        section {
+            padding: 80px 40px;
+        }
+
+        section h2 {
+            font-size: 36px;
+            margin-bottom: 50px;
+            color: #1a1a3e;
+            text-align: center;
+        }
+
+        section h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #2d3a5f;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            border-left: 4px solid #5b7dd5;
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        /* Mockup Section */
+        .mockup-section {
+            background: #f8f9fa;
+        }
+
+        .mockup-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            margin-top: 40px;
+        }
+
+        .mockup-image {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 2px dashed #5b7dd5;
+        }
+
+        .mockup-description h3 {
+            margin-top: 0;
+        }
+
+        .mockup-description ul {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .mockup-description li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            color: #666;
+        }
+
+        .mockup-description li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #2ecc71;
+            font-weight: bold;
+        }
+
+        /* Use Cases */
+        .use-cases {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .use-case {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border-top: 3px solid #5b7dd5;
+        }
+
+        .use-case h4 {
+            color: #1a1a3e;
+            margin-bottom: 10px;
+        }
+
+        .use-case p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* FAQ */
+        .faq-section {
+            background: white;
+        }
+
+        .faq-item {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 30px;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-item h4 {
+            color: #1a1a3e;
+            margin-bottom: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .faq-item h4:before {
+            content: "▶";
+            margin-right: 10px;
+            transition: transform 0.3s;
+        }
+
+        .faq-item p {
+            color: #666;
+            margin-left: 20px;
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a3e;
+            color: white;
+            text-align: center;
+            padding: 40px;
+            margin-top: 40px;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        footer a {
+            color: #5b7dd5;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            section {
+                padding: 40px 20px;
+            }
+
+            .container {
+                padding: 0 20px;
+            }
+
+            section h2 {
+                font-size: 28px;
+                margin-bottom: 30px;
+            }
+
+            .mockup-container {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .highlight {
+            color: #5b7dd5;
+            font-weight: 600;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #e8eef7;
+            color: #5b7dd5;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .stat {
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: #5b7dd5;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-badge">Built for Odoo 18.0 | AMADIO</div>
+        <h1>Every Process. Every Time. Done Right.</h1>
+        <p>Transform operational workflows with reusable SOP checklists. Track step-by-step completion, enforce critical steps, and maintain a complete audit trail.</p>
+        <div>
+            <a href="https://amadio.io" class="cta-button">Learn More at AMADIO</a>
+            <a href="#features" class="cta-button secondary">Explore Features</a>
+        </div>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section id="features">
+        <div class="container">
+            <h2>Powerful Features</h2>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3>Template Library</h3>
+                    <p>Create unlimited reusable SOP templates. Organize by category, code, and description. Launch the same process on any record, any time.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>One-Click Launch</h3>
+                    <p>Launch any SOP on a sales order, project, picking, or custom record. Template steps automatically copied to a live checklist instance.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">✓</div>
+                    <h3>Step Tracking</h3>
+                    <p>Mark steps done individually. Records who completed each step and when. Optional evidence attachments for audit compliance.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🚫</div>
+                    <h3>Critical Step Blocking</h3>
+                    <p>Mark steps as critical to prevent workflow advancement. Completion warnings until all critical steps are checked off.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Real-Time Progress</h3>
+                    <p>Visual completion percentage, step counts, and progress bar. Live dashboard of completion status across all checklists.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔗</div>
+                    <h3>Any Model Support</h3>
+                    <p>Works with any Odoo model: Sale Orders, Projects, Pickings, Invoices, custom models. Optional model filtering per template.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📎</div>
+                    <h3>Evidence Management</h3>
+                    <p>Require attachments to complete steps. Store photos, documents, or signatures as proof. Complete audit trail of evidence.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3>Audit Trail</h3>
+                    <p>Every step records timestamps, responsible users, and notes. Message thread for process communication and history.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🖨️</div>
+                    <h3>Print-Ready</h3>
+                    <p>Export checklists with completion status, dates, and responsible users. Professional reports for compliance and records.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MOCKUP SECTION -->
+    <section class="mockup-section">
+        <div class="container">
+            <h2>How It Works</h2>
+
+            <div class="mockup-container">
+                <div class="mockup-image">
+                    <div style="text-align: center; padding: 20px;">
+                        <div style="font-size: 60px; margin-bottom: 20px;">✓</div>
+                        <p style="color: #999; font-size: 14px;">SOP Checklist Instance</p>
+                        <p style="color: #999; font-size: 12px; margin-top: 10px;">Showing real-time completion tracking</p>
+                    </div>
+                </div>
+
+                <div class="mockup-description">
+                    <h3>Process Execution at a Glance</h3>
+                    <p>Once a checklist is launched, users see a clean, intuitive interface:</p>
+                    <ul>
+                        <li>Clear step instructions with estimated time</li>
+                        <li>Checkbox toggle for each step with instant feedback</li>
+                        <li>Completion percentage and progress bar</li>
+                        <li>Responsible user and timestamp for each step</li>
+                        <li>Optional evidence attachment fields</li>
+                        <li>Critical step warnings block premature completion</li>
+                        <li>Notes field for step-level communication</li>
+                        <li>Message thread for process collaboration</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- USE CASES SECTION -->
+    <section>
+        <div class="container">
+            <h2>Perfect Use Cases</h2>
+
+            <div class="use-cases">
+                <div class="use-case">
+                    <h4>Employee Onboarding</h4>
+                    <p>Multi-step onboarding with critical sign-offs, document checklists, and equipment handover verification. Track completion across all new hires.</p>
+                </div>
+
+                <div class="use-case">
+                    <h4>Client Onboarding</h4>
+                    <p>Structured intake process with document collection, evidence attachments, and completion milestones. Compliance audit trail included.</p>
+                </div>
+
+                <div class="use-case">
+                    <h4>Product Launch</h4>
+                    <p>Multi-team launch checklist with quality gates, review sign-offs, and critical blocking on unfinished steps. Coordinate across departments.</p>
+                </div>
+
+                <div class="use-case">
+                    <h4>Order Fulfillment</h4>
+                    <p>Quality control checklist, packing verification, and final inspection sign-off. Link checklist directly to sale orders.</p>
+                </div>
+
+                <div class="use-case">
+                    <h4>Safety Inspections</h4>
+                    <p>Daily/weekly safety audits with evidence photo attachments and critical hazard blocking. Complete regulatory compliance trail.</p>
+                </div>
+
+                <div class="use-case">
+                    <h4>IT Deployment</h4>
+                    <p>Server setup verification, security checklist completion, and rollback decision points. Track deployment across multiple servers.</p>
+                </div>
+
+                <div class="use-case">
+                    <h4>Quality Assurance</h4>
+                    <p>Pre-release QA checklist with test evidence, bug verification, and critical blocker management.</p>
+                </div>
+
+                <div class="use-case">
+                    <h4>Compliance Audits</h4>
+                    <p>Regulatory compliance checklists with timestamped evidence, responsible user tracking, and audit trail export.</p>
+                </div>
+
+                <div class="use-case">
+                    <h4>Maintenance Tasks</h4>
+                    <p>Equipment maintenance checklists with critical maintenance items, service evidence, and scheduled compliance tracking.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section class="faq-section">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="faq-item">
+                <h4>Can I launch the same SOP on multiple records?</h4>
+                <p>Absolutely! Each time you launch a template, a new independent checklist instance is created. You can launch the same template on thousands of records. Each has its own step completion status, timestamps, and evidence.</p>
+            </div>
+
+            <div class="faq-item">
+                <h4>What does "critical" mean?</h4>
+                <p>Critical steps must be completed before you can mark the checklist as complete. If any critical step is pending, an alert banner appears. This prevents premature workflow advancement—perfect for mandatory sign-offs, quality gates, or legal compliance checkpoints.</p>
+            </div>
+
+            <div class="faq-item">
+                <h4>Can I print the checklist?</h4>
+                <p>Yes! Odoo's built-in print functionality works with checklists. Print shows template name, all steps, completion status, dates, responsible users, and notes. Perfect for physical records or compliance documentation.</p>
+            </div>
+
+            <div class="faq-item">
+                <h4>What models can I launch checklists on?</h4>
+                <p>Any Odoo model: Sale Orders, Projects, Pickings, Invoices, Subscriptions, Tasks, custom modules, etc. You can optionally restrict a template to specific models via the "Applicable Models" field.</p>
+            </div>
+
+            <div class="faq-item">
+                <h4>Can steps require evidence attachments?</h4>
+                <p>Yes! Mark any step as "Requires Evidence" to mandate an attachment. Users cannot complete the step without uploading a file. Perfect for safety inspections, compliance photos, or document sign-offs.</p>
+            </div>
+
+            <div class="faq-item">
+                <h4>How do I track who completed each step?</h4>
+                <p>When a step is marked done, the system automatically records the user and timestamp. The "Completed By" and "Completed On" fields show this metadata. All changes are logged in the checklist's message thread for audit purposes.</p>
+            </div>
+
+            <div class="faq-item">
+                <h4>Can I edit steps after launching a checklist?</h4>
+                <p>Yes! The template defines the structure, but checklist steps are independent. You can edit notes, add evidence, or reopen steps. This allows flexibility while maintaining template consistency across launches.</p>
+            </div>
+
+            <div class="faq-item">
+                <h4>Does it work offline?</h4>
+                <p>SOP Checklist is a native Odoo module, so it follows Odoo's standard behavior. For offline capability, consider Odoo's native offline modules or sync your instance to a mobile device running the Odoo mobile app.</p>
+            </div>
+
+            <div class="faq-item">
+                <h4>Can I duplicate templates?</h4>
+                <p>Yes! Use the "Duplicate" button to copy any template with all its steps. Useful for creating variants or managing versions of SOPs across different departments.</p>
+            </div>
+
+            <div class="faq-item">
+                <h4>Is there a limit to steps per template?</h4>
+                <p>No! Create as many steps as needed. We've tested templates with 100+ steps. Organize long checklists into multiple templates by category or process phase for better usability.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMPATIBILITY SECTION -->
+    <section>
+        <div class="container">
+            <h2>Compatibility</h2>
+
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">18.0</div>
+                    <div class="stat-label">Odoo Version</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">3.10+</div>
+                    <div class="stat-label">Python</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">13+</div>
+                    <div class="stat-label">PostgreSQL</div>
+                </div>
+            </div>
+
+            <p style="text-align: center; color: #666;">
+                <span class="badge">Mail Module Required</span>
+                <span class="badge">Base Module Required</span>
+            </p>
+
+            <p style="text-align: center; color: #666; margin-top: 20px; font-size: 14px;">
+                Built with production-quality code. Follows Odoo standards and best practices. Includes full API documentation and developer examples.
+            </p>
+        </div>
+    </section>
+
+    <!-- CTA FOOTER SECTION -->
+    <section>
+        <div class="container" style="text-align: center;">
+            <h2>Ready to Streamline Your Operations?</h2>
+            <p style="font-size: 18px; color: #666; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                SOP Checklist Builder brings structure, accountability, and consistency to every process.
+            </p>
+            <a href="https://amadio.io" class="cta-button">Visit AMADIO.io</a>
+            <p style="margin-top: 20px; color: #999; font-size: 14px;">
+                Part of the AMADIO Odoo consulting ecosystem. Enterprise-grade quality at fair pricing.
+            </p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 AMADIO. All rights reserved.</p>
+            <p><a href="https://amadio.io">AMADIO.io</a> | Enterprise Odoo Solutions</p>
+            <p style="font-size: 12px; margin-top: 20px;">
+                SOP Checklist Builder is licensed under LGPL-3 and distributed through the Odoo Apps Store.
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

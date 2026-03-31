@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Version Control - Odoo Module</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #0d2d4a 0%, #1e5a96 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            opacity: 0.95;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: #ff9800;
+            color: white;
+            padding: 14px 40px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            background-color: #e68900;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .features h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            color: #0d2d4a;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .feature-card {
+            background: #f9f9f9;
+            padding: 30px;
+            border-radius: 8px;
+            border-left: 5px solid #ff9800;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card h3 {
+            color: #0d2d4a;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        /* Before/After Section */
+        .before-after {
+            background: #f5f5f5;
+            padding: 60px 20px;
+        }
+
+        .before-after-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .before-after-item {
+            text-align: center;
+        }
+
+        .before-after-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #0d2d4a;
+        }
+
+        .chaos-box {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            border: 2px solid #d32f2f;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(211, 47, 47, 0.2);
+        }
+
+        .chaos-file {
+            color: #d32f2f;
+            margin: 5px 0;
+            font-family: monospace;
+            font-size: 0.95rem;
+            word-break: break-word;
+        }
+
+        .order-box {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            border: 2px solid #388e3c;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(56, 142, 60, 0.2);
+        }
+
+        .version-item {
+            color: #388e3c;
+            margin: 8px 0;
+            font-family: monospace;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .version-item:before {
+            content: "✓";
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .before-after-container {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Use Cases Section */
+        .use-cases {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .use-cases h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            color: #0d2d4a;
+        }
+
+        .use-case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .use-case-item {
+            background: white;
+            padding: 25px;
+            border-radius: 6px;
+            text-align: center;
+            border-top: 4px solid #ff9800;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .use-case-item h4 {
+            color: #0d2d4a;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .use-case-item p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* FAQ Section */
+        .faq {
+            background: #f5f5f5;
+            padding: 60px 20px;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            color: #0d2d4a;
+        }
+
+        .faq-item {
+            background: white;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .faq-question {
+            background: #0d2d4a;
+            color: white;
+            padding: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+        .faq-question:hover {
+            background: #1e5a96;
+        }
+
+        .faq-answer {
+            padding: 20px;
+            color: #333;
+            line-height: 1.7;
+            display: none;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .faq-toggle {
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+
+        /* Footer */
+        footer {
+            background: #0d2d4a;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 0.95rem;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        .footer-links {
+            margin-top: 15px;
+        }
+
+        .footer-links a {
+            color: #ff9800;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Compatibility Badge */
+        .compatibility {
+            background: white;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #ddd;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #0d2d4a;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            margin: 5px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .badge.license {
+            background: #388e3c;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1>Stop Losing Track of Document Versions</h1>
+        <p>Attach versioned documents to any Odoo record. Track revisions, view full history, and optionally require approval before a new version goes live.</p>
+        <button class="cta-button">Get Started</button>
+    </div>
+
+    <!-- Features Section -->
+    <div class="features">
+        <h2>Key Features</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>Version History</h3>
+                <p>Complete audit trail of every document version. Never lose track of who changed what, and when. Full transparency from draft to superseded.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Archive, Never Delete</h3>
+                <p>Old versions are marked as superseded, not deleted. Keep a complete record for compliance, auditing, and historical reference without cluttering your workspace.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Optional Approval Workflow</h3>
+                <p>Require approval before a document version goes live. Perfect for contracts, SOPs, and critical documents. Draft states until authorized users approve.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Works With Any Model</h3>
+                <p>Use on contracts, opportunities, projects, purchase orders, or any custom Odoo model. Simply inherit the mixin and you're ready to go.</p>
+            </div>
+            <div class="feature-card">
+                <h3>File Type Agnostic</h3>
+                <p>Upload PDFs, Word docs, spreadsheets, images, or any file format. Document Version Control handles it all without restriction.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Chatter Integration</h3>
+                <p>Every version appears in the model's Chatter feed. Team notifications, comments, and discussion threads on specific versions are automatically tracked.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Before/After Section -->
+    <div class="before-after">
+        <div class="before-after-container">
+            <div class="before-after-item">
+                <h3>Before: Chaos</h3>
+                <div class="chaos-box">
+                    <div class="chaos-file">file_v3_FINAL.pdf</div>
+                    <div class="chaos-file">file_v3_FINAL_REVISED.pdf</div>
+                    <div class="chaos-file">file_v3_FINAL_REVISED2.pdf</div>
+                    <div class="chaos-file">file_v3_FINAL_REVISED_v2.pdf</div>
+                    <div class="chaos-file">file_ACTUAL_FINAL.pdf</div>
+                    <div class="chaos-file">file_USE_THIS_ONE.pdf</div>
+                </div>
+            </div>
+            <div class="before-after-item">
+                <h3>After: Order</h3>
+                <div class="order-box">
+                    <div class="version-item">Contract v1.0 (Draft)</div>
+                    <div class="version-item">Contract v1.1 (Active)</div>
+                    <div class="version-item">Contract v2.0 (Superseded)</div>
+                    <div class="version-item">Contract v2.1 (Active)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Use Cases Section -->
+    <div class="use-cases">
+        <h2>Perfect For</h2>
+        <div class="use-case-grid">
+            <div class="use-case-item">
+                <h4>Contracts &amp; Agreements</h4>
+                <p>Track contract revisions, amendments, and approvals with full audit trail.</p>
+            </div>
+            <div class="use-case-item">
+                <h4>Standard Operating Procedures</h4>
+                <p>Keep SOPs current with version control and change notes for team reference.</p>
+            </div>
+            <div class="use-case-item">
+                <h4>Sales Proposals</h4>
+                <p>Manage proposal revisions and track which version was sent to which client.</p>
+            </div>
+            <div class="use-case-item">
+                <h4>Technical Drawings</h4>
+                <p>Engineering and design teams benefit from revision control and approval workflows.</p>
+            </div>
+            <div class="use-case-item">
+                <h4>Company Policies</h4>
+                <p>Policy updates with version history and approval chain for governance compliance.</p>
+            </div>
+            <div class="use-case-item">
+                <h4>Project Documentation</h4>
+                <p>Keep project files organized with versions, notes, and team visibility.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="faq">
+        <div class="faq-container">
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Does Document Version Control work with Odoo's Documents module?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes! Document Version Control is a complementary module that adds version tracking on top of any Odoo model. It stores versioned documents as ir.attachment records, so it integrates seamlessly with Odoo's document ecosystem and doesn't conflict with the Documents module.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Will old versions be permanently deleted?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>No. Old versions are marked as "Superseded" or "Rejected" in the version history, never deleted. This gives you a complete audit trail and ensures compliance with document retention policies. System administrators can view, reference, and restore old versions at any time.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>How do I add document versions to my custom model?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Simply inherit the <code>document.version.mixin</code> AbstractModel in your model class, and you automatically get the <code>document_version_ids</code> One2many field, version count, and action buttons. Add the template to your form view and you're done!</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Can I require approval before a version goes live?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes! When uploading a document, check "Approval Required" and the version will start in Draft state. Designated users can then review and approve the version, setting it to Active. Previous active versions are automatically superseded.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>What file formats are supported?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>All file formats are supported: PDFs, Word documents, Excel spreadsheets, images, videos, archives, and more. Document Version Control stores any file type that Odoo's attachment system supports.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Can I see who approved/rejected a version?</span>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes. Each version tracks the author (uploader), the approval status, and who approved or rejected it (if applicable). Full tracking is logged in the Chatter timeline for complete transparency.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Compatibility & License -->
+    <div class="compatibility">
+        <div>
+            <span class="badge">Odoo 18.0</span>
+            <span class="badge license">LGPL-3</span>
+        </div>
+        <p style="margin-top: 15px; font-size: 0.9rem;">
+            Compatible with Odoo 18.0 Community and Enterprise editions. Licensed under LGPL-3.0.
+        </p>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 AMADIO. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="https://amadio.io">Website</a>
+            <a href="https://amadio.io/support">Support</a>
+            <a href="https://amadio.io/contact">Contact</a>
+        </div>
+        <p style="margin-top: 15px; font-size: 0.85rem; opacity: 0.8;">
+            Document Version Control | Version 18.0.1.0
+        </p>
+    </footer>
+
+    <!-- FAQ Toggle Script -->
+    <script>
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+
+        // Open first FAQ by default
+        document.querySelector('.faq-item').classList.add('active');
+    </script>
+
+</body>
+</html>
