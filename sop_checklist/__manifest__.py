@@ -6,6 +6,7 @@
     'author': 'AMADIO',
     'website': 'https://amadio.io',
     'license': 'OPL-1',
+    'images': ['static/description/banner.png', 'static/description/icon.png'],
     'price': 69.00,
     'currency': 'EUR',
     'depends': ['mail', 'base'],

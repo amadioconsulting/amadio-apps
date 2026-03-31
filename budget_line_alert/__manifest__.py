@@ -15,6 +15,7 @@
     'installable': True,
     'auto_install': False,
     'license': 'OPL-1',
+    'images': ['static/description/banner.png', 'static/description/icon.png'],
     'author': 'AMADIO',
     'website': 'https://amadio.io',
     'currency': 'EUR',
