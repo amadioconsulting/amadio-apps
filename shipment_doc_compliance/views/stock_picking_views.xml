@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- CRITICAL XPath Rule: Use div wrappers ONLY, never group before group[1].
+         Inserting a group before group[1] silently breaks Odoo Studio.
+         See: https://amadio.io/blog -->
+    <record id="view_picking_form_compliance" model="ir.ui.view">
+        <field name="name">stock.picking.form.compliance</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="before">
+                <div attrs="{'invisible': [('compliance_doc_required', '=', False)]}"
+                     style="background-color: #FEE2E2; border: 1px solid #EF4444; border-radius: 6px; padding: 12px 16px; margin-bottom: 12px;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="color: #DC2626; font-weight: bold; font-size: 15px;">
+                            Compliance Document Required
+                        </span>
+                    </div>
+                    <div style="color: #7F1D1D; margin-top: 4px; font-size: 13px;">
+                        This shipment requires a compliance document before validation. Confirm below once included.
+                    </div>
+                </div>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <div attrs="{'invisible': [('compliance_doc_required', '=', False)]}"
+                     style="margin-top: 8px; margin-bottom: 8px;">
+                    <field name="compliance_doc_confirmed" widget="boolean_toggle"
+                           attrs="{'readonly': [('state', 'in', ['done', 'cancel'])]}"/>
+                    <label for="compliance_doc_confirmed" style="font-weight: 600; color: #1F2937;">
+                        I confirm the compliance document is included in this shipment
+                    </label>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
