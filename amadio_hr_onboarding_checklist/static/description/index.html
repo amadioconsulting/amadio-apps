@@ -1,311 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hr Onboarding Checklist - AMADIO Premium Odoo Apps</title>
-    <meta name="description" content="Structured onboarding workflows for new hires — HR tasks, IT provisioning, document collection, policy acknowledgments. Auto-launch on employee creation.">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            color: #333;
-            line-height: 1.6;
-        }
-        .header {
-            background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
-            color: white;
-            padding: 20px 40px;
-            text-align: center;
-        }
-        .header h1 {
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-        .header p {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-        .hero {
-            background: linear-gradient(135deg, #27ae6022 0%, #27ae6011 100%);
-            padding: 60px 40px;
-            text-align: center;
-            border-bottom: 4px solid #27ae60;
-        }
-        .hero h2 {
-            font-size: 42px;
-            color: #0f3460;
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
-        .hero p {
-            font-size: 18px;
-            color: #555;
-            max-width: 600px;
-            margin: 0 auto;
-            font-weight: 500;
-        }
-        .features {
-            padding: 60px 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .features h3 {
-            text-align: center;
-            font-size: 32px;
-            color: #0f3460;
-            margin-bottom: 40px;
-        }
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 60px;
-        }
-        .feature-card {
-            padding: 30px;
-            border-left: 4px solid #27ae60;
-            background: #f9f9f9;
-            border-radius: 4px;
-            transition: transform 0.2s;
-        }
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-        .feature-card h4 {
-            color: #0f3460;
-            margin-bottom: 12px;
-            font-size: 18px;
-        }
-        .feature-card p {
-            color: #666;
-            font-size: 14px;
-        }
-        .how-it-works {
-            background: #f5f5f5;
-            padding: 60px 40px;
-        }
-        .how-it-works h3 {
-            text-align: center;
-            font-size: 32px;
-            color: #0f3460;
-            margin-bottom: 40px;
-        }
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        .step {
-            text-align: center;
-            padding: 20px;
-        }
-        .step-number {
-            display: inline-block;
-            width: 50px;
-            height: 50px;
-            background: #27ae60;
-            color: white;
-            border-radius: 50%;
-            line-height: 50px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            font-size: 24px;
-        }
-        .step h4 {
-            color: #0f3460;
-            margin-bottom: 10px;
-        }
-        .step p {
-            color: #666;
-            font-size: 14px;
-        }
-        .use-cases {
-            padding: 60px 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .use-cases h3 {
-            text-align: center;
-            font-size: 32px;
-            color: #0f3460;
-            margin-bottom: 40px;
-        }
-        .case-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
-        .case-card {
-            padding: 30px;
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            text-align: center;
-        }
-        .case-card h4 {
-            color: #27ae60;
-            margin-bottom: 10px;
-            font-size: 16px;
-        }
-        .case-card p {
-            color: #666;
-            font-size: 14px;
-        }
-        .specs {
-            background: #0f3460;
-            color: white;
-            padding: 40px;
-            text-align: center;
-        }
-        .specs h3 {
-            margin-bottom: 20px;
-            font-size: 24px;
-        }
-        .specs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .spec-item {
-            padding: 15px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 4px;
-        }
-        .spec-item strong {
-            color: #27ae60;
-            display: block;
-            margin-bottom: 5px;
-        }
-        .footer {
-            text-align: center;
-            padding: 20px;
-            background: #1a1a1a;
-            color: #999;
-            font-size: 12px;
-        }
-        @media (max-width: 768px) {
-            .steps {
-                grid-template-columns: 1fr;
-            }
-            .hero h2 {
-                font-size: 28px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HR Employee Onboarding Checklist — AMADIO for Odoo 18.0</title>
+<meta name="description" content="Launch structured onboarding checklists automatically when a new employee is created — covering HR, IT, management, and employee tasks with deadline tracking.">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif; color: #1a202c; line-height: 1.6; }
+
+/* Brand Header */
+.brand-header { background: #0f3460; padding: 16px 40px; display: flex; justify-content: space-between; align-items: center; }
+.brand-name { color: #fff; font-size: 24px; font-weight: 800; letter-spacing: 4px; }
+.brand-sub { color: #a0aec0; font-size: 12px; letter-spacing: 1px; margin-top: 3px; }
+.brand-url { color: #27ae60; font-size: 14px; font-weight: 600; text-decoration: none; }
+
+/* Hero */
+.hero { background: linear-gradient(135deg, #0f3460 0%, #1a3a6b 60%, #0d2845 100%); padding: 60px 40px; border-bottom: 4px solid #27ae60; }
+.hero-inner { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+.hero h1 { color: #fff; font-size: 38px; font-weight: 800; line-height: 1.2; margin-bottom: 16px; }
+.hero p { color: #cbd5e0; font-size: 17px; line-height: 1.7; margin-bottom: 24px; }
+.badges { display: flex; flex-wrap: wrap; gap: 8px; }
+.badge { background: rgba(255,255,255,0.12); color: #e2e8f0; border: 1px solid rgba(255,255,255,0.2); padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500; }
+
+/* Sections */
+.section { padding: 60px 40px; }
+.section-inner { max-width: 960px; margin: 0 auto; }
+.section-gray { background: #f8fafc; }
+.section-white { background: #ffffff; }
+.section h2 { color: #0f3460; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+.section-sub { color: #718096; font-size: 16px; margin-bottom: 40px; }
+
+/* Problem Cards */
+.problems-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.problem-card { background: #fff; border-left: 4px solid #e53e3e; border-radius: 8px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: box-shadow 0.2s; }
+.problem-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+.problem-title { color: #c53030; font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+.problem-card p { color: #4a5568; font-size: 14px; }
+
+/* Feature Cards */
+.features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.feature-card { background: #fff; border-radius: 10px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: box-shadow 0.2s; display: flex; gap: 16px; align-items: flex-start; }
+.feature-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+.feature-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+.feature-content h4 { color: #0f3460; font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+.feature-content p { color: #4a5568; font-size: 13px; line-height: 1.6; }
+
+/* Steps */
+.steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.step-card { text-align: center; padding: 32px 20px; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: box-shadow 0.2s; }
+.step-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+.step-number { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px; font-weight: 800; margin: 0 auto 20px; }
+.step-card h4 { color: #0f3460; font-size: 17px; font-weight: 700; margin-bottom: 12px; }
+.step-card p { color: #4a5568; font-size: 14px; line-height: 1.6; }
+
+/* Use Cases */
+.usecases-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.usecase-card { background: #fff; border-radius: 10px; padding: 28px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: box-shadow 0.2s; }
+.usecase-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+.usecase-icon { font-size: 36px; margin-bottom: 16px; }
+.usecase-card h4 { color: #0f3460; font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+.usecase-card p { color: #4a5568; font-size: 14px; line-height: 1.6; }
+
+/* Specs */
+.specs-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.specs-table th, .specs-table td { padding: 14px 20px; text-align: left; border-bottom: 1px solid #edf2f7; }
+.specs-table th { background: #0f3460; color: #fff; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; width: 200px; }
+.specs-table td { color: #2d3748; font-size: 14px; }
+.specs-table tr:last-child th, .specs-table tr:last-child td { border-bottom: none; }
+
+/* Footer */
+.footer { background: #0f3460; color: #a0aec0; text-align: center; padding: 40px 40px; }
+.footer-brand { color: #fff; font-size: 20px; font-weight: 800; letter-spacing: 3px; margin-bottom: 8px; }
+.footer-tagline { color: #27ae60; font-size: 14px; font-style: italic; margin-bottom: 16px; }
+.footer-info { font-size: 13px; }
+</style>
 </head>
 <body>
-    <div class="header">
-        <h1>AMADIO</h1>
-        <p>Premium Odoo 18.0 Applications</p>
-    </div>
 
-    <div class="hero">
-        <h2>Hr Onboarding Checklist</h2>
-        <p>Structured onboarding workflows for new hires — HR tasks, IT provisioning, document collection, policy acknowledgments. Auto-launch on employee creation.</p>
-    </div>
+<!-- Brand Header -->
+<div class="brand-header">
+  <div>
+    <div class="brand-name">AMADIO</div>
+    <div class="brand-sub">Premium Odoo 18.0 Applications</div>
+  </div>
+  <a href="https://amadio.io" class="brand-url">amadio.io</a>
+</div>
 
-    <div class="features">
-        <h3>Key Features</h3>
-        <div class="feature-grid">
-            <div class="feature-card">
-                <h4>Automated Workflows</h4>
-                <p>Streamline processes with intelligent automation and scheduled tasks.</p>
-            </div>
-            <div class="feature-card">
-                <h4>Real-Time Alerts</h4>
-                <p>Stay informed with instant notifications and proactive monitoring.</p>
-            </div>
-            <div class="feature-card">
-                <h4>Comprehensive Reporting</h4>
-                <p>Data-driven insights with beautiful dashboards and analytics.</p>
-            </div>
-            <div class="feature-card">
-                <h4>Seamless Integration</h4>
-                <p>Works natively with Odoo modules for unified operations.</p>
-            </div>
-            <div class="feature-card">
-                <h4>Audit & Compliance</h4>
-                <p>Complete audit trails and compliance tracking for governance.</p>
-            </div>
-            <div class="feature-card">
-                <h4>Easy Configuration</h4>
-                <p>No-code setup with intuitive interfaces for business users.</p>
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-inner">
+    <div>
+      <h1>HR Employee Onboarding Checklist</h1>
+      <p>Launch structured onboarding checklists automatically when a new employee is created — covering HR, IT, management, and employee tasks with deadline tracking.</p>
+    </div>
+    <div class="badges"><span class="badge">Auto-Launch on Hire</span><span class="badge">Role-Based Steps</span><span class="badge">Completion Tracking</span><span class="badge">Due Date Enforcement</span></div>
+  </div>
+</div>
+
+<!-- The Challenge -->
+<div class="section section-white">
+  <div class="section-inner">
+    <h2>The Challenge</h2>
+    <p class="section-sub">Why organizations need HR Employee Onboarding Checklist</p>
+    <div class="problems-grid">
+        <div class="problem-card">
+            <div class="problem-title">Forgotten Onboarding Steps</div>
+            <p>New hires miss critical first-week tasks — access cards not ordered, system accounts not created, policies not acknowledged — because there's no centralized checklist.</p>
+        </div>
+        <div class="problem-card">
+            <div class="problem-title">No Cross-Department Coordination</div>
+            <p>Onboarding spans HR, IT, and the hiring manager. Without a shared system, each department does their part in isolation with no visibility into what others have done.</p>
+        </div>
+        <div class="problem-card">
+            <div class="problem-title">Inconsistent Experiences</div>
+            <p>Onboarding quality varies by manager and department. Some new hires get thorough orientation; others are handed a laptop and left to figure it out.</p>
+        </div></div>
+  </div>
+</div>
+
+<!-- Features -->
+<div class="section section-gray">
+  <div class="section-inner">
+    <h2>What HR Employee Onboarding Checklist Does</h2>
+    <p class="section-sub">Six capabilities built specifically for this problem</p>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#27ae60">🚀</div>
+            <div class="feature-content">
+                <h4>Auto-Launch on Creation</h4>
+                <p>When a new hr.employee record is created, the system automatically launches the default onboarding template — zero manual steps required to start the process.</p>
             </div>
         </div>
-    </div>
-
-    <div class="how-it-works">
-        <h3>How It Works</h3>
-        <div class="steps">
-            <div class="step">
-                <div class="step-number">1</div>
-                <h4>Install & Configure</h4>
-                <p>Quick setup with guided configuration wizards.</p>
-            </div>
-            <div class="step">
-                <div class="step-number">2</div>
-                <h4>Activate Rules</h4>
-                <p>Define your business rules and approval workflows.</p>
-            </div>
-            <div class="step">
-                <div class="step-number">3</div>
-                <h4>Monitor & Optimize</h4>
-                <p>Track performance and refine settings based on KPIs.</p>
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#27ae60">👤</div>
+            <div class="feature-content">
+                <h4>Role-Based Step Assignment</h4>
+                <p>Steps are assigned to roles: HR (documentation), IT (system access), Manager (orientation), and Employee (self-serve). Each party sees only their tasks.</p>
             </div>
         </div>
-    </div>
-
-    <div class="use-cases">
-        <h3>Use Cases</h3>
-        <div class="case-grid">
-            <div class="case-card">
-                <h4>Enterprise Operations</h4>
-                <p>Scale operations with centralized control and compliance.</p>
-            </div>
-            <div class="case-card">
-                <h4>SMB Optimization</h4>
-                <p>Grow faster with intelligent process automation.</p>
-            </div>
-            <div class="case-card">
-                <h4>Team Productivity</h4>
-                <p>Empower teams with clear workflows and accountability.</p>
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#27ae60">📅</div>
+            <div class="feature-content">
+                <h4>Due Date Calculation</h4>
+                <p>Step due dates are calculated from the employee's start date using configurable offsets — 'Day 1', 'Day 3', 'End of Week 1', etc.</p>
             </div>
         </div>
-    </div>
-
-    <div class="specs">
-        <h3>Technical Specifications</h3>
-        <div class="specs-grid">
-            <div class="spec-item">
-                <strong>Version</strong>
-                Odoo 18.0+
-            </div>
-            <div class="spec-item">
-                <strong>Dependencies</strong>
-                hr, mail
-            </div>
-            <div class="spec-item">
-                <strong>License</strong>
-                OPL-1
-            </div>
-            <div class="spec-item">
-                <strong>Support</strong>
-                Professional support included
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#27ae60">✅</div>
+            <div class="feature-content">
+                <h4>Step-Level Completion</h4>
+                <p>Each step is marked done individually, recording who completed it and when. Steps can require evidence attachments for compliance-sensitive tasks.</p>
             </div>
         </div>
-    </div>
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#27ae60">📊</div>
+            <div class="feature-content">
+                <h4>Completion Dashboard</h4>
+                <p>HR can see all active onboarding checklists with completion percentage, overdue steps, and responsible parties — from a single dashboard view.</p>
+            </div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#27ae60">📋</div>
+            <div class="feature-content">
+                <h4>Multiple Templates</h4>
+                <p>Different departments, roles, or locations can have different onboarding templates. Templates are reusable and version-controlled.</p>
+            </div>
+        </div></div>
+  </div>
+</div>
 
-    <div class="footer">
-        <p>&copy; 2024 AMADIO Consulting. All rights reserved. | Made with care for Odoo.</p>
-    </div>
+<!-- How It Works -->
+<div class="section section-white">
+  <div class="section-inner">
+    <h2>How It Works</h2>
+    <p class="section-sub">Operational in minutes — not weeks</p>
+    <div class="steps-grid">
+        <div class="step-card">
+            <div class="step-number" style="background:#27ae60">1</div>
+            <h4>Configure Templates</h4>
+            <p>Go to Employees → Onboarding Templates. Create templates with steps assigned to HR, IT, Manager, or Employee roles. Set day-offset due dates.</p>
+        </div>
+        <div class="step-card">
+            <div class="step-number" style="background:#27ae60">2</div>
+            <h4>Hire the Employee</h4>
+            <p>Create or import the new employee record normally. The system detects the new record and automatically launches the appropriate onboarding template.</p>
+        </div>
+        <div class="step-card">
+            <div class="step-number" style="background:#27ae60">3</div>
+            <h4>Track to Completion</h4>
+            <p>HR monitors the onboarding dashboard. Each department completes their assigned steps. Overdue items are highlighted. Completion percentage updates in real time.</p>
+        </div></div>
+  </div>
+</div>
+
+<!-- Use Cases -->
+<div class="section section-gray">
+  <div class="section-inner">
+    <h2>Perfect For</h2>
+    <p class="section-sub">Industries and organizations that rely on HR Employee Onboarding Checklist</p>
+    <div class="usecases-grid">
+        <div class="usecase-card">
+            <div class="usecase-icon">🏢</div>
+            <h4>Growing SMBs</h4>
+            <p>Companies hiring 5–50 people per year need consistent, repeatable onboarding without dedicated HR software. This module runs entirely within their existing Odoo instance.</p>
+        </div>
+        <div class="usecase-card">
+            <div class="usecase-icon">🏥</div>
+            <h4>Healthcare & Regulated Industries</h4>
+            <p>Mandatory policy acknowledgments, credential verifications, and compliance training sign-offs are tracked with evidence attachments and completion timestamps.</p>
+        </div>
+        <div class="usecase-card">
+            <div class="usecase-icon">🌍</div>
+            <h4>Multi-Location Operations</h4>
+            <p>Different onboarding templates per location or department ensure new hires in different regions or functions get the right onboarding — not a generic one-size-fits-all process.</p>
+        </div></div>
+  </div>
+</div>
+
+<!-- Technical Specs -->
+<div class="section section-white">
+  <div class="section-inner">
+    <h2>Technical Specifications</h2>
+    <p class="section-sub">Compatibility and deployment details</p>
+    <table class="specs-table">
+      <tr><th>Odoo Version</th><td>18.0</td></tr>
+      <tr><th>Platform</th><td>Odoo.sh &amp; On-Premise</td></tr>
+      <tr><th>License</th><td>OPL-1</td></tr>
+      <tr><th>Author</th><td>AMADIO</td></tr>
+      <tr><th>Support</th><td>info@amadio.io</td></tr>
+      <tr><th>Website</th><td>amadio.io</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <div class="footer-brand">AMADIO</div>
+  <div class="footer-tagline">Premium Odoo Consulting &amp; Applications</div>
+  <div class="footer-info">amadio.io &nbsp;|&nbsp; info@amadio.io<br><br>Built by consultants who deploy Odoo every day.</div>
+</div>
+
 </body>
 </html>

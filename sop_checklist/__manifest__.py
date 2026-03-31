@@ -5,7 +5,7 @@
     'category': 'Project',
     'author': 'AMADIO',
     'website': 'https://amadio.io',
-    'license': 'LGPL-3',
+    'license': 'OPL-1',
     'price': 69.00,
     'currency': 'EUR',
     'depends': ['mail', 'base'],

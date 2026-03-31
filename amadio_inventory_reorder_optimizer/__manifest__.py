@@ -14,6 +14,6 @@
     "application": True,
     "summary": "Analyzes 12 months of demand history to suggest optimal reorder points and safety stock levels. Flags slow-movers, predicts stockouts, and generates draft POs for approval.",
     "description": "Analyzes 12 months of demand history to suggest optimal reorder points and safety stock levels. Flags slow-movers, predicts stockouts, and generates draft POs for approval.",
-    "images": ["static/description/icon.png"],
+    "images": ["static/description/banner.png", "static/description/icon.png"],
     "external_dependencies": {"python": [], "bin": []},
 }

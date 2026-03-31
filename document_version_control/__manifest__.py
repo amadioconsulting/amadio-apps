@@ -5,7 +5,7 @@
     'category': 'Document Management',
     'author': 'AMADIO',
     'website': 'https://amadio.io',
-    'license': 'LGPL-3',
+    'license': 'OPL-1',
     'depends': [
         'mail',
         'base',

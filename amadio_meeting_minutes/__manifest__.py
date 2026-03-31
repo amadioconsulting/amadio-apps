@@ -14,6 +14,6 @@
     "application": True,
     "summary": "Capture structured meeting minutes directly in Odoo calendar events. Record decisions, assign action items with owners and due dates, track completion. Auto-email minutes to all attendees.",
     "description": "Capture structured meeting minutes directly in Odoo calendar events. Record decisions, assign action items with owners and due dates, track completion. Auto-email minutes to all attendees.",
-    "images": ["static/description/icon.png"],
+    "images": ["static/description/banner.png", "static/description/icon.png"],
     "external_dependencies": {"python": [], "bin": []},
 }

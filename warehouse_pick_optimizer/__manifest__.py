@@ -36,7 +36,7 @@ This module extends stock.location and stock.picking models:
     ''',
     'author': 'AMADIO',
     'website': 'https://amadio.io',
-    'license': 'LGPL-3',
+    'license': 'OPL-1',
     'price': 79.00,
     'currency': 'EUR',
     'depends': ['stock'],
@@ -46,7 +46,7 @@ This module extends stock.location and stock.picking models:
         'views/stock_picking_views.xml',
         'report/pick_list_report.xml',
     ],
-    'images': ['static/description/icon.png'],
+    'images': ['static/description/banner.png', 'static/description/icon.png'],
     'installable': True,
     'application': False,
 }

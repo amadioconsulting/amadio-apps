@@ -14,6 +14,6 @@
     "application": True,
     "summary": "Define task templates with recurrence rules (daily/weekly/monthly/custom cron). Tasks auto-generate on schedule, pre-assigned, pre-tagged, and ready to work.",
     "description": "Define task templates with recurrence rules (daily/weekly/monthly/custom cron). Tasks auto-generate on schedule, pre-assigned, pre-tagged, and ready to work.",
-    "images": ["static/description/icon.png"],
+    "images": ["static/description/banner.png", "static/description/icon.png"],
     "external_dependencies": {"python": [], "bin": []},
 }

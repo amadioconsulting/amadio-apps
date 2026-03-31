@@ -14,6 +14,6 @@
     "application": True,
     "summary": "Configure multi-level PO approval tiers based on amount thresholds. POs auto-route to the right approver. No more bypassed controls or over-budget purchases.",
     "description": "Configure multi-level PO approval tiers based on amount thresholds. POs auto-route to the right approver. No more bypassed controls or over-budget purchases.",
-    "images": ["static/description/icon.png"],
+    "images": ["static/description/banner.png", "static/description/icon.png"],
     "external_dependencies": {"python": [], "bin": []},
 }

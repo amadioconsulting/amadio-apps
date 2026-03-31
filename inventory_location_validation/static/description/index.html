@@ -2,236 +2,243 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Real-Time Inventory Location Validation — AMADIO for Odoo 18.0</title>
+<meta name="description" content="Prevent stock from landing in the wrong bin — enforce location rules before the warehouse error becomes an inventory crisis.">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Segoe UI', Arial, sans-serif; color: #1a1a2e; background: #fff; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif; color: #1a202c; line-height: 1.6; }
 
-  /* HERO */
-  .hero {
-    background: linear-gradient(135deg, #0f3460 0%, #1a1a2e 60%, #16213e 100%);
-    color: white; text-align: center; padding: 60px 40px 50px;
-  }
-  .hero-badge {
-    display: inline-block; background: #e8a020; color: #0f3460;
-    font-weight: 800; font-size: 11px; letter-spacing: 2px;
-    padding: 5px 16px; border-radius: 20px; margin-bottom: 20px; text-transform: uppercase;
-  }
-  .hero h1 { font-size: 38px; font-weight: 800; margin-bottom: 16px; letter-spacing: -0.5px; }
-  .hero p { font-size: 18px; color: #b8c5d6; max-width: 680px; margin: 0 auto 28px; line-height: 1.6; }
-  .hero-badges { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
-  .badge { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25);
-    color: #e0e8f0; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; }
-  .badge.orange { background: rgba(232,160,32,0.25); border-color: #e8a020; color: #f5c84c; }
+/* Brand Header */
+.brand-header { background: #0f3460; padding: 16px 40px; display: flex; justify-content: space-between; align-items: center; }
+.brand-name { color: #fff; font-size: 24px; font-weight: 800; letter-spacing: 4px; }
+.brand-sub { color: #a0aec0; font-size: 12px; letter-spacing: 1px; margin-top: 3px; }
+.brand-url { color: #e67e22; font-size: 14px; font-weight: 600; text-decoration: none; }
 
-  /* PROBLEM SECTION */
-  .section { padding: 52px 40px; }
-  .section-alt { background: #f8f9fc; }
-  .section-title { text-align: center; font-size: 28px; font-weight: 800; color: #0f3460; margin-bottom: 10px; }
-  .section-sub { text-align: center; color: #666; font-size: 16px; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto; }
-  .problem-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; max-width: 960px; margin: 0 auto; }
-  .problem-card { border: 2px solid #e8a020; border-radius: 12px; padding: 24px; background: #fff; }
-  .problem-card h3 { color: #c0392b; font-size: 15px; font-weight: 700; margin-bottom: 10px; }
-  .problem-card p { color: #555; font-size: 14px; line-height: 1.6; }
+/* Hero */
+.hero { background: linear-gradient(135deg, #0f3460 0%, #1a3a6b 60%, #0d2845 100%); padding: 60px 40px; border-bottom: 4px solid #e67e22; }
+.hero-inner { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+.hero h1 { color: #fff; font-size: 38px; font-weight: 800; line-height: 1.2; margin-bottom: 16px; }
+.hero p { color: #cbd5e0; font-size: 17px; line-height: 1.7; margin-bottom: 24px; }
+.badges { display: flex; flex-wrap: wrap; gap: 8px; }
+.badge { background: rgba(255,255,255,0.12); color: #e2e8f0; border: 1px solid rgba(255,255,255,0.2); padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500; }
 
-  /* HOW IT WORKS */
-  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; max-width: 960px; margin: 0 auto; }
-  .step { background: white; border-radius: 12px; padding: 28px 22px; text-align: center;
-    box-shadow: 0 4px 20px rgba(15,52,96,0.10); border-top: 4px solid #e8a020; }
-  .step-num { width: 44px; height: 44px; border-radius: 50%; background: #e8a020; color: white;
-    font-size: 20px; font-weight: 800; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
-  .step h3 { font-size: 16px; font-weight: 700; color: #0f3460; margin-bottom: 10px; }
-  .step p { color: #666; font-size: 14px; line-height: 1.6; }
+/* Sections */
+.section { padding: 60px 40px; }
+.section-inner { max-width: 960px; margin: 0 auto; }
+.section-gray { background: #f8fafc; }
+.section-white { background: #ffffff; }
+.section h2 { color: #0f3460; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+.section-sub { color: #718096; font-size: 16px; margin-bottom: 40px; }
 
-  /* FEATURES */
-  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px; max-width: 960px; margin: 0 auto; }
-  .feature { display: flex; gap: 14px; align-items: flex-start; background: white;
-    padding: 20px; border-radius: 10px; box-shadow: 0 2px 12px rgba(15,52,96,0.07); }
-  .feature-icon { font-size: 26px; flex-shrink: 0; width: 44px; text-align: center; }
-  .feature h3 { font-size: 14px; font-weight: 700; color: #0f3460; margin-bottom: 6px; }
-  .feature p { font-size: 13px; color: #666; line-height: 1.5; }
+/* Problem Cards */
+.problems-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.problem-card { background: #fff; border-left: 4px solid #e53e3e; border-radius: 8px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: box-shadow 0.2s; }
+.problem-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+.problem-title { color: #c53030; font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+.problem-card p { color: #4a5568; font-size: 14px; }
 
-  /* USE CASES */
-  .cases { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; max-width: 960px; margin: 0 auto; }
-  .case { background: white; border-radius: 12px; padding: 24px; border-left: 5px solid #e8a020; }
-  .case h3 { font-size: 15px; font-weight: 700; color: #0f3460; margin-bottom: 8px; }
-  .case p { font-size: 13px; color: #555; line-height: 1.5; }
+/* Feature Cards */
+.features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.feature-card { background: #fff; border-radius: 10px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: box-shadow 0.2s; display: flex; gap: 16px; align-items: flex-start; }
+.feature-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+.feature-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+.feature-content h4 { color: #0f3460; font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+.feature-content p { color: #4a5568; font-size: 13px; line-height: 1.6; }
 
-  /* TECH SPEC */
-  .spec-table { max-width: 800px; margin: 0 auto; border-collapse: collapse; width: 100%; font-size: 14px; }
-  .spec-table td { padding: 12px 16px; border-bottom: 1px solid #e8edf5; }
-  .spec-table tr:nth-child(odd) td { background: #f5f8ff; }
-  .spec-table td:first-child { font-weight: 700; color: #0f3460; width: 38%; }
+/* Steps */
+.steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.step-card { text-align: center; padding: 32px 20px; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: box-shadow 0.2s; }
+.step-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+.step-number { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px; font-weight: 800; margin: 0 auto 20px; }
+.step-card h4 { color: #0f3460; font-size: 17px; font-weight: 700; margin-bottom: 12px; }
+.step-card p { color: #4a5568; font-size: 14px; line-height: 1.6; }
 
-  /* FOOTER */
-  .amadio-footer { background: #0f3460; color: white; text-align: center; padding: 40px; }
-  .amadio-footer .logo { font-size: 26px; font-weight: 800; letter-spacing: 3px; color: #e8a020; margin-bottom: 10px; }
-  .amadio-footer p { color: #a8b8cc; font-size: 14px; }
-  .amadio-footer a { color: #e8a020; text-decoration: none; font-weight: 600; }
+/* Use Cases */
+.usecases-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.usecase-card { background: #fff; border-radius: 10px; padding: 28px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: box-shadow 0.2s; }
+.usecase-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+.usecase-icon { font-size: 36px; margin-bottom: 16px; }
+.usecase-card h4 { color: #0f3460; font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+.usecase-card p { color: #4a5568; font-size: 14px; line-height: 1.6; }
+
+/* Specs */
+.specs-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.specs-table th, .specs-table td { padding: 14px 20px; text-align: left; border-bottom: 1px solid #edf2f7; }
+.specs-table th { background: #0f3460; color: #fff; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; width: 200px; }
+.specs-table td { color: #2d3748; font-size: 14px; }
+.specs-table tr:last-child th, .specs-table tr:last-child td { border-bottom: none; }
+
+/* Footer */
+.footer { background: #0f3460; color: #a0aec0; text-align: center; padding: 40px 40px; }
+.footer-brand { color: #fff; font-size: 20px; font-weight: 800; letter-spacing: 3px; margin-bottom: 8px; }
+.footer-tagline { color: #e67e22; font-size: 14px; font-style: italic; margin-bottom: 16px; }
+.footer-info { font-size: 13px; }
 </style>
 </head>
 <body>
 
-<!-- HERO -->
+<!-- Brand Header -->
+<div class="brand-header">
+  <div>
+    <div class="brand-name">AMADIO</div>
+    <div class="brand-sub">Premium Odoo 18.0 Applications</div>
+  </div>
+  <a href="https://amadio.io" class="brand-url">amadio.io</a>
+</div>
+
+<!-- Hero -->
 <div class="hero">
-  <div class="hero-badge">⚠️ Odoo 18 · Inventory / Warehouse</div>
-  <h1>Real-Time Inventory<br>Location Validation</h1>
-  <p>Stop products from landing in the wrong bin. Enforce location rules by product category with instant validation at the moment of shipment — before the warehouse error becomes an inventory crisis.</p>
-  <div class="hero-badges">
-    <span class="badge orange">Warn or Block</span>
-    <span class="badge">Category-Based Rules</span>
-    <span class="badge">Zero Training Required</span>
-    <span class="badge">Odoo.sh &amp; On-Premise</span>
+  <div class="hero-inner">
+    <div>
+      <h1>Real-Time Inventory Location Validation</h1>
+      <p>Prevent stock from landing in the wrong bin — enforce location rules before the warehouse error becomes an inventory crisis.</p>
+    </div>
+    <div class="badges"><span class="badge">Warn or Block Mode</span><span class="badge">Category-Based Rules</span><span class="badge">Override Wizard</span><span class="badge">Zero Training Required</span></div>
   </div>
 </div>
 
-<!-- PROBLEM -->
-<div class="section">
-  <div class="section-title">The Location Mistake That Costs You Hours</div>
-  <div class="section-sub">Odoo's default validation doesn't check whether products belong in the location they're being moved to. Your rules live in someone's head — not in the system.</div>
-  <div class="problem-grid">
-    <div class="problem-card">
-      <h3>⚠️ Misrouted Products</h3>
-      <p>Cold-chain items land in ambient storage. Hazardous materials go to the wrong zone. Valuable stock ends up in a bulk bin. The system said nothing.</p>
-    </div>
-    <div class="problem-card">
-      <h3>⚠️ Wasted Cycle Counts</h3>
-      <p>Products placed in wrong locations create phantom inventory discrepancies. Hours spent counting stock that's simply in the wrong place.</p>
-    </div>
-    <div class="problem-card">
-      <h3>⚠️ New Staff Errors</h3>
-      <p>Warehouse rules exist in binders and verbal handoffs. New staff validate shipments confidently — and incorrectly — until someone notices weeks later.</p>
-    </div>
-    <div class="problem-card">
-      <h3>⚠️ Compliance Exposure</h3>
-      <p>For regulated products, wrong-location shipments can trigger audit findings, fines, or product recalls. Manual checks don't scale.</p>
-    </div>
+<!-- The Challenge -->
+<div class="section section-white">
+  <div class="section-inner">
+    <h2>The Challenge</h2>
+    <p class="section-sub">Why organizations need Real-Time Inventory Location Validation</p>
+    <div class="problems-grid">
+        <div class="problem-card">
+            <div class="problem-title">Misrouted Products</div>
+            <p>Cold-chain items land in ambient storage. Hazardous materials go to the wrong zone. Valuable stock ends up in a bulk bin. Odoo's default validation says nothing.</p>
+        </div>
+        <div class="problem-card">
+            <div class="problem-title">Phantom Inventory Discrepancies</div>
+            <p>Products placed in wrong locations create cycle-count nightmares — stock that exists but can't be found where the system says it is.</p>
+        </div>
+        <div class="problem-card">
+            <div class="problem-title">Reactive Firefighting</div>
+            <p>Warehouse managers discover errors hours or days later. By then, the product has been picked, packed, or further moved — compounding the original mistake.</p>
+        </div></div>
   </div>
 </div>
 
-<!-- HOW IT WORKS -->
-<div class="section section-alt">
-  <div class="section-title">How It Works</div>
-  <div class="section-sub">Three steps from rule creation to real-time enforcement. No developer needed.</div>
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">1</div>
-      <h3>Configure Rules</h3>
-      <p>Go to Inventory → Configuration → Location Rules. Set which product categories are restricted from which storage locations. Choose Warn or Block.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <h3>Automatic Enforcement</h3>
-      <p>When a warehouse operator clicks Validate on a delivery or transfer, the module scans all move lines against your rules in real time.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <h3>Warn or Block</h3>
-      <p>In Warn mode, the operator sees a clear violation list and can confirm or cancel. In Block mode, validation is rejected with a precise explanation.</p>
-    </div>
+<!-- Features -->
+<div class="section section-gray">
+  <div class="section-inner">
+    <h2>What Real-Time Inventory Location Validation Does</h2>
+    <p class="section-sub">Six capabilities built specifically for this problem</p>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#e67e22">📍</div>
+            <div class="feature-content">
+                <h4>Category-Based Location Rules</h4>
+                <p>Define which product categories are permitted in which storage locations. Rules are checked at the moment of shipment validation — before any error is committed.</p>
+            </div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#e67e22">⚠️</div>
+            <div class="feature-content">
+                <h4>Warn or Block Mode</h4>
+                <p>Choose per-rule: warn the warehouse operator with a pop-up (they can proceed) or hard-block validation entirely until the location is corrected.</p>
+            </div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#e67e22">🧙</div>
+            <div class="feature-content">
+                <h4>Override Wizard</h4>
+                <p>Authorized managers can override a blocked validation with a reason code. Every override is logged for audit purposes.</p>
+            </div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#e67e22">📦</div>
+            <div class="feature-content">
+                <h4>Works on All Picking Types</h4>
+                <p>Receipts, internal transfers, delivery orders, and manufacturing moves — any stock.picking operation can have location rules applied.</p>
+            </div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#e67e22">🔧</div>
+            <div class="feature-content">
+                <h4>Zero Training Required</h4>
+                <p>Rules are enforced automatically. Warehouse staff see clear, plain-language messages. No manual checklist, no supervisor required.</p>
+            </div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#e67e22">📊</div>
+            <div class="feature-content">
+                <h4>Violation Log</h4>
+                <p>Every blocked or warned validation is recorded with timestamp, user, product, and intended location — giving you a clean audit trail.</p>
+            </div>
+        </div></div>
   </div>
 </div>
 
-<!-- FEATURES -->
-<div class="section">
-  <div class="section-title">Key Features</div>
-  <div class="section-sub">Built for warehouse managers who need rules that actually stick.</div>
-  <div class="features-grid">
-    <div class="feature">
-      <div class="feature-icon">📋</div>
-      <div>
-        <h3>Category-Based Rules</h3>
-        <p>Apply rules at the product category level — one rule covers hundreds of SKUs. Rules cascade to child categories automatically.</p>
-      </div>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">🚦</div>
-      <div>
-        <h3>Warn vs. Block Mode</h3>
-        <p>Choose per rule: Warn shows a confirmation dialog letting managers override, Block is a hard stop that prevents validation entirely.</p>
-      </div>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">🔴</div>
-      <div>
-        <h3>Picking Form Warning Banner</h3>
-        <p>A prominent visual warning appears on the stock picking form as soon as a violation is detected — before the operator even clicks Validate.</p>
-      </div>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">📍</div>
-      <div>
-        <h3>Any Transfer Type</h3>
-        <p>Works on receipts, deliveries, and internal transfers. Configure rules differently per operation type using Odoo's existing operation codes.</p>
-      </div>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">✏️</div>
-      <div>
-        <h3>Manager Notes on Rules</h3>
-        <p>Attach a plain-language explanation to each rule — "Cold chain items only in Zone A" — so operators understand why the restriction exists.</p>
-      </div>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">🔒</div>
-      <div>
-        <h3>Role-Based Access</h3>
-        <p>Stock Managers configure rules. Stock Users see validation results only. No risk of accidental rule modification by floor staff.</p>
-      </div>
-    </div>
+<!-- How It Works -->
+<div class="section section-white">
+  <div class="section-inner">
+    <h2>How It Works</h2>
+    <p class="section-sub">Operational in minutes — not weeks</p>
+    <div class="steps-grid">
+        <div class="step-card">
+            <div class="step-number" style="background:#e67e22">1</div>
+            <h4>Configure Rules</h4>
+            <p>Navigate to Inventory → Configuration → Location Rules. Create rules linking product categories to permitted locations. Set warn or block mode per rule.</p>
+        </div>
+        <div class="step-card">
+            <div class="step-number" style="background:#e67e22">2</div>
+            <h4>Business as Usual</h4>
+            <p>Warehouse staff process transfers normally. The system checks rules in the background at the moment of validation — no extra steps required.</p>
+        </div>
+        <div class="step-card">
+            <div class="step-number" style="background:#e67e22">3</div>
+            <h4>Instant Feedback</h4>
+            <p>When a violation is detected, the operator sees a clear message identifying the product and correct location. Managers can override with a reason if needed.</p>
+        </div></div>
   </div>
 </div>
 
-<!-- USE CASES -->
-<div class="section section-alt">
-  <div class="section-title">Who Needs This Module</div>
-  <div class="cases">
-    <div class="case">
-      <h3>🧊 Cold Chain &amp; Food Distribution</h3>
-      <p>Prevent ambient-temperature products from being validated into refrigerated zones — and vice versa. Critical for food safety compliance.</p>
-    </div>
-    <div class="case">
-      <h3>⚗️ Chemical &amp; Hazardous Materials</h3>
-      <p>Enforce separation rules for incompatible chemical categories. Ensure dangerous goods never land in general-access areas during transfers.</p>
-    </div>
-    <div class="case">
-      <h3>📦 Multi-Client 3PL Warehouses</h3>
-      <p>Restrict each client's inventory to their dedicated zones. Eliminate costly cross-client contamination errors automatically.</p>
-    </div>
-    <div class="case">
-      <h3>🏥 Pharma &amp; Medical Devices</h3>
-      <p>Maintain validated storage conditions required by GMP and regulatory standards. Route products to approved locations by default.</p>
-    </div>
-    <div class="case">
-      <h3>🏭 High-Value Manufacturing</h3>
-      <p>Keep components in controlled-access areas and prevent expensive items from being moved to open picking zones incorrectly.</p>
-    </div>
-    <div class="case">
-      <h3>🛒 Omnichannel Retail</h3>
-      <p>Prevent B2C fulfillment stock from being moved to B2B bulk areas during high-volume periods when shortcuts are tempting.</p>
-    </div>
+<!-- Use Cases -->
+<div class="section section-gray">
+  <div class="section-inner">
+    <h2>Perfect For</h2>
+    <p class="section-sub">Industries and organizations that rely on Real-Time Inventory Location Validation</p>
+    <div class="usecases-grid">
+        <div class="usecase-card">
+            <div class="usecase-icon">🏭</div>
+            <h4>Cold-Chain Warehouses</h4>
+            <p>Ensure refrigerated products never land in ambient zones. Enforce temperature-zone rules automatically across all receiving operations.</p>
+        </div>
+        <div class="usecase-card">
+            <div class="usecase-icon">⚗️</div>
+            <h4>Hazmat Distributors</h4>
+            <p>Keep dangerous goods in compliant storage areas. Prevent accidental placement in general-population bins — critical for regulatory audits.</p>
+        </div>
+        <div class="usecase-card">
+            <div class="usecase-icon">🏪</div>
+            <h4>Multi-Category 3PLs</h4>
+            <p>Third-party logistics providers managing client inventory can enforce client-specific storage rules without staff needing to memorize them.</p>
+        </div></div>
   </div>
 </div>
 
-<!-- TECH SPEC -->
-<div class="section">
-  <div class="section-title">Technical Specifications</div>
-  <table class="spec-table">
-    <tr><td>Odoo Version</td><td>18.0</td></tr>
-    <tr><td>Deployment</td><td>On-Premise · Odoo.sh (Odoo Online not supported)</td></tr>
-    <tr><td>Module Name</td><td>inventory_location_validation</td></tr>
-    <tr><td>Dependencies</td><td>stock</td></tr>
-    <tr><td>New Models</td><td>stock.location.rule · stock.location.validation.wizard</td></tr>
-    <tr><td>License</td><td>LGPL-3</td></tr>
-    <tr><td>Lines of Code</td><td>~220 Python · ~130 XML</td></tr>
-    <tr><td>Installation Impact</td><td>Non-destructive · no existing data modified</td></tr>
-  </table>
+<!-- Technical Specs -->
+<div class="section section-white">
+  <div class="section-inner">
+    <h2>Technical Specifications</h2>
+    <p class="section-sub">Compatibility and deployment details</p>
+    <table class="specs-table">
+      <tr><th>Odoo Version</th><td>18.0</td></tr>
+      <tr><th>Platform</th><td>Odoo.sh &amp; On-Premise</td></tr>
+      <tr><th>License</th><td>OPL-1</td></tr>
+      <tr><th>Author</th><td>AMADIO</td></tr>
+      <tr><th>Support</th><td>info@amadio.io</td></tr>
+      <tr><th>Website</th><td>amadio.io</td></tr>
+    </table>
+  </div>
 </div>
 
-<!-- FOOTER -->
-<div class="amadio-footer">
-  <div class="logo">AMADIO</div>
-  <p>Odoo consulting and module development for operations-focused businesses.<br>
-  <a href="https://amadio.io">amadio.io</a> &nbsp;·&nbsp; Enterprise support available</p>
+<!-- Footer -->
+<div class="footer">
+  <div class="footer-brand">AMADIO</div>
+  <div class="footer-tagline">Premium Odoo Consulting &amp; Applications</div>
+  <div class="footer-info">amadio.io &nbsp;|&nbsp; info@amadio.io<br><br>Built by consultants who deploy Odoo every day.</div>
 </div>
 
 </body>

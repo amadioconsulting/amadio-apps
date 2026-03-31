@@ -2,246 +2,243 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Warehouse Pick Path Optimizer — AMADIO for Odoo 18.0</title>
+<meta name="description" content="Reorder pick lines by physical bin sequence and print an optimized pick list — cut picker travel distance by 30–50% with zero process change.">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Segoe UI', Arial, sans-serif; color: #1a2e1a; background: #fff; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif; color: #1a202c; line-height: 1.6; }
 
-  .hero {
-    background: linear-gradient(135deg, #1a3a1a 0%, #1a2e1a 50%, #0d2b0d 100%);
-    color: white; text-align: center; padding: 60px 40px 50px;
-  }
-  .hero-badge {
-    display: inline-block; background: #27ae60; color: white;
-    font-weight: 800; font-size: 11px; letter-spacing: 2px;
-    padding: 5px 16px; border-radius: 20px; margin-bottom: 20px; text-transform: uppercase;
-  }
-  .hero h1 { font-size: 38px; font-weight: 800; margin-bottom: 16px; }
-  .hero p { font-size: 18px; color: #a8d8a8; max-width: 680px; margin: 0 auto 28px; line-height: 1.6; }
-  .hero-badges { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
-  .badge { background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.20);
-    color: #ddd; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; }
-  .badge.green { background: rgba(39,174,96,0.3); border-color: #27ae60; color: #a8d8a8; }
+/* Brand Header */
+.brand-header { background: #0f3460; padding: 16px 40px; display: flex; justify-content: space-between; align-items: center; }
+.brand-name { color: #fff; font-size: 24px; font-weight: 800; letter-spacing: 4px; }
+.brand-sub { color: #a0aec0; font-size: 12px; letter-spacing: 1px; margin-top: 3px; }
+.brand-url { color: #1abc9c; font-size: 14px; font-weight: 600; text-decoration: none; }
 
-  .stat-strip { display: flex; justify-content: center; flex-wrap: wrap; background: #1a3a1a; padding: 36px 40px; }
-  .stat { text-align: center; padding: 10px 36px; border-right: 1px solid rgba(255,255,255,0.15); }
-  .stat:last-child { border-right: none; }
-  .stat .number { font-size: 38px; font-weight: 800; color: #27ae60; line-height: 1; }
-  .stat .label { font-size: 13px; color: #a8d8a8; margin-top: 6px; }
+/* Hero */
+.hero { background: linear-gradient(135deg, #0f3460 0%, #1a3a6b 60%, #0d2845 100%); padding: 60px 40px; border-bottom: 4px solid #1abc9c; }
+.hero-inner { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+.hero h1 { color: #fff; font-size: 38px; font-weight: 800; line-height: 1.2; margin-bottom: 16px; }
+.hero p { color: #cbd5e0; font-size: 17px; line-height: 1.7; margin-bottom: 24px; }
+.badges { display: flex; flex-wrap: wrap; gap: 8px; }
+.badge { background: rgba(255,255,255,0.12); color: #e2e8f0; border: 1px solid rgba(255,255,255,0.2); padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500; }
 
-  .section { padding: 52px 40px; }
-  .section-alt { background: #f4fbf4; }
-  .section-title { text-align: center; font-size: 28px; font-weight: 800; color: #1a3a1a; margin-bottom: 10px; }
-  .section-sub { text-align: center; color: #555; font-size: 16px; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto; }
+/* Sections */
+.section { padding: 60px 40px; }
+.section-inner { max-width: 960px; margin: 0 auto; }
+.section-gray { background: #f8fafc; }
+.section-white { background: #ffffff; }
+.section h2 { color: #0f3460; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+.section-sub { color: #718096; font-size: 16px; margin-bottom: 40px; }
 
-  .problem-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; max-width: 960px; margin: 0 auto; }
-  .problem-card { border: 2px solid #27ae60; border-radius: 12px; padding: 24px; background: #fff; }
-  .problem-card h3 { color: #c0392b; font-size: 15px; font-weight: 700; margin-bottom: 10px; }
-  .problem-card p { color: #555; font-size: 14px; line-height: 1.6; }
+/* Problem Cards */
+.problems-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.problem-card { background: #fff; border-left: 4px solid #e53e3e; border-radius: 8px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: box-shadow 0.2s; }
+.problem-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+.problem-title { color: #c53030; font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+.problem-card p { color: #4a5568; font-size: 14px; }
 
-  .before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 860px; margin: 0 auto; }
-  .before, .after { border-radius: 12px; padding: 28px; }
-  .before { background: #fff5f5; border: 2px solid #e74c3c; }
-  .after { background: #f0fff4; border: 2px solid #27ae60; }
-  .before h3 { color: #c0392b; font-size: 16px; font-weight: 800; margin-bottom: 16px; }
-  .after h3 { color: #1a7a40; font-size: 16px; font-weight: 800; margin-bottom: 16px; }
-  .before ul, .after ul { list-style: none; }
-  .before li { color: #555; font-size: 14px; padding: 6px 0; border-bottom: 1px solid #f5d5d5; }
-  .after li { color: #2d6a4f; font-size: 14px; padding: 6px 0; border-bottom: 1px solid #d5f5e3; }
-  .before li:before { content: "✗ "; color: #e74c3c; font-weight: 700; }
-  .after li:before { content: "✓ "; color: #27ae60; font-weight: 700; }
+/* Feature Cards */
+.features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.feature-card { background: #fff; border-radius: 10px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: box-shadow 0.2s; display: flex; gap: 16px; align-items: flex-start; }
+.feature-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+.feature-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+.feature-content h4 { color: #0f3460; font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+.feature-content p { color: #4a5568; font-size: 13px; line-height: 1.6; }
 
-  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px; max-width: 960px; margin: 0 auto; }
-  .feature { display: flex; gap: 14px; align-items: flex-start; background: white;
-    padding: 20px; border-radius: 10px; box-shadow: 0 2px 12px rgba(26,58,26,0.08); }
-  .feature-icon { font-size: 26px; flex-shrink: 0; width: 44px; text-align: center; }
-  .feature h3 { font-size: 14px; font-weight: 700; color: #1a3a1a; margin-bottom: 6px; }
-  .feature p { font-size: 13px; color: #555; line-height: 1.5; }
+/* Steps */
+.steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.step-card { text-align: center; padding: 32px 20px; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: box-shadow 0.2s; }
+.step-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+.step-number { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px; font-weight: 800; margin: 0 auto 20px; }
+.step-card h4 { color: #0f3460; font-size: 17px; font-weight: 700; margin-bottom: 12px; }
+.step-card p { color: #4a5568; font-size: 14px; line-height: 1.6; }
 
-  .cases { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; max-width: 960px; margin: 0 auto; }
-  .case { background: white; border-radius: 12px; padding: 24px; border-left: 5px solid #27ae60; }
-  .case h3 { font-size: 15px; font-weight: 700; color: #1a3a1a; margin-bottom: 8px; }
-  .case p { font-size: 13px; color: #555; line-height: 1.5; }
+/* Use Cases */
+.usecases-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.usecase-card { background: #fff; border-radius: 10px; padding: 28px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: box-shadow 0.2s; }
+.usecase-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+.usecase-icon { font-size: 36px; margin-bottom: 16px; }
+.usecase-card h4 { color: #0f3460; font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+.usecase-card p { color: #4a5568; font-size: 14px; line-height: 1.6; }
 
-  .spec-table { max-width: 800px; margin: 0 auto; border-collapse: collapse; width: 100%; font-size: 14px; }
-  .spec-table td { padding: 12px 16px; border-bottom: 1px solid #d5f0dc; }
-  .spec-table tr:nth-child(odd) td { background: #f4fbf4; }
-  .spec-table td:first-child { font-weight: 700; color: #1a3a1a; width: 38%; }
+/* Specs */
+.specs-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.specs-table th, .specs-table td { padding: 14px 20px; text-align: left; border-bottom: 1px solid #edf2f7; }
+.specs-table th { background: #0f3460; color: #fff; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; width: 200px; }
+.specs-table td { color: #2d3748; font-size: 14px; }
+.specs-table tr:last-child th, .specs-table tr:last-child td { border-bottom: none; }
 
-  .amadio-footer { background: #1a3a1a; color: white; text-align: center; padding: 40px; }
-  .amadio-footer .logo { font-size: 26px; font-weight: 800; letter-spacing: 3px; color: #27ae60; margin-bottom: 10px; }
-  .amadio-footer p { color: #a8d8a8; font-size: 14px; }
-  .amadio-footer a { color: #27ae60; text-decoration: none; font-weight: 600; }
+/* Footer */
+.footer { background: #0f3460; color: #a0aec0; text-align: center; padding: 40px 40px; }
+.footer-brand { color: #fff; font-size: 20px; font-weight: 800; letter-spacing: 3px; margin-bottom: 8px; }
+.footer-tagline { color: #1abc9c; font-size: 14px; font-style: italic; margin-bottom: 16px; }
+.footer-info { font-size: 13px; }
 </style>
 </head>
 <body>
 
+<!-- Brand Header -->
+<div class="brand-header">
+  <div>
+    <div class="brand-name">AMADIO</div>
+    <div class="brand-sub">Premium Odoo 18.0 Applications</div>
+  </div>
+  <a href="https://amadio.io" class="brand-url">amadio.io</a>
+</div>
+
+<!-- Hero -->
 <div class="hero">
-  <div class="hero-badge">🚀 Odoo 18 · Inventory / Warehouse</div>
-  <h1>Warehouse Pick<br>Path Optimizer</h1>
-  <p>Your pickers are walking twice as far as they need to. Odoo orders pick lists by sale order — not by shelf location. One click reorders every move line by physical bin sequence, cuts travel time, and prints a professional optimized pick list PDF.</p>
-  <div class="hero-badges">
-    <span class="badge green">One-Click Optimization</span>
-    <span class="badge">Custom Bin Sequencing</span>
-    <span class="badge">Pick List PDF</span>
-    <span class="badge">Odoo.sh &amp; On-Premise</span>
+  <div class="hero-inner">
+    <div>
+      <h1>Warehouse Pick Path Optimizer</h1>
+      <p>Reorder pick lines by physical bin sequence and print an optimized pick list — cut picker travel distance by 30–50% with zero process change.</p>
+    </div>
+    <div class="badges"><span class="badge">Bin-Sequence Ordering</span><span class="badge">Optimized PDF Pick List</span><span class="badge">One-Click Optimize</span><span class="badge">No WMS Required</span></div>
   </div>
 </div>
 
-<div class="stat-strip">
-  <div class="stat"><div class="number">30–50%</div><div class="label">reduction in picker<br>travel distance</div></div>
-  <div class="stat"><div class="number">1 Click</div><div class="label">to optimize<br>any pick list</div></div>
-  <div class="stat"><div class="number">PDF</div><div class="label">optimized pick list<br>ready to print</div></div>
-  <div class="stat"><div class="number">Zero</div><div class="label">WMS upgrade<br>required</div></div>
-</div>
-
-<div class="section">
-  <div class="section-title">Why Your Pickers Are Wasting Steps</div>
-  <div class="section-sub">Odoo creates pick lists based on how orders are entered, not how your warehouse is laid out. The result is a pick route that zigzags across the warehouse.</div>
-  <div class="problem-grid">
-    <div class="problem-card">
-      <h3>🔄 Zigzag Picking Routes</h3>
-      <p>Item from Aisle A, then Aisle F, then back to Aisle B. Odoo's default sort order is transaction-based, not location-based. Pickers pay the penalty.</p>
-    </div>
-    <div class="problem-card">
-      <h3>⏱️ Picking Is Your Bottleneck</h3>
-      <p>In most warehouses, picking accounts for 50–70% of labor cost. A 30% improvement in travel efficiency directly improves your output per picker per hour.</p>
-    </div>
-    <div class="problem-card">
-      <h3>💸 No WMS Budget</h3>
-      <p>Full Warehouse Management Systems cost tens of thousands of dollars and months to implement. This module adds the most valuable single feature for a fraction of the price.</p>
-    </div>
-    <div class="problem-card">
-      <h3>📄 Printed Pick Lists Are Unreadable</h3>
-      <p>Odoo's default pick slip is functional but not warehouse-friendly. No bin order, no clean layout, no barcode integration for quick scanning.</p>
-    </div>
+<!-- The Challenge -->
+<div class="section section-white">
+  <div class="section-inner">
+    <h2>The Challenge</h2>
+    <p class="section-sub">Why organizations need Warehouse Pick Path Optimizer</p>
+    <div class="problems-grid">
+        <div class="problem-card">
+            <div class="problem-title">Zigzag Pick Routes</div>
+            <p>Odoo generates pick lists in sales order sequence — not warehouse geography. Pickers travel back and forth across the warehouse, wasting 20–40% of their time.</p>
+        </div>
+        <div class="problem-card">
+            <div class="problem-title">No Pick List Printing</div>
+            <p>Standard Odoo has no formatted pick list document. Staff read off screens or print unformatted system reports.</p>
+        </div>
+        <div class="problem-card">
+            <div class="problem-title">WMS Cost Barrier</div>
+            <p>Full warehouse management systems with path optimization cost tens of thousands of dollars. Mid-market warehouses need this capability without the price tag.</p>
+        </div></div>
   </div>
 </div>
 
-<div class="section section-alt">
-  <div class="section-title">Before and After</div>
-  <div class="before-after">
-    <div class="before">
-      <h3>❌ Without This Module</h3>
-      <ul>
-        <li>Pick list ordered by order line entry</li>
-        <li>Pickers create their own informal route</li>
-        <li>Inconsistent travel paths = variable times</li>
-        <li>New staff take 3× longer than veterans</li>
-        <li>Default printed pick slip — hard to follow</li>
-        <li>No bin-level visibility on the transfer form</li>
-      </ul>
-    </div>
-    <div class="after">
-      <h3>✅ With This Module</h3>
-      <ul>
-        <li>Pick list reordered by physical shelf sequence</li>
-        <li>One button click — done in under a second</li>
-        <li>Consistent, repeatable route every time</li>
-        <li>New staff pick as efficiently as veterans</li>
-        <li>Clean PDF pick list with barcode column</li>
-        <li>Bin sequence configurable per location</li>
-      </ul>
-    </div>
+<!-- Features -->
+<div class="section section-gray">
+  <div class="section-inner">
+    <h2>What Warehouse Pick Path Optimizer Does</h2>
+    <p class="section-sub">Six capabilities built specifically for this problem</p>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#1abc9c">🗺️</div>
+            <div class="feature-content">
+                <h4>Bin Sequence Ordering</h4>
+                <p>Assign a pick_sequence number to each stock location. The optimizer reorders pick lines by this sequence — creating a logical aisle-by-aisle route.</p>
+            </div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#1abc9c">🖨️</div>
+            <div class="feature-content">
+                <h4>Professional Pick List PDF</h4>
+                <p>Print a formatted pick list sorted by bin sequence, with product name, reference, lot/serial if applicable, and quantity — designed for actual warehouse use.</p>
+            </div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#1abc9c">⚡</div>
+            <div class="feature-content">
+                <h4>One-Click Optimization</h4>
+                <p>An Optimize button on the picking form reorders all move lines by bin sequence in a single click. No configuration required per pick.</p>
+            </div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#1abc9c">📍</div>
+            <div class="feature-content">
+                <h4>Location-Level Configuration</h4>
+                <p>Bin sequences are set once on the stock.location record. Every pick that includes that location automatically benefits — nothing to configure per order.</p>
+            </div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#1abc9c">🔄</div>
+            <div class="feature-content">
+                <h4>Works with Existing Operations</h4>
+                <p>No change to receiving, putaway, or validation workflow. The optimizer is additive — add it to any existing operation type.</p>
+            </div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#1abc9c">📊</div>
+            <div class="feature-content">
+                <h4>Multi-Product Batch Ready</h4>
+                <p>Works with batch transfers and cluster picks. Optimize an entire batch by bin sequence to minimize picker travel across multiple orders simultaneously.</p>
+            </div>
+        </div></div>
   </div>
 </div>
 
-<div class="section">
-  <div class="section-title">Key Features</div>
-  <div class="features-grid">
-    <div class="feature">
-      <div class="feature-icon">⚡</div>
-      <div>
-        <h3>One-Click Optimization</h3>
-        <p>The "Optimize Pick Path" button appears on delivery orders and internal transfers. One click reorders all move lines by pick sequence, instantly.</p>
-      </div>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">🗂️</div>
-      <div>
-        <h3>Custom Bin Sequences</h3>
-        <p>Assign a numeric pick_sequence to each storage location (e.g., Aisle A-01=10, A-02=20). Manage all sequences from Inventory → Configuration → Pick Sequences.</p>
-      </div>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">📄</div>
-      <div>
-        <h3>Optimized Pick List PDF</h3>
-        <p>Print a clean, warehouse-friendly pick list showing product, quantity, lot/serial, source and destination location — all in bin-sequence order with a barcode column.</p>
-      </div>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">🔢</div>
-      <div>
-        <h3>Alphabetic Fallback Sort</h3>
-        <p>Locations without a custom sequence fall back to alphabetical location name order — the module works immediately after install with no configuration required.</p>
-      </div>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">🏭</div>
-      <div>
-        <h3>Transfer Type Filtering</h3>
-        <p>The optimize button is shown only on outgoing deliveries and internal transfers. Receipts are unaffected — no clutter in the put-away workflow.</p>
-      </div>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">📦</div>
-      <div>
-        <h3>Lot/Serial Visibility</h3>
-        <p>The optimized pick list PDF includes lot and serial number columns, so pickers can grab the right batch from the right bin in one pass.</p>
-      </div>
-    </div>
+<!-- How It Works -->
+<div class="section section-white">
+  <div class="section-inner">
+    <h2>How It Works</h2>
+    <p class="section-sub">Operational in minutes — not weeks</p>
+    <div class="steps-grid">
+        <div class="step-card">
+            <div class="step-number" style="background:#1abc9c">1</div>
+            <h4>Set Bin Sequences</h4>
+            <p>Go to Inventory → Configuration → Locations. Set the pick_sequence field on each storage location (e.g., Aisle 1 Bin A = 10, Aisle 1 Bin B = 20, Aisle 2 = 100).</p>
+        </div>
+        <div class="step-card">
+            <div class="step-number" style="background:#1abc9c">2</div>
+            <h4>Confirm Your Picking</h4>
+            <p>Process pickings as normal. When ready to pick, click the Optimize Pick Order button to reorder all lines by bin sequence in one click.</p>
+        </div>
+        <div class="step-card">
+            <div class="step-number" style="background:#1abc9c">3</div>
+            <h4>Print and Pick</h4>
+            <p>Click Print Pick List for a professional, bin-sequenced PDF. Hand it to the picker. They walk a logical route — no backtracking, no wasted steps.</p>
+        </div></div>
   </div>
 </div>
 
-<div class="section section-alt">
-  <div class="section-title">Who Needs This Module</div>
-  <div class="cases">
-    <div class="case">
-      <h3>📦 E-Commerce Fulfillment</h3>
-      <p>High-volume order fulfillment where picker efficiency directly drives shipping SLA compliance. Every second per pick multiplied by 500 picks per day compounds fast.</p>
-    </div>
-    <div class="case">
-      <h3>🏭 Industrial Distribution</h3>
-      <p>Large warehouse footprints where optimized routing makes the difference between one picker handling a route in 20 minutes or 45 minutes.</p>
-    </div>
-    <div class="case">
-      <h3>🥦 Food &amp; Grocery Wholesale</h3>
-      <p>Time-critical picking operations where products must be picked, packed, and cold-chain loaded within strict windows. Every minute of walking matters.</p>
-    </div>
-    <div class="case">
-      <h3>🔩 Auto &amp; Hardware Parts</h3>
-      <p>Dense parts warehouses with hundreds of locations per aisle. Routing by bin sequence eliminates the confusion of long, non-sequenced transfer lists.</p>
-    </div>
-    <div class="case">
-      <h3>🛒 Retail Replenishment</h3>
-      <p>Picking for store replenishment runs, where a single pick list covers dozens of SKUs across the warehouse. Sequence-optimized runs reduce shift time measurably.</p>
-    </div>
-    <div class="case">
-      <h3>🧑‍🏫 Warehouse Training</h3>
-      <p>New staff learn the warehouse layout faster when pick lists are physically sequenced. Consistent routes become muscle memory within the first week.</p>
-    </div>
+<!-- Use Cases -->
+<div class="section section-gray">
+  <div class="section-inner">
+    <h2>Perfect For</h2>
+    <p class="section-sub">Industries and organizations that rely on Warehouse Pick Path Optimizer</p>
+    <div class="usecases-grid">
+        <div class="usecase-card">
+            <div class="usecase-icon">🏭</div>
+            <h4>E-Commerce Fulfillment</h4>
+            <p>Warehouse operations fulfilling hundreds of daily orders gain massive efficiency from optimized pick paths — without implementing a full WMS.</p>
+        </div>
+        <div class="usecase-card">
+            <div class="usecase-icon">🛒</div>
+            <h4>Wholesale Distributors</h4>
+            <p>Distributors picking multi-line orders for B2B customers reduce labor costs and improve same-day shipping rates with optimized pick sequences.</p>
+        </div>
+        <div class="usecase-card">
+            <div class="usecase-icon">🏗️</div>
+            <h4>Manufacturing Stores</h4>
+            <p>Production stores picking components for work orders reduce walk time and ensure the right parts arrive at the right workstation at the right time.</p>
+        </div></div>
   </div>
 </div>
 
-<div class="section">
-  <div class="section-title">Technical Specifications</div>
-  <table class="spec-table">
-    <tr><td>Odoo Version</td><td>18.0</td></tr>
-    <tr><td>Deployment</td><td>On-Premise · Odoo.sh (Odoo Online not supported)</td></tr>
-    <tr><td>Module Name</td><td>warehouse_pick_optimizer</td></tr>
-    <tr><td>Dependencies</td><td>stock</td></tr>
-    <tr><td>New Fields</td><td>stock.location.pick_sequence (Integer)</td></tr>
-    <tr><td>New Report</td><td>Optimized Pick List PDF (QWeb)</td></tr>
-    <tr><td>License</td><td>LGPL-3</td></tr>
-    <tr><td>Lines of Code</td><td>~180 Python · ~290 XML/QWeb</td></tr>
-    <tr><td>Installation Impact</td><td>Non-destructive · no existing data modified</td></tr>
-  </table>
+<!-- Technical Specs -->
+<div class="section section-white">
+  <div class="section-inner">
+    <h2>Technical Specifications</h2>
+    <p class="section-sub">Compatibility and deployment details</p>
+    <table class="specs-table">
+      <tr><th>Odoo Version</th><td>18.0</td></tr>
+      <tr><th>Platform</th><td>Odoo.sh &amp; On-Premise</td></tr>
+      <tr><th>License</th><td>OPL-1</td></tr>
+      <tr><th>Author</th><td>AMADIO</td></tr>
+      <tr><th>Support</th><td>info@amadio.io</td></tr>
+      <tr><th>Website</th><td>amadio.io</td></tr>
+    </table>
+  </div>
 </div>
 
-<div class="amadio-footer">
-  <div class="logo">AMADIO</div>
-  <p>Odoo consulting and module development for operations-focused businesses.<br>
-  <a href="https://amadio.io">amadio.io</a> &nbsp;·&nbsp; Enterprise support available</p>
+<!-- Footer -->
+<div class="footer">
+  <div class="footer-brand">AMADIO</div>
+  <div class="footer-tagline">Premium Odoo Consulting &amp; Applications</div>
+  <div class="footer-info">amadio.io &nbsp;|&nbsp; info@amadio.io<br><br>Built by consultants who deploy Odoo every day.</div>
 </div>
 
 </body>

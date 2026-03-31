@@ -34,7 +34,7 @@ Security: Full access control via donation_donation, donation_fund, donation_cam
     ''',
     'author': 'AMADIO',
     'website': 'https://amadio.io',
-    'license': 'LGPL-3',
+    'license': 'OPL-1',
     'price': 149.00,
     'currency': 'EUR',
     'depends': [
@@ -51,7 +51,7 @@ Security: Full access control via donation_donation, donation_fund, donation_cam
         'report/donation_receipt_report.xml',
     ],
     'demo': [],
-    'images': ['static/description/icon.png'],
+    'images': ['static/description/banner.png', 'static/description/icon.png'],
     'installable': True,
     'application': True,
     'auto_install': False,

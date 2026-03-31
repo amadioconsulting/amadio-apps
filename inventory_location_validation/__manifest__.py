@@ -37,7 +37,7 @@ manager/user role separation.
     'category': 'Inventory/Warehouse',
     'author': 'AMADIO',
     'website': 'https://amadio.io',
-    'license': 'LGPL-3',
+    'license': 'OPL-1',
     'depends': ['stock'],
     'data': [
         'security/ir.model.access.csv',
@@ -50,5 +50,5 @@ manager/user role separation.
     'auto_install': False,
     'price': 89.00,
     'currency': 'EUR',
-    'images': ['static/description/icon.png'],
+    'images': ['static/description/banner.png', 'static/description/icon.png'],
 }

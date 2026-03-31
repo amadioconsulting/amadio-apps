@@ -1,311 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vendor Performance Scorecard - AMADIO Premium Odoo Apps</title>
-    <meta name="description" content="Rate vendors on delivery punctuality, quality, pricing accuracy, and service. Scorecards auto-update from PO receipts. Dashboard KPIs surface your best and worst performers.">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            color: #333;
-            line-height: 1.6;
-        }
-        .header {
-            background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
-            color: white;
-            padding: 20px 40px;
-            text-align: center;
-        }
-        .header h1 {
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-        .header p {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-        .hero {
-            background: linear-gradient(135deg, #16a08522 0%, #16a08511 100%);
-            padding: 60px 40px;
-            text-align: center;
-            border-bottom: 4px solid #16a085;
-        }
-        .hero h2 {
-            font-size: 42px;
-            color: #0f3460;
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
-        .hero p {
-            font-size: 18px;
-            color: #555;
-            max-width: 600px;
-            margin: 0 auto;
-            font-weight: 500;
-        }
-        .features {
-            padding: 60px 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .features h3 {
-            text-align: center;
-            font-size: 32px;
-            color: #0f3460;
-            margin-bottom: 40px;
-        }
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 60px;
-        }
-        .feature-card {
-            padding: 30px;
-            border-left: 4px solid #16a085;
-            background: #f9f9f9;
-            border-radius: 4px;
-            transition: transform 0.2s;
-        }
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-        .feature-card h4 {
-            color: #0f3460;
-            margin-bottom: 12px;
-            font-size: 18px;
-        }
-        .feature-card p {
-            color: #666;
-            font-size: 14px;
-        }
-        .how-it-works {
-            background: #f5f5f5;
-            padding: 60px 40px;
-        }
-        .how-it-works h3 {
-            text-align: center;
-            font-size: 32px;
-            color: #0f3460;
-            margin-bottom: 40px;
-        }
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        .step {
-            text-align: center;
-            padding: 20px;
-        }
-        .step-number {
-            display: inline-block;
-            width: 50px;
-            height: 50px;
-            background: #16a085;
-            color: white;
-            border-radius: 50%;
-            line-height: 50px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            font-size: 24px;
-        }
-        .step h4 {
-            color: #0f3460;
-            margin-bottom: 10px;
-        }
-        .step p {
-            color: #666;
-            font-size: 14px;
-        }
-        .use-cases {
-            padding: 60px 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .use-cases h3 {
-            text-align: center;
-            font-size: 32px;
-            color: #0f3460;
-            margin-bottom: 40px;
-        }
-        .case-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
-        .case-card {
-            padding: 30px;
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            text-align: center;
-        }
-        .case-card h4 {
-            color: #16a085;
-            margin-bottom: 10px;
-            font-size: 16px;
-        }
-        .case-card p {
-            color: #666;
-            font-size: 14px;
-        }
-        .specs {
-            background: #0f3460;
-            color: white;
-            padding: 40px;
-            text-align: center;
-        }
-        .specs h3 {
-            margin-bottom: 20px;
-            font-size: 24px;
-        }
-        .specs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .spec-item {
-            padding: 15px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 4px;
-        }
-        .spec-item strong {
-            color: #16a085;
-            display: block;
-            margin-bottom: 5px;
-        }
-        .footer {
-            text-align: center;
-            padding: 20px;
-            background: #1a1a1a;
-            color: #999;
-            font-size: 12px;
-        }
-        @media (max-width: 768px) {
-            .steps {
-                grid-template-columns: 1fr;
-            }
-            .hero h2 {
-                font-size: 28px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vendor Performance Scorecard — AMADIO for Odoo 18.0</title>
+<meta name="description" content="Rate vendors on delivery, quality, pricing, and service — scorecards auto-update from PO receipts and surface your best and worst performers at a glance.">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif; color: #1a202c; line-height: 1.6; }
+
+/* Brand Header */
+.brand-header { background: #0f3460; padding: 16px 40px; display: flex; justify-content: space-between; align-items: center; }
+.brand-name { color: #fff; font-size: 24px; font-weight: 800; letter-spacing: 4px; }
+.brand-sub { color: #a0aec0; font-size: 12px; letter-spacing: 1px; margin-top: 3px; }
+.brand-url { color: #16a085; font-size: 14px; font-weight: 600; text-decoration: none; }
+
+/* Hero */
+.hero { background: linear-gradient(135deg, #0f3460 0%, #1a3a6b 60%, #0d2845 100%); padding: 60px 40px; border-bottom: 4px solid #16a085; }
+.hero-inner { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+.hero h1 { color: #fff; font-size: 38px; font-weight: 800; line-height: 1.2; margin-bottom: 16px; }
+.hero p { color: #cbd5e0; font-size: 17px; line-height: 1.7; margin-bottom: 24px; }
+.badges { display: flex; flex-wrap: wrap; gap: 8px; }
+.badge { background: rgba(255,255,255,0.12); color: #e2e8f0; border: 1px solid rgba(255,255,255,0.2); padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500; }
+
+/* Sections */
+.section { padding: 60px 40px; }
+.section-inner { max-width: 960px; margin: 0 auto; }
+.section-gray { background: #f8fafc; }
+.section-white { background: #ffffff; }
+.section h2 { color: #0f3460; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+.section-sub { color: #718096; font-size: 16px; margin-bottom: 40px; }
+
+/* Problem Cards */
+.problems-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.problem-card { background: #fff; border-left: 4px solid #e53e3e; border-radius: 8px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: box-shadow 0.2s; }
+.problem-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+.problem-title { color: #c53030; font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+.problem-card p { color: #4a5568; font-size: 14px; }
+
+/* Feature Cards */
+.features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.feature-card { background: #fff; border-radius: 10px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: box-shadow 0.2s; display: flex; gap: 16px; align-items: flex-start; }
+.feature-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+.feature-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+.feature-content h4 { color: #0f3460; font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+.feature-content p { color: #4a5568; font-size: 13px; line-height: 1.6; }
+
+/* Steps */
+.steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.step-card { text-align: center; padding: 32px 20px; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: box-shadow 0.2s; }
+.step-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+.step-number { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px; font-weight: 800; margin: 0 auto 20px; }
+.step-card h4 { color: #0f3460; font-size: 17px; font-weight: 700; margin-bottom: 12px; }
+.step-card p { color: #4a5568; font-size: 14px; line-height: 1.6; }
+
+/* Use Cases */
+.usecases-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.usecase-card { background: #fff; border-radius: 10px; padding: 28px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: box-shadow 0.2s; }
+.usecase-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+.usecase-icon { font-size: 36px; margin-bottom: 16px; }
+.usecase-card h4 { color: #0f3460; font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+.usecase-card p { color: #4a5568; font-size: 14px; line-height: 1.6; }
+
+/* Specs */
+.specs-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.specs-table th, .specs-table td { padding: 14px 20px; text-align: left; border-bottom: 1px solid #edf2f7; }
+.specs-table th { background: #0f3460; color: #fff; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; width: 200px; }
+.specs-table td { color: #2d3748; font-size: 14px; }
+.specs-table tr:last-child th, .specs-table tr:last-child td { border-bottom: none; }
+
+/* Footer */
+.footer { background: #0f3460; color: #a0aec0; text-align: center; padding: 40px 40px; }
+.footer-brand { color: #fff; font-size: 20px; font-weight: 800; letter-spacing: 3px; margin-bottom: 8px; }
+.footer-tagline { color: #16a085; font-size: 14px; font-style: italic; margin-bottom: 16px; }
+.footer-info { font-size: 13px; }
+</style>
 </head>
 <body>
-    <div class="header">
-        <h1>AMADIO</h1>
-        <p>Premium Odoo 18.0 Applications</p>
-    </div>
 
-    <div class="hero">
-        <h2>Vendor Performance Scorecard</h2>
-        <p>Rate vendors on delivery punctuality, quality, pricing accuracy, and service. Scorecards auto-update from PO receipts. Dashboard KPIs surface your best and worst performers.</p>
-    </div>
+<!-- Brand Header -->
+<div class="brand-header">
+  <div>
+    <div class="brand-name">AMADIO</div>
+    <div class="brand-sub">Premium Odoo 18.0 Applications</div>
+  </div>
+  <a href="https://amadio.io" class="brand-url">amadio.io</a>
+</div>
 
-    <div class="features">
-        <h3>Key Features</h3>
-        <div class="feature-grid">
-            <div class="feature-card">
-                <h4>Automated Workflows</h4>
-                <p>Streamline processes with intelligent automation and scheduled tasks.</p>
-            </div>
-            <div class="feature-card">
-                <h4>Real-Time Alerts</h4>
-                <p>Stay informed with instant notifications and proactive monitoring.</p>
-            </div>
-            <div class="feature-card">
-                <h4>Comprehensive Reporting</h4>
-                <p>Data-driven insights with beautiful dashboards and analytics.</p>
-            </div>
-            <div class="feature-card">
-                <h4>Seamless Integration</h4>
-                <p>Works natively with Odoo modules for unified operations.</p>
-            </div>
-            <div class="feature-card">
-                <h4>Audit & Compliance</h4>
-                <p>Complete audit trails and compliance tracking for governance.</p>
-            </div>
-            <div class="feature-card">
-                <h4>Easy Configuration</h4>
-                <p>No-code setup with intuitive interfaces for business users.</p>
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-inner">
+    <div>
+      <h1>Vendor Performance Scorecard</h1>
+      <p>Rate vendors on delivery, quality, pricing, and service — scorecards auto-update from PO receipts and surface your best and worst performers at a glance.</p>
+    </div>
+    <div class="badges"><span class="badge">4-Dimension Rating</span><span class="badge">Auto-Computed Scores</span><span class="badge">Monthly Scorecards</span><span class="badge">Dashboard KPIs</span></div>
+  </div>
+</div>
+
+<!-- The Challenge -->
+<div class="section section-white">
+  <div class="section-inner">
+    <h2>The Challenge</h2>
+    <p class="section-sub">Why organizations need Vendor Performance Scorecard</p>
+    <div class="problems-grid">
+        <div class="problem-card">
+            <div class="problem-title">Gut-Feel Vendor Decisions</div>
+            <p>Procurement teams choose vendors based on price and habit — not data. Poor performers stay on the approved vendor list because there's no objective scorecard to flag them.</p>
+        </div>
+        <div class="problem-card">
+            <div class="problem-title">No Post-Delivery Feedback Loop</div>
+            <p>Once a purchase order is received and closed, the performance data is lost. There's no mechanism to capture whether delivery was on time, quality was acceptable, or pricing was accurate.</p>
+        </div>
+        <div class="problem-card">
+            <div class="problem-title">Vendor Review Preparation</div>
+            <p>Annual or quarterly vendor reviews require pulling data from email, spreadsheets, and memory. Preparation takes days — and the data is still incomplete and subjective.</p>
+        </div></div>
+  </div>
+</div>
+
+<!-- Features -->
+<div class="section section-gray">
+  <div class="section-inner">
+    <h2>What Vendor Performance Scorecard Does</h2>
+    <p class="section-sub">Six capabilities built specifically for this problem</p>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#16a085">⭐</div>
+            <div class="feature-content">
+                <h4>4-Dimension Rating on POs</h4>
+                <p>Rate each vendor on Delivery (on-time), Quality (defect rate), Price (accuracy vs. quote), and Service (communication, responsiveness) directly on the purchase order.</p>
             </div>
         </div>
-    </div>
-
-    <div class="how-it-works">
-        <h3>How It Works</h3>
-        <div class="steps">
-            <div class="step">
-                <div class="step-number">1</div>
-                <h4>Install & Configure</h4>
-                <p>Quick setup with guided configuration wizards.</p>
-            </div>
-            <div class="step">
-                <div class="step-number">2</div>
-                <h4>Activate Rules</h4>
-                <p>Define your business rules and approval workflows.</p>
-            </div>
-            <div class="step">
-                <div class="step-number">3</div>
-                <h4>Monitor & Optimize</h4>
-                <p>Track performance and refine settings based on KPIs.</p>
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#16a085">📊</div>
+            <div class="feature-content">
+                <h4>Weighted Overall Score</h4>
+                <p>An overall_score is computed as a configurable weighted average of the four dimensions — giving you a single number to compare vendors at a glance.</p>
             </div>
         </div>
-    </div>
-
-    <div class="use-cases">
-        <h3>Use Cases</h3>
-        <div class="case-grid">
-            <div class="case-card">
-                <h4>Enterprise Operations</h4>
-                <p>Scale operations with centralized control and compliance.</p>
-            </div>
-            <div class="case-card">
-                <h4>SMB Optimization</h4>
-                <p>Grow faster with intelligent process automation.</p>
-            </div>
-            <div class="case-card">
-                <h4>Team Productivity</h4>
-                <p>Empower teams with clear workflows and accountability.</p>
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#16a085">📅</div>
+            <div class="feature-content">
+                <h4>Monthly Scorecard Generation</h4>
+                <p>A scheduled job generates monthly vendor.scorecard records per active vendor — aggregating all rated POs in the period into a single scorecard.</p>
             </div>
         </div>
-    </div>
-
-    <div class="specs">
-        <h3>Technical Specifications</h3>
-        <div class="specs-grid">
-            <div class="spec-item">
-                <strong>Version</strong>
-                Odoo 18.0+
-            </div>
-            <div class="spec-item">
-                <strong>Dependencies</strong>
-                purchase, stock, mail
-            </div>
-            <div class="spec-item">
-                <strong>License</strong>
-                OPL-1
-            </div>
-            <div class="spec-item">
-                <strong>Support</strong>
-                Professional support included
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#16a085">📈</div>
+            <div class="feature-content">
+                <h4>Trend Visualization</h4>
+                <p>Scorecard history shows performance trends over time — identifying improving vendors, declining suppliers, and seasonal patterns.</p>
             </div>
         </div>
-    </div>
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#16a085">🔔</div>
+            <div class="feature-content">
+                <h4>Low-Score Alerts</h4>
+                <p>Configure an alert threshold. Vendors scoring below the threshold trigger an email notification to the procurement manager for review.</p>
+            </div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#16a085">🏆</div>
+            <div class="feature-content">
+                <h4>Dashboard Rankings</h4>
+                <p>A dashboard view ranks all vendors by overall score — instantly surfacing your top performers and flagging underperformers for corrective action.</p>
+            </div>
+        </div></div>
+  </div>
+</div>
 
-    <div class="footer">
-        <p>&copy; 2024 AMADIO Consulting. All rights reserved. | Made with care for Odoo.</p>
-    </div>
+<!-- How It Works -->
+<div class="section section-white">
+  <div class="section-inner">
+    <h2>How It Works</h2>
+    <p class="section-sub">Operational in minutes — not weeks</p>
+    <div class="steps-grid">
+        <div class="step-card">
+            <div class="step-number" style="background:#16a085">1</div>
+            <h4>Rate at Receiving</h4>
+            <p>When closing a purchase order, the purchasing team rates the vendor on the four dimensions directly on the PO form. Ratings take 30 seconds.</p>
+        </div>
+        <div class="step-card">
+            <div class="step-number" style="background:#16a085">2</div>
+            <h4>Scorecards Auto-Generate</h4>
+            <p>At the start of each month, the cron job aggregates the previous month's ratings into a vendor scorecard — automatically, with no manual compilation.</p>
+        </div>
+        <div class="step-card">
+            <div class="step-number" style="background:#16a085">3</div>
+            <h4>Review and Act</h4>
+            <p>Procurement managers review the vendor dashboard. Low scorers are flagged for discussion, improvement plans, or replacement sourcing decisions.</p>
+        </div></div>
+  </div>
+</div>
+
+<!-- Use Cases -->
+<div class="section section-gray">
+  <div class="section-inner">
+    <h2>Perfect For</h2>
+    <p class="section-sub">Industries and organizations that rely on Vendor Performance Scorecard</p>
+    <div class="usecases-grid">
+        <div class="usecase-card">
+            <div class="usecase-icon">🏭</div>
+            <h4>Manufacturing Companies</h4>
+            <p>Manufacturers with multiple raw material suppliers need objective, data-driven vendor rankings to support sourcing decisions and ISO supplier evaluation requirements.</p>
+        </div>
+        <div class="usecase-card">
+            <div class="usecase-icon">🛒</div>
+            <h4>Retail & Distribution</h4>
+            <p>Distributors buying from dozens of suppliers need to track on-time delivery rates, quality return rates, and pricing accuracy to protect margins and service levels.</p>
+        </div>
+        <div class="usecase-card">
+            <div class="usecase-icon">🏗️</div>
+            <h4>Construction & Engineering</h4>
+            <p>Project-based businesses need contractor and subcontractor performance data to make informed decisions on repeat engagement and bid evaluations.</p>
+        </div></div>
+  </div>
+</div>
+
+<!-- Technical Specs -->
+<div class="section section-white">
+  <div class="section-inner">
+    <h2>Technical Specifications</h2>
+    <p class="section-sub">Compatibility and deployment details</p>
+    <table class="specs-table">
+      <tr><th>Odoo Version</th><td>18.0</td></tr>
+      <tr><th>Platform</th><td>Odoo.sh &amp; On-Premise</td></tr>
+      <tr><th>License</th><td>OPL-1</td></tr>
+      <tr><th>Author</th><td>AMADIO</td></tr>
+      <tr><th>Support</th><td>info@amadio.io</td></tr>
+      <tr><th>Website</th><td>amadio.io</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <div class="footer-brand">AMADIO</div>
+  <div class="footer-tagline">Premium Odoo Consulting &amp; Applications</div>
+  <div class="footer-info">amadio.io &nbsp;|&nbsp; info@amadio.io<br><br>Built by consultants who deploy Odoo every day.</div>
+</div>
+
 </body>
 </html>

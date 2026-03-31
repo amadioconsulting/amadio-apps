@@ -43,7 +43,7 @@ For AMADIO customers: P09 standard configuration, fully white-label ready.
     'category': 'Productivity',
     'author': 'AMADIO',
     'website': 'https://amadio.io',
-    'license': 'LGPL-3',
+    'license': 'OPL-1',
     'price': 69.00,
     'currency': 'EUR',
     'depends': [
@@ -55,7 +55,7 @@ For AMADIO customers: P09 standard configuration, fully white-label ready.
         'data/menu_data.xml',
         'views/calendar_sync_rule_views.xml',
     ],
-    'images': ['static/description/icon.png'],
+    'images': ['static/description/banner.png', 'static/description/icon.png'],
     'installable': True,
     'auto_install': False,
     'application': False,

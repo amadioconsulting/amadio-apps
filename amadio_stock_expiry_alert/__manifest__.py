@@ -14,6 +14,6 @@
     "application": True,
     "summary": "Real-time lot/serial expiry monitoring with configurable alert lead times. Auto-email warnings before expiry. Enforces FEFO (First Expired First Out) on pick operations.",
     "description": "Real-time lot/serial expiry monitoring with configurable alert lead times. Auto-email warnings before expiry. Enforces FEFO (First Expired First Out) on pick operations.",
-    "images": ["static/description/icon.png"],
+    "images": ["static/description/banner.png", "static/description/icon.png"],
     "external_dependencies": {"python": [], "bin": []},
 }

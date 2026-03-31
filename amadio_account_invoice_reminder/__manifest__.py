@@ -14,6 +14,6 @@
     "application": True,
     "summary": "Multi-stage dunning automation — configure reminder sequences (day 1, day 7, day 30 overdue) with escalating tone. Auto-send to customers, CC internal teams.",
     "description": "Multi-stage dunning automation — configure reminder sequences (day 1, day 7, day 30 overdue) with escalating tone. Auto-send to customers, CC internal teams.",
-    "images": ["static/description/icon.png"],
+    "images": ["static/description/banner.png", "static/description/icon.png"],
     "external_dependencies": {"python": [], "bin": []},
 }

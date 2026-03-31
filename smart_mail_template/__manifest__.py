@@ -45,7 +45,7 @@ Compatible with Odoo 18.0 Community and Enterprise editions.
     ''',
     'author': 'AMADIO',
     'website': 'https://amadio.io',
-    'license': 'LGPL-3',
+    'license': 'OPL-1',
     'price': 59.00,
     'currency': 'EUR',
     'depends': ['mail'],
@@ -54,7 +54,7 @@ Compatible with Odoo 18.0 Community and Enterprise editions.
         'views/smart_mail_template_rule_views.xml',
         'views/mail_compose_message_views.xml',
     ],
-    'images': ['static/description/icon.png'],
+    'images': ['static/description/banner.png', 'static/description/icon.png'],
     'installable': True,
     'auto_install': False,
 }

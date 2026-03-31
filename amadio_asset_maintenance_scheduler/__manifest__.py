@@ -14,6 +14,6 @@
     "application": True,
     "summary": "Link preventive maintenance schedules directly to Odoo fixed assets. Configure service intervals (mileage, time, usage), receive alerts when maintenance is due.",
     "description": "Link preventive maintenance schedules directly to Odoo fixed assets. Configure service intervals (mileage, time, usage), receive alerts when maintenance is due.",
-    "images": ["static/description/icon.png"],
+    "images": ["static/description/banner.png", "static/description/icon.png"],
     "external_dependencies": {"python": [], "bin": []},
 }

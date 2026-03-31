@@ -1,311 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock Expiry Alert - AMADIO Premium Odoo Apps</title>
-    <meta name="description" content="Real-time lot/serial expiry monitoring with configurable alert lead times. Auto-email warnings before expiry. Enforces FEFO (First Expired First Out) on pick operations.">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            color: #333;
-            line-height: 1.6;
-        }
-        .header {
-            background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
-            color: white;
-            padding: 20px 40px;
-            text-align: center;
-        }
-        .header h1 {
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-        .header p {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-        .hero {
-            background: linear-gradient(135deg, #c0392b22 0%, #c0392b11 100%);
-            padding: 60px 40px;
-            text-align: center;
-            border-bottom: 4px solid #c0392b;
-        }
-        .hero h2 {
-            font-size: 42px;
-            color: #0f3460;
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
-        .hero p {
-            font-size: 18px;
-            color: #555;
-            max-width: 600px;
-            margin: 0 auto;
-            font-weight: 500;
-        }
-        .features {
-            padding: 60px 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .features h3 {
-            text-align: center;
-            font-size: 32px;
-            color: #0f3460;
-            margin-bottom: 40px;
-        }
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 60px;
-        }
-        .feature-card {
-            padding: 30px;
-            border-left: 4px solid #c0392b;
-            background: #f9f9f9;
-            border-radius: 4px;
-            transition: transform 0.2s;
-        }
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-        .feature-card h4 {
-            color: #0f3460;
-            margin-bottom: 12px;
-            font-size: 18px;
-        }
-        .feature-card p {
-            color: #666;
-            font-size: 14px;
-        }
-        .how-it-works {
-            background: #f5f5f5;
-            padding: 60px 40px;
-        }
-        .how-it-works h3 {
-            text-align: center;
-            font-size: 32px;
-            color: #0f3460;
-            margin-bottom: 40px;
-        }
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        .step {
-            text-align: center;
-            padding: 20px;
-        }
-        .step-number {
-            display: inline-block;
-            width: 50px;
-            height: 50px;
-            background: #c0392b;
-            color: white;
-            border-radius: 50%;
-            line-height: 50px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            font-size: 24px;
-        }
-        .step h4 {
-            color: #0f3460;
-            margin-bottom: 10px;
-        }
-        .step p {
-            color: #666;
-            font-size: 14px;
-        }
-        .use-cases {
-            padding: 60px 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .use-cases h3 {
-            text-align: center;
-            font-size: 32px;
-            color: #0f3460;
-            margin-bottom: 40px;
-        }
-        .case-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
-        .case-card {
-            padding: 30px;
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            text-align: center;
-        }
-        .case-card h4 {
-            color: #c0392b;
-            margin-bottom: 10px;
-            font-size: 16px;
-        }
-        .case-card p {
-            color: #666;
-            font-size: 14px;
-        }
-        .specs {
-            background: #0f3460;
-            color: white;
-            padding: 40px;
-            text-align: center;
-        }
-        .specs h3 {
-            margin-bottom: 20px;
-            font-size: 24px;
-        }
-        .specs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .spec-item {
-            padding: 15px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 4px;
-        }
-        .spec-item strong {
-            color: #c0392b;
-            display: block;
-            margin-bottom: 5px;
-        }
-        .footer {
-            text-align: center;
-            padding: 20px;
-            background: #1a1a1a;
-            color: #999;
-            font-size: 12px;
-        }
-        @media (max-width: 768px) {
-            .steps {
-                grid-template-columns: 1fr;
-            }
-            .hero h2 {
-                font-size: 28px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stock Lot Expiry Alert & FEFO Enforcer — AMADIO for Odoo 18.0</title>
+<meta name="description" content="Monitor lot expiry dates in real time, send pre-expiry alerts automatically, enforce First Expired First Out on picks, and quarantine expired stock in one click.">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif; color: #1a202c; line-height: 1.6; }
+
+/* Brand Header */
+.brand-header { background: #0f3460; padding: 16px 40px; display: flex; justify-content: space-between; align-items: center; }
+.brand-name { color: #fff; font-size: 24px; font-weight: 800; letter-spacing: 4px; }
+.brand-sub { color: #a0aec0; font-size: 12px; letter-spacing: 1px; margin-top: 3px; }
+.brand-url { color: #e74c3c; font-size: 14px; font-weight: 600; text-decoration: none; }
+
+/* Hero */
+.hero { background: linear-gradient(135deg, #0f3460 0%, #1a3a6b 60%, #0d2845 100%); padding: 60px 40px; border-bottom: 4px solid #e74c3c; }
+.hero-inner { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+.hero h1 { color: #fff; font-size: 38px; font-weight: 800; line-height: 1.2; margin-bottom: 16px; }
+.hero p { color: #cbd5e0; font-size: 17px; line-height: 1.7; margin-bottom: 24px; }
+.badges { display: flex; flex-wrap: wrap; gap: 8px; }
+.badge { background: rgba(255,255,255,0.12); color: #e2e8f0; border: 1px solid rgba(255,255,255,0.2); padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500; }
+
+/* Sections */
+.section { padding: 60px 40px; }
+.section-inner { max-width: 960px; margin: 0 auto; }
+.section-gray { background: #f8fafc; }
+.section-white { background: #ffffff; }
+.section h2 { color: #0f3460; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+.section-sub { color: #718096; font-size: 16px; margin-bottom: 40px; }
+
+/* Problem Cards */
+.problems-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.problem-card { background: #fff; border-left: 4px solid #e53e3e; border-radius: 8px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: box-shadow 0.2s; }
+.problem-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+.problem-title { color: #c53030; font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+.problem-card p { color: #4a5568; font-size: 14px; }
+
+/* Feature Cards */
+.features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.feature-card { background: #fff; border-radius: 10px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: box-shadow 0.2s; display: flex; gap: 16px; align-items: flex-start; }
+.feature-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+.feature-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+.feature-content h4 { color: #0f3460; font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+.feature-content p { color: #4a5568; font-size: 13px; line-height: 1.6; }
+
+/* Steps */
+.steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.step-card { text-align: center; padding: 32px 20px; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: box-shadow 0.2s; }
+.step-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+.step-number { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px; font-weight: 800; margin: 0 auto 20px; }
+.step-card h4 { color: #0f3460; font-size: 17px; font-weight: 700; margin-bottom: 12px; }
+.step-card p { color: #4a5568; font-size: 14px; line-height: 1.6; }
+
+/* Use Cases */
+.usecases-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.usecase-card { background: #fff; border-radius: 10px; padding: 28px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: box-shadow 0.2s; }
+.usecase-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+.usecase-icon { font-size: 36px; margin-bottom: 16px; }
+.usecase-card h4 { color: #0f3460; font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+.usecase-card p { color: #4a5568; font-size: 14px; line-height: 1.6; }
+
+/* Specs */
+.specs-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.specs-table th, .specs-table td { padding: 14px 20px; text-align: left; border-bottom: 1px solid #edf2f7; }
+.specs-table th { background: #0f3460; color: #fff; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; width: 200px; }
+.specs-table td { color: #2d3748; font-size: 14px; }
+.specs-table tr:last-child th, .specs-table tr:last-child td { border-bottom: none; }
+
+/* Footer */
+.footer { background: #0f3460; color: #a0aec0; text-align: center; padding: 40px 40px; }
+.footer-brand { color: #fff; font-size: 20px; font-weight: 800; letter-spacing: 3px; margin-bottom: 8px; }
+.footer-tagline { color: #e74c3c; font-size: 14px; font-style: italic; margin-bottom: 16px; }
+.footer-info { font-size: 13px; }
+</style>
 </head>
 <body>
-    <div class="header">
-        <h1>AMADIO</h1>
-        <p>Premium Odoo 18.0 Applications</p>
-    </div>
 
-    <div class="hero">
-        <h2>Stock Expiry Alert</h2>
-        <p>Real-time lot/serial expiry monitoring with configurable alert lead times. Auto-email warnings before expiry. Enforces FEFO (First Expired First Out) on pick operations.</p>
-    </div>
+<!-- Brand Header -->
+<div class="brand-header">
+  <div>
+    <div class="brand-name">AMADIO</div>
+    <div class="brand-sub">Premium Odoo 18.0 Applications</div>
+  </div>
+  <a href="https://amadio.io" class="brand-url">amadio.io</a>
+</div>
 
-    <div class="features">
-        <h3>Key Features</h3>
-        <div class="feature-grid">
-            <div class="feature-card">
-                <h4>Automated Workflows</h4>
-                <p>Streamline processes with intelligent automation and scheduled tasks.</p>
-            </div>
-            <div class="feature-card">
-                <h4>Real-Time Alerts</h4>
-                <p>Stay informed with instant notifications and proactive monitoring.</p>
-            </div>
-            <div class="feature-card">
-                <h4>Comprehensive Reporting</h4>
-                <p>Data-driven insights with beautiful dashboards and analytics.</p>
-            </div>
-            <div class="feature-card">
-                <h4>Seamless Integration</h4>
-                <p>Works natively with Odoo modules for unified operations.</p>
-            </div>
-            <div class="feature-card">
-                <h4>Audit & Compliance</h4>
-                <p>Complete audit trails and compliance tracking for governance.</p>
-            </div>
-            <div class="feature-card">
-                <h4>Easy Configuration</h4>
-                <p>No-code setup with intuitive interfaces for business users.</p>
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-inner">
+    <div>
+      <h1>Stock Lot Expiry Alert & FEFO Enforcer</h1>
+      <p>Monitor lot expiry dates in real time, send pre-expiry alerts automatically, enforce First Expired First Out on picks, and quarantine expired stock in one click.</p>
+    </div>
+    <div class="badges"><span class="badge">Pre-Expiry Alerts</span><span class="badge">FEFO Enforcement</span><span class="badge">Quarantine Action</span><span class="badge">Category-Based Rules</span></div>
+  </div>
+</div>
+
+<!-- The Challenge -->
+<div class="section section-white">
+  <div class="section-inner">
+    <h2>The Challenge</h2>
+    <p class="section-sub">Why organizations need Stock Lot Expiry Alert & FEFO Enforcer</p>
+    <div class="problems-grid">
+        <div class="problem-card">
+            <div class="problem-title">Expired Stock Shipped to Customers</div>
+            <p>Without active monitoring, expired lots remain in available stock. Pickers select them — not because they're careless, but because Odoo doesn't warn them.</p>
+        </div>
+        <div class="problem-card">
+            <div class="problem-title">Manual Expiry Monitoring</div>
+            <p>Someone is responsible for checking expiry dates manually — weekly or monthly. Between checks, product passes its expiry date and continues to be picked.</p>
+        </div>
+        <div class="problem-card">
+            <div class="problem-title">FIFO vs. FEFO Confusion</div>
+            <p>Standard Odoo supports FIFO (First In, First Out) but not FEFO (First Expired, First Out). For perishables and pharmaceuticals, expiry-based rotation is mandatory.</p>
+        </div></div>
+  </div>
+</div>
+
+<!-- Features -->
+<div class="section section-gray">
+  <div class="section-inner">
+    <h2>What Stock Lot Expiry Alert & FEFO Enforcer Does</h2>
+    <p class="section-sub">Six capabilities built specifically for this problem</p>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#e74c3c">🗓️</div>
+            <div class="feature-content">
+                <h4>Pre-Expiry Alert Rules</h4>
+                <p>Configure rules per product category: warn X days before expiry, block Y days before. Email alerts fire automatically to designated stakeholders.</p>
             </div>
         </div>
-    </div>
-
-    <div class="how-it-works">
-        <h3>How It Works</h3>
-        <div class="steps">
-            <div class="step">
-                <div class="step-number">1</div>
-                <h4>Install & Configure</h4>
-                <p>Quick setup with guided configuration wizards.</p>
-            </div>
-            <div class="step">
-                <div class="step-number">2</div>
-                <h4>Activate Rules</h4>
-                <p>Define your business rules and approval workflows.</p>
-            </div>
-            <div class="step">
-                <div class="step-number">3</div>
-                <h4>Monitor & Optimize</h4>
-                <p>Track performance and refine settings based on KPIs.</p>
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#e74c3c">🚦</div>
+            <div class="feature-content">
+                <h4>Live Expiry Status on Lots</h4>
+                <p>Each stock.lot shows a real-time expiry_alert_state: OK (green), Warning (orange), Critical (red), or Expired (gray). Visible at a glance on the lot list.</p>
             </div>
         </div>
-    </div>
-
-    <div class="use-cases">
-        <h3>Use Cases</h3>
-        <div class="case-grid">
-            <div class="case-card">
-                <h4>Enterprise Operations</h4>
-                <p>Scale operations with centralized control and compliance.</p>
-            </div>
-            <div class="case-card">
-                <h4>SMB Optimization</h4>
-                <p>Grow faster with intelligent process automation.</p>
-            </div>
-            <div class="case-card">
-                <h4>Team Productivity</h4>
-                <p>Empower teams with clear workflows and accountability.</p>
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#e74c3c">📦</div>
+            <div class="feature-content">
+                <h4>FEFO Pick Enforcement</h4>
+                <p>On pick validation, the system checks that selected lots are not past expiry. Expired lots are flagged and operators are prompted to select a fresher lot.</p>
             </div>
         </div>
-    </div>
-
-    <div class="specs">
-        <h3>Technical Specifications</h3>
-        <div class="specs-grid">
-            <div class="spec-item">
-                <strong>Version</strong>
-                Odoo 18.0+
-            </div>
-            <div class="spec-item">
-                <strong>Dependencies</strong>
-                stock, mail
-            </div>
-            <div class="spec-item">
-                <strong>License</strong>
-                OPL-1
-            </div>
-            <div class="spec-item">
-                <strong>Support</strong>
-                Professional support included
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#e74c3c">🔒</div>
+            <div class="feature-content">
+                <h4>One-Click Quarantine</h4>
+                <p>An action on expired or near-expired lots moves stock to a designated quarantine location instantly — removing it from available inventory without manual transfers.</p>
             </div>
         </div>
-    </div>
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#e74c3c">⏰</div>
+            <div class="feature-content">
+                <h4>Daily Cron Monitoring</h4>
+                <p>A scheduled job runs daily, scanning all lots against their expiry rules. Email digest alerts are sent automatically — no manual monitoring required.</p>
+            </div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#e74c3c">📊</div>
+            <div class="feature-content">
+                <h4>Expiry Dashboard</h4>
+                <p>A dashboard view shows all lots by expiry status — allowing QA managers to see exactly what's at risk without running a report.</p>
+            </div>
+        </div></div>
+  </div>
+</div>
 
-    <div class="footer">
-        <p>&copy; 2024 AMADIO Consulting. All rights reserved. | Made with care for Odoo.</p>
-    </div>
+<!-- How It Works -->
+<div class="section section-white">
+  <div class="section-inner">
+    <h2>How It Works</h2>
+    <p class="section-sub">Operational in minutes — not weeks</p>
+    <div class="steps-grid">
+        <div class="step-card">
+            <div class="step-number" style="background:#e74c3c">1</div>
+            <h4>Configure Expiry Rules</h4>
+            <p>Go to Inventory → Configuration → Expiry Rules. Create rules per product category with warn days, block days, and alert email recipients.</p>
+        </div>
+        <div class="step-card">
+            <div class="step-number" style="background:#e74c3c">2</div>
+            <h4>Monitor Automatically</h4>
+            <p>The daily cron scans all tracked lots. As lots approach expiry thresholds, their status updates and email alerts fire to the configured contacts.</p>
+        </div>
+        <div class="step-card">
+            <div class="step-number" style="background:#e74c3c">3</div>
+            <h4>Act on Alerts</h4>
+            <p>QA managers review the expiry dashboard. Quarantine expired lots with one click. On picks, operators are guided to FEFO-compliant lot selection automatically.</p>
+        </div></div>
+  </div>
+</div>
+
+<!-- Use Cases -->
+<div class="section section-gray">
+  <div class="section-inner">
+    <h2>Perfect For</h2>
+    <p class="section-sub">Industries and organizations that rely on Stock Lot Expiry Alert & FEFO Enforcer</p>
+    <div class="usecases-grid">
+        <div class="usecase-card">
+            <div class="usecase-icon">🥩</div>
+            <h4>Food Distribution</h4>
+            <p>Distributors handling perishable food products need FEFO-enforced picking and pre-expiry alerts to prevent expired goods from reaching consumers.</p>
+        </div>
+        <div class="usecase-card">
+            <div class="usecase-icon">💊</div>
+            <h4>Pharmaceutical Wholesale</h4>
+            <p>Pharmaceutical distributors face regulatory requirements for lot tracking and expiry management. Automated alerts and quarantine ensure compliance.</p>
+        </div>
+        <div class="usecase-card">
+            <div class="usecase-icon">🧴</div>
+            <h4>Consumer Goods & Cosmetics</h4>
+            <p>Personal care and cosmetic products with shelf-life requirements need systematic expiry monitoring to protect brand reputation and consumer safety.</p>
+        </div></div>
+  </div>
+</div>
+
+<!-- Technical Specs -->
+<div class="section section-white">
+  <div class="section-inner">
+    <h2>Technical Specifications</h2>
+    <p class="section-sub">Compatibility and deployment details</p>
+    <table class="specs-table">
+      <tr><th>Odoo Version</th><td>18.0</td></tr>
+      <tr><th>Platform</th><td>Odoo.sh &amp; On-Premise</td></tr>
+      <tr><th>License</th><td>OPL-1</td></tr>
+      <tr><th>Author</th><td>AMADIO</td></tr>
+      <tr><th>Support</th><td>info@amadio.io</td></tr>
+      <tr><th>Website</th><td>amadio.io</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <div class="footer-brand">AMADIO</div>
+  <div class="footer-tagline">Premium Odoo Consulting &amp; Applications</div>
+  <div class="footer-info">amadio.io &nbsp;|&nbsp; info@amadio.io<br><br>Built by consultants who deploy Odoo every day.</div>
+</div>
+
 </body>
 </html>

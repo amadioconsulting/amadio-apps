@@ -2,240 +2,243 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Status-to-Calendar Event Automation — AMADIO for Odoo 18.0</title>
+<meta name="description" content="Automatically create calendar events when records move to configured stages — keep your team's calendar in sync with your pipeline, without manual entries.">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Segoe UI', Arial, sans-serif; color: #0a2e2e; background: #fff; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif; color: #1a202c; line-height: 1.6; }
 
-  .hero {
-    background: linear-gradient(135deg, #0a2e2e 0%, #0d3b3b 50%, #083030 100%);
-    color: white; text-align: center; padding: 60px 40px 50px;
-  }
-  .hero-badge {
-    display: inline-block; background: #1abc9c; color: #0a2e2e;
-    font-weight: 800; font-size: 11px; letter-spacing: 2px;
-    padding: 5px 16px; border-radius: 20px; margin-bottom: 20px; text-transform: uppercase;
-  }
-  .hero h1 { font-size: 38px; font-weight: 800; margin-bottom: 16px; }
-  .hero p { font-size: 18px; color: #a0d8d0; max-width: 680px; margin: 0 auto 28px; line-height: 1.6; }
-  .hero-badges { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
-  .badge { background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.20);
-    color: #ddd; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; }
-  .badge.teal { background: rgba(26,188,156,0.25); border-color: #1abc9c; color: #a0ddd5; }
+/* Brand Header */
+.brand-header { background: #0f3460; padding: 16px 40px; display: flex; justify-content: space-between; align-items: center; }
+.brand-name { color: #fff; font-size: 24px; font-weight: 800; letter-spacing: 4px; }
+.brand-sub { color: #a0aec0; font-size: 12px; letter-spacing: 1px; margin-top: 3px; }
+.brand-url { color: #16a085; font-size: 14px; font-weight: 600; text-decoration: none; }
 
-  .section { padding: 52px 40px; }
-  .section-alt { background: #f0faf8; }
-  .section-title { text-align: center; font-size: 28px; font-weight: 800; color: #0a2e2e; margin-bottom: 10px; }
-  .section-sub { text-align: center; color: #555; font-size: 16px; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto; }
+/* Hero */
+.hero { background: linear-gradient(135deg, #0f3460 0%, #1a3a6b 60%, #0d2845 100%); padding: 60px 40px; border-bottom: 4px solid #16a085; }
+.hero-inner { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+.hero h1 { color: #fff; font-size: 38px; font-weight: 800; line-height: 1.2; margin-bottom: 16px; }
+.hero p { color: #cbd5e0; font-size: 17px; line-height: 1.7; margin-bottom: 24px; }
+.badges { display: flex; flex-wrap: wrap; gap: 8px; }
+.badge { background: rgba(255,255,255,0.12); color: #e2e8f0; border: 1px solid rgba(255,255,255,0.2); padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500; }
 
-  .example-strip { background: #0a2e2e; padding: 40px; }
-  .example-strip h2 { text-align: center; color: #1abc9c; font-size: 20px; font-weight: 700; margin-bottom: 30px; }
-  .examples { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; max-width: 960px; margin: 0 auto; }
-  .example { background: rgba(255,255,255,0.06); border: 1px solid rgba(26,188,156,0.3); border-radius: 10px; padding: 18px; }
-  .example .trigger { font-size: 11px; color: #1abc9c; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
-  .example .arrow { font-size: 13px; color: #a0d8d0; margin: 6px 0; }
-  .example .result { font-size: 13px; color: #e0f0ee; line-height: 1.4; }
+/* Sections */
+.section { padding: 60px 40px; }
+.section-inner { max-width: 960px; margin: 0 auto; }
+.section-gray { background: #f8fafc; }
+.section-white { background: #ffffff; }
+.section h2 { color: #0f3460; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+.section-sub { color: #718096; font-size: 16px; margin-bottom: 40px; }
 
-  .problem-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; max-width: 960px; margin: 0 auto; }
-  .problem-card { border: 2px solid #1abc9c; border-radius: 12px; padding: 24px; background: #fff; }
-  .problem-card h3 { color: #c0392b; font-size: 15px; font-weight: 700; margin-bottom: 10px; }
-  .problem-card p { color: #555; font-size: 14px; line-height: 1.6; }
+/* Problem Cards */
+.problems-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.problem-card { background: #fff; border-left: 4px solid #e53e3e; border-radius: 8px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: box-shadow 0.2s; }
+.problem-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+.problem-title { color: #c53030; font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+.problem-card p { color: #4a5568; font-size: 14px; }
 
-  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px; max-width: 960px; margin: 0 auto; }
-  .feature { display: flex; gap: 14px; align-items: flex-start; background: white;
-    padding: 20px; border-radius: 10px; box-shadow: 0 2px 12px rgba(10,46,46,0.08); }
-  .feature-icon { font-size: 26px; flex-shrink: 0; width: 44px; text-align: center; }
-  .feature h3 { font-size: 14px; font-weight: 700; color: #0a2e2e; margin-bottom: 6px; }
-  .feature p { font-size: 13px; color: #555; line-height: 1.5; }
+/* Feature Cards */
+.features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.feature-card { background: #fff; border-radius: 10px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: box-shadow 0.2s; display: flex; gap: 16px; align-items: flex-start; }
+.feature-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+.feature-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+.feature-content h4 { color: #0f3460; font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+.feature-content p { color: #4a5568; font-size: 13px; line-height: 1.6; }
 
-  .cases { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; max-width: 960px; margin: 0 auto; }
-  .case { background: white; border-radius: 12px; padding: 24px; border-left: 5px solid #1abc9c; }
-  .case h3 { font-size: 15px; font-weight: 700; color: #0a2e2e; margin-bottom: 8px; }
-  .case p { font-size: 13px; color: #555; line-height: 1.5; }
+/* Steps */
+.steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.step-card { text-align: center; padding: 32px 20px; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: box-shadow 0.2s; }
+.step-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+.step-number { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px; font-weight: 800; margin: 0 auto 20px; }
+.step-card h4 { color: #0f3460; font-size: 17px; font-weight: 700; margin-bottom: 12px; }
+.step-card p { color: #4a5568; font-size: 14px; line-height: 1.6; }
 
-  .config-box { background: #0a2e2e; border-radius: 12px; padding: 32px; max-width: 700px; margin: 0 auto; }
-  .config-box h3 { color: #1abc9c; font-size: 16px; font-weight: 700; margin-bottom: 20px; text-align: center; }
-  .config-row { display: flex; margin-bottom: 12px; align-items: center; }
-  .config-label { color: #a0d8d0; font-size: 13px; width: 160px; flex-shrink: 0; }
-  .config-value { background: rgba(255,255,255,0.08); border: 1px solid rgba(26,188,156,0.3);
-    border-radius: 6px; padding: 6px 12px; color: #e0f5f0; font-size: 13px; flex: 1; font-family: monospace; }
+/* Use Cases */
+.usecases-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.usecase-card { background: #fff; border-radius: 10px; padding: 28px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: box-shadow 0.2s; }
+.usecase-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+.usecase-icon { font-size: 36px; margin-bottom: 16px; }
+.usecase-card h4 { color: #0f3460; font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+.usecase-card p { color: #4a5568; font-size: 14px; line-height: 1.6; }
 
-  .spec-table { max-width: 800px; margin: 0 auto; border-collapse: collapse; width: 100%; font-size: 14px; }
-  .spec-table td { padding: 12px 16px; border-bottom: 1px solid #c8ede8; }
-  .spec-table tr:nth-child(odd) td { background: #f0faf8; }
-  .spec-table td:first-child { font-weight: 700; color: #0a2e2e; width: 38%; }
+/* Specs */
+.specs-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.specs-table th, .specs-table td { padding: 14px 20px; text-align: left; border-bottom: 1px solid #edf2f7; }
+.specs-table th { background: #0f3460; color: #fff; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; width: 200px; }
+.specs-table td { color: #2d3748; font-size: 14px; }
+.specs-table tr:last-child th, .specs-table tr:last-child td { border-bottom: none; }
 
-  .amadio-footer { background: #0a2e2e; color: white; text-align: center; padding: 40px; }
-  .amadio-footer .logo { font-size: 26px; font-weight: 800; letter-spacing: 3px; color: #1abc9c; margin-bottom: 10px; }
-  .amadio-footer p { color: #a0d8d0; font-size: 14px; }
-  .amadio-footer a { color: #1abc9c; text-decoration: none; font-weight: 600; }
+/* Footer */
+.footer { background: #0f3460; color: #a0aec0; text-align: center; padding: 40px 40px; }
+.footer-brand { color: #fff; font-size: 20px; font-weight: 800; letter-spacing: 3px; margin-bottom: 8px; }
+.footer-tagline { color: #16a085; font-size: 14px; font-style: italic; margin-bottom: 16px; }
+.footer-info { font-size: 13px; }
 </style>
 </head>
 <body>
 
+<!-- Brand Header -->
+<div class="brand-header">
+  <div>
+    <div class="brand-name">AMADIO</div>
+    <div class="brand-sub">Premium Odoo 18.0 Applications</div>
+  </div>
+  <a href="https://amadio.io" class="brand-url">amadio.io</a>
+</div>
+
+<!-- Hero -->
 <div class="hero">
-  <div class="hero-badge">⚡ Odoo 18 · Productivity · Automation</div>
-  <h1>Status-to-Calendar<br>Automation</h1>
-  <p>When a record changes stage, a calendar event is created automatically. No code. No automation rules to write. Just configure what triggers what — and let Odoo handle the scheduling.</p>
-  <div class="hero-badges">
-    <span class="badge teal">Zero-Code Configuration</span>
-    <span class="badge">Any Odoo Model</span>
-    <span class="badge">Auto Calendar Events</span>
-    <span class="badge">Odoo.sh &amp; On-Premise</span>
+  <div class="hero-inner">
+    <div>
+      <h1>Status-to-Calendar Event Automation</h1>
+      <p>Automatically create calendar events when records move to configured stages — keep your team's calendar in sync with your pipeline, without manual entries.</p>
+    </div>
+    <div class="badges"><span class="badge">Any Model & Stage</span><span class="badge">Custom Event Templates</span><span class="badge">Auto-Assigned Attendees</span><span class="badge">Zero Manual Entry</span></div>
   </div>
 </div>
 
-<div class="example-strip">
-  <h2>Real Examples — Configured in Minutes</h2>
-  <div class="examples">
-    <div class="example">
-      <div class="trigger">Sale Order → Confirmed</div>
-      <div class="arrow">⚡ triggers</div>
-      <div class="result">📅 "Follow-up call" event created 3 days later, assigned to salesperson</div>
-    </div>
-    <div class="example">
-      <div class="trigger">Project Task → In Progress</div>
-      <div class="arrow">⚡ triggers</div>
-      <div class="result">📅 "Weekly check-in" event created same day, assigned to task responsible</div>
-    </div>
-    <div class="example">
-      <div class="trigger">Helpdesk Ticket → Resolved</div>
-      <div class="arrow">⚡ triggers</div>
-      <div class="result">📅 "Customer satisfaction check" event created 7 days later</div>
-    </div>
-    <div class="example">
-      <div class="trigger">CRM Lead → Qualified</div>
-      <div class="arrow">⚡ triggers</div>
-      <div class="result">📅 "Discovery call" event created 1 day later, assigned to current user</div>
-    </div>
+<!-- The Challenge -->
+<div class="section section-white">
+  <div class="section-inner">
+    <h2>The Challenge</h2>
+    <p class="section-sub">Why organizations need Status-to-Calendar Event Automation</p>
+    <div class="problems-grid">
+        <div class="problem-card">
+            <div class="problem-title">Calendar Gaps</div>
+            <p>Sales follow-ups, project milestones, and service appointments should trigger calendar events automatically. Instead, someone manually creates them — or forgets entirely.</p>
+        </div>
+        <div class="problem-card">
+            <div class="problem-title">Meeting-Record Disconnection</div>
+            <p>Calendar events created manually have no link to the originating Odoo record. Updates to the sale or project don't propagate to the calendar.</p>
+        </div>
+        <div class="problem-card">
+            <div class="problem-title">Inconsistent Scheduling</div>
+            <p>Different reps and project managers handle stage transitions differently. Some create follow-up events, others don't — leading to inconsistent pipeline management.</p>
+        </div></div>
   </div>
 </div>
 
-<div class="section">
-  <div class="section-title">The Follow-Up Gap That Kills Deals</div>
-  <div class="section-sub">The most valuable actions in your workflow happen after a status change. Without automation, they depend entirely on memory and manual discipline.</div>
-  <div class="problem-grid">
-    <div class="problem-card">
-      <h3>🕳️ The Black Hole After "Confirmed"</h3>
-      <p>A sale order gets confirmed, then nothing happens for 3 weeks until the customer calls wondering about delivery. The follow-up was supposed to happen — nobody scheduled it.</p>
-    </div>
-    <div class="problem-card">
-      <h3>📋 Automation Rules Are Hard</h3>
-      <p>Odoo's native automation rules are powerful but technical. Most users can't write domain filters or compute scheduled dates without developer help.</p>
-    </div>
-    <div class="problem-card">
-      <h3>📆 Calendars Don't Reflect Reality</h3>
-      <p>Staff calendars show meetings they booked manually. The workflow-driven events — follow-ups, check-ins, reviews — are in someone's notebook, not in Odoo.</p>
-    </div>
-    <div class="problem-card">
-      <h3>👥 Team Handoffs Get Dropped</h3>
-      <p>When records move from sales to ops, the responsible user changes — but no one creates the handoff event. The next step exists only in the outgoing person's memory.</p>
-    </div>
+<!-- Features -->
+<div class="section section-gray">
+  <div class="section-inner">
+    <h2>What Status-to-Calendar Event Automation Does</h2>
+    <p class="section-sub">Six capabilities built specifically for this problem</p>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#16a085">🔄</div>
+            <div class="feature-content">
+                <h4>Any Model, Any Stage</h4>
+                <p>Configure sync rules for sale.order, project.task, crm.lead, helpdesk.ticket, or any other model with stages. Rules trigger on stage field change.</p>
+            </div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#16a085">📅</div>
+            <div class="feature-content">
+                <h4>Custom Event Templates</h4>
+                <p>Define the event name template, duration, and description dynamically using the record's fields — e.g., 'Follow-up: {partner_name} — {sale_amount}'.</p>
+            </div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#16a085">👥</div>
+            <div class="feature-content">
+                <h4>Auto-Assigned Attendees</h4>
+                <p>Rules can automatically add the record's salesperson, project manager, or any configured partner as calendar event attendees.</p>
+            </div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#16a085">⏱️</div>
+            <div class="feature-content">
+                <h4>Configurable Timing</h4>
+                <p>Set event start offset (e.g., +3 days from stage change) and duration. Events are created with the correct timing automatically.</p>
+            </div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#16a085">🔗</div>
+            <div class="feature-content">
+                <h4>Linked to the Record</h4>
+                <p>Each calendar event includes a link back to the originating record — click from the calendar event to jump directly to the sale order or task.</p>
+            </div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon" style="background:#16a085">📧</div>
+            <div class="feature-content">
+                <h4>Attendee Notifications</h4>
+                <p>Created calendar events send the standard Odoo invitation emails to all attendees — ensuring everyone is notified automatically.</p>
+            </div>
+        </div></div>
   </div>
 </div>
 
-<div class="section section-alt">
-  <div class="section-title">Configure a Rule in 60 Seconds</div>
-  <div class="section-sub">Go to Calendar → Configuration → Sync Rules. Create a new rule:</div>
-  <div class="config-box">
-    <h3>Example: Sale Order Confirmation Follow-Up</h3>
-    <div class="config-row"><div class="config-label">Model</div><div class="config-value">sale.order (Sales Order)</div></div>
-    <div class="config-row"><div class="config-label">Trigger Field</div><div class="config-value">state</div></div>
-    <div class="config-row"><div class="config-label">Trigger Value</div><div class="config-value">sale</div></div>
-    <div class="config-row"><div class="config-label">Event Name</div><div class="config-value">Follow-up: {record_name}</div></div>
-    <div class="config-row"><div class="config-label">Delay (Days)</div><div class="config-value">3</div></div>
-    <div class="config-row"><div class="config-label">Duration</div><div class="config-value">0.5 hours</div></div>
-    <div class="config-row"><div class="config-label">Assign To</div><div class="config-value">Responsible User (user_id)</div></div>
+<!-- How It Works -->
+<div class="section section-white">
+  <div class="section-inner">
+    <h2>How It Works</h2>
+    <p class="section-sub">Operational in minutes — not weeks</p>
+    <div class="steps-grid">
+        <div class="step-card">
+            <div class="step-number" style="background:#16a085">1</div>
+            <h4>Configure a Sync Rule</h4>
+            <p>Go to Calendar → Stage Sync Rules → New. Select the model (e.g., sale.order), the stage that triggers the event, and the event template settings.</p>
+        </div>
+        <div class="step-card">
+            <div class="step-number" style="background:#16a085">2</div>
+            <h4>Move Records Through Stages</h4>
+            <p>Users process records as normal — moving a lead to 'Proposal Sent' or a task to 'In Review'. The system watches for configured stage changes.</p>
+        </div>
+        <div class="step-card">
+            <div class="step-number" style="background:#16a085">3</div>
+            <h4>Calendar Populates Automatically</h4>
+            <p>When a rule fires, a calendar event is created instantly — title, duration, attendees, and record link all populated. No manual intervention required.</p>
+        </div></div>
   </div>
 </div>
 
-<div class="section">
-  <div class="section-title">Key Features</div>
-  <div class="features-grid">
-    <div class="feature">
-      <div class="feature-icon">🔧</div>
-      <div>
-        <h3>Any Model, Any Field</h3>
-        <p>Configure rules for any Odoo model — sales, projects, helpdesk, CRM, manufacturing. Monitor any status field: state, stage_id, kanban_state, or custom fields.</p>
-      </div>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">📅</div>
-      <div>
-        <h3>Configurable Event Timing</h3>
-        <p>Set the event delay in days (0 = same day) and duration in hours. Perfect for same-day reminders, next-day follow-ups, or week-later check-ins.</p>
-      </div>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">👤</div>
-      <div>
-        <h3>Smart User Assignment</h3>
-        <p>Assign events to: the current user, the responsible user (via dot notation like user_id or project_id.user_id), or all followers on the record.</p>
-      </div>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">📝</div>
-      <div>
-        <h3>Dynamic Event Names</h3>
-        <p>Event name templates support {record_name} and {record_url} placeholders. Events are meaningful and linkable back to the source record.</p>
-      </div>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">⚙️</div>
-      <div>
-        <h3>Auto Server Action Generation</h3>
-        <p>When you save a rule, the module automatically creates the underlying Odoo server action and automation trigger. No manual setup in technical menus.</p>
-      </div>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">🏷️</div>
-      <div>
-        <h3>Event Category Support</h3>
-        <p>Assign a calendar event category to each rule so events from different workflows appear in distinct colors on the calendar view.</p>
-      </div>
-    </div>
+<!-- Use Cases -->
+<div class="section section-gray">
+  <div class="section-inner">
+    <h2>Perfect For</h2>
+    <p class="section-sub">Industries and organizations that rely on Status-to-Calendar Event Automation</p>
+    <div class="usecases-grid">
+        <div class="usecase-card">
+            <div class="usecase-icon">💼</div>
+            <h4>CRM Pipeline</h4>
+            <p>When a lead moves to 'Proposal Sent', auto-create a follow-up call event 3 days later. When it moves to 'Won', auto-create an onboarding kickoff meeting.</p>
+        </div>
+        <div class="usecase-card">
+            <div class="usecase-icon">📋</div>
+            <h4>Project Management</h4>
+            <p>When a project task reaches 'Ready for Review', auto-create a review meeting with the project manager and client as attendees.</p>
+        </div>
+        <div class="usecase-card">
+            <div class="usecase-icon">🎧</div>
+            <h4>Customer Service</h4>
+            <p>When a helpdesk ticket escalates to a configured stage, auto-schedule a customer call — ensuring no escalation falls through without a follow-up.</p>
+        </div></div>
   </div>
 </div>
 
-<div class="section section-alt">
-  <div class="section-title">Who Benefits Most</div>
-  <div class="cases">
-    <div class="case">
-      <h3>💼 Sales Teams</h3>
-      <p>Auto-schedule post-confirmation follow-ups, delivery check-ins, and renewal reminders. Nothing falls through the cracks after an order is placed.</p>
-    </div>
-    <div class="case">
-      <h3>🎧 Customer Support</h3>
-      <p>Trigger customer satisfaction events after ticket resolution. Ensure every closed ticket has a follow-up date — without adding to the agent's manual workload.</p>
-    </div>
-    <div class="case">
-      <h3>🏗️ Project Management</h3>
-      <p>When a project task moves to "In Progress," schedule a check-in. When it reaches "Review," book the sign-off. Milestones drive calendar events automatically.</p>
-    </div>
-    <div class="case">
-      <h3>⛪ Service Organizations</h3>
-      <p>Non-profits, churches, and service orgs that handle appointments, registrations, and events. Status changes automatically populate staff calendars.</p>
-    </div>
+<!-- Technical Specs -->
+<div class="section section-white">
+  <div class="section-inner">
+    <h2>Technical Specifications</h2>
+    <p class="section-sub">Compatibility and deployment details</p>
+    <table class="specs-table">
+      <tr><th>Odoo Version</th><td>18.0</td></tr>
+      <tr><th>Platform</th><td>Odoo.sh &amp; On-Premise</td></tr>
+      <tr><th>License</th><td>OPL-1</td></tr>
+      <tr><th>Author</th><td>AMADIO</td></tr>
+      <tr><th>Support</th><td>info@amadio.io</td></tr>
+      <tr><th>Website</th><td>amadio.io</td></tr>
+    </table>
   </div>
 </div>
 
-<div class="section">
-  <div class="section-title">Technical Specifications</div>
-  <table class="spec-table">
-    <tr><td>Odoo Version</td><td>18.0</td></tr>
-    <tr><td>Deployment</td><td>On-Premise · Odoo.sh (Odoo Online not supported)</td></tr>
-    <tr><td>Module Name</td><td>status_calendar_sync</td></tr>
-    <tr><td>Dependencies</td><td>calendar · base_automation</td></tr>
-    <tr><td>New Models</td><td>calendar.sync.rule</td></tr>
-    <tr><td>Integration</td><td>Creates ir.actions.server + base.automation records automatically</td></tr>
-    <tr><td>License</td><td>LGPL-3</td></tr>
-    <tr><td>Lines of Code</td><td>~325 Python · ~160 XML</td></tr>
-  </table>
-</div>
-
-<div class="amadio-footer">
-  <div class="logo">AMADIO</div>
-  <p>Odoo consulting and module development for operations-focused businesses.<br>
-  <a href="https://amadio.io">amadio.io</a> &nbsp;·&nbsp; Enterprise support available</p>
+<!-- Footer -->
+<div class="footer">
+  <div class="footer-brand">AMADIO</div>
+  <div class="footer-tagline">Premium Odoo Consulting &amp; Applications</div>
+  <div class="footer-info">amadio.io &nbsp;|&nbsp; info@amadio.io<br><br>Built by consultants who deploy Odoo every day.</div>
 </div>
 
 </body>

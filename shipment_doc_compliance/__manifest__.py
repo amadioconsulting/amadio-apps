@@ -46,7 +46,7 @@ Depends: stock, sale_stock, mail
     """,
     'author': 'AMADIO',
     'website': 'https://amadio.io',
-    'license': 'LGPL-3',
+    'license': 'OPL-1',
     'depends': [
         'stock',
         'sale_stock',
@@ -59,7 +59,7 @@ Depends: stock, sale_stock, mail
         'views/res_partner_views.xml',
         'views/stock_operation_type_views.xml',
     ],
-    'images': ['static/description/icon.png'],
+    'images': ['static/description/banner.png', 'static/description/icon.png'],
     'installable': True,
     'application': False,
     'auto_install': False,

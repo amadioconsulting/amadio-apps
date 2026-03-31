@@ -1,685 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Analytic Budget Alert & Variance Monitor - Odoo Module</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analytic Budget Alert & Variance Monitor — AMADIO for Odoo 18.0</title>
+<meta name="description" content="Set spend limits on analytic accounts and receive automatic alerts before budgets are breached — with hard blocks when you need them.">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif; color: #1a202c; line-height: 1.6; }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-        }
+/* Brand Header */
+.brand-header { background: #0f3460; padding: 16px 40px; display: flex; justify-content: space-between; align-items: center; }
+.brand-name { color: #fff; font-size: 24px; font-weight: 800; letter-spacing: 4px; }
+.brand-sub { color: #a0aec0; font-size: 12px; letter-spacing: 1px; margin-top: 3px; }
+.brand-url { color: #e74c3c; font-size: 14px; font-weight: 600; text-decoration: none; }
 
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, #0d2b1e 0%, #1a4d2e 100%);
-            color: white;
-            padding: 80px 20px;
-            text-align: center;
-            min-height: 500px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
+/* Hero */
+.hero { background: linear-gradient(135deg, #0f3460 0%, #1a3a6b 60%, #0d2845 100%); padding: 60px 40px; border-bottom: 4px solid #e74c3c; }
+.hero-inner { max-width: 960px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+.hero h1 { color: #fff; font-size: 38px; font-weight: 800; line-height: 1.2; margin-bottom: 16px; }
+.hero p { color: #cbd5e0; font-size: 17px; line-height: 1.7; margin-bottom: 24px; }
+.badges { display: flex; flex-wrap: wrap; gap: 8px; }
+.badge { background: rgba(255,255,255,0.12); color: #e2e8f0; border: 1px solid rgba(255,255,255,0.2); padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500; }
 
-        .hero h1 {
-            font-size: 3.5em;
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
+/* Sections */
+.section { padding: 60px 40px; }
+.section-inner { max-width: 960px; margin: 0 auto; }
+.section-gray { background: #f8fafc; }
+.section-white { background: #ffffff; }
+.section h2 { color: #0f3460; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+.section-sub { color: #718096; font-size: 16px; margin-bottom: 40px; }
 
-        .hero .subtitle {
-            font-size: 1.3em;
-            margin-bottom: 30px;
-            opacity: 0.95;
-            max-width: 800px;
-            line-height: 1.8;
-        }
+/* Problem Cards */
+.problems-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.problem-card { background: #fff; border-left: 4px solid #e53e3e; border-radius: 8px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: box-shadow 0.2s; }
+.problem-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+.problem-title { color: #c53030; font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+.problem-card p { color: #4a5568; font-size: 14px; }
 
-        .hero-cta {
-            display: inline-block;
-            background-color: #22c55e;
-            color: white;
-            padding: 15px 40px;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: 600;
-            font-size: 1.1em;
-            transition: background-color 0.3s;
-            border: none;
-            cursor: pointer;
-        }
+/* Feature Cards */
+.features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.feature-card { background: #fff; border-radius: 10px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: box-shadow 0.2s; display: flex; gap: 16px; align-items: flex-start; }
+.feature-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+.feature-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+.feature-content h4 { color: #0f3460; font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+.feature-content p { color: #4a5568; font-size: 13px; line-height: 1.6; }
 
-        .hero-cta:hover {
-            background-color: #16a34a;
-        }
+/* Steps */
+.steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.step-card { text-align: center; padding: 32px 20px; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: box-shadow 0.2s; }
+.step-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+.step-number { width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px; font-weight: 800; margin: 0 auto 20px; }
+.step-card h4 { color: #0f3460; font-size: 17px; font-weight: 700; margin-bottom: 12px; }
+.step-card p { color: #4a5568; font-size: 14px; line-height: 1.6; }
 
-        /* Stats Strip */
-        .stats-strip {
-            background-color: #f8f9fa;
-            padding: 60px 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            text-align: center;
-        }
+/* Use Cases */
+.usecases-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.usecase-card { background: #fff; border-radius: 10px; padding: 28px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); transition: box-shadow 0.2s; }
+.usecase-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+.usecase-icon { font-size: 36px; margin-bottom: 16px; }
+.usecase-card h4 { color: #0f3460; font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+.usecase-card p { color: #4a5568; font-size: 14px; line-height: 1.6; }
 
-        .stat-item h3 {
-            font-size: 2.5em;
-            color: #0d2b1e;
-            margin-bottom: 10px;
-        }
+/* Specs */
+.specs-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.specs-table th, .specs-table td { padding: 14px 20px; text-align: left; border-bottom: 1px solid #edf2f7; }
+.specs-table th { background: #0f3460; color: #fff; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; width: 200px; }
+.specs-table td { color: #2d3748; font-size: 14px; }
+.specs-table tr:last-child th, .specs-table tr:last-child td { border-bottom: none; }
 
-        .stat-item p {
-            color: #666;
-            font-size: 1.1em;
-        }
-
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Section */
-        section {
-            padding: 80px 20px;
-        }
-
-        section h2 {
-            font-size: 2.5em;
-            color: #0d2b1e;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        section .section-subtitle {
-            text-align: center;
-            color: #666;
-            font-size: 1.1em;
-            margin-bottom: 50px;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Features Grid */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
-        }
-
-        .feature-card {
-            background: white;
-            border: 2px solid #e5e7eb;
-            border-radius: 10px;
-            padding: 30px;
-            transition: all 0.3s;
-            text-align: center;
-        }
-
-        .feature-card:hover {
-            border-color: #22c55e;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transform: translateY(-5px);
-        }
-
-        .feature-card .icon {
-            width: 60px;
-            height: 60px;
-            background-color: #0d2b1e;
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2em;
-        }
-
-        .feature-card h3 {
-            color: #0d2b1e;
-            margin-bottom: 15px;
-            font-size: 1.5em;
-        }
-
-        .feature-card p {
-            color: #666;
-            line-height: 1.8;
-        }
-
-        /* How It Works */
-        .how-it-works {
-            background-color: #f8f9fa;
-        }
-
-        .timeline {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
-        }
-
-        .timeline-item {
-            position: relative;
-            padding: 30px;
-            background: white;
-            border-left: 4px solid #22c55e;
-            border-radius: 5px;
-        }
-
-        .timeline-item .step-number {
-            display: inline-block;
-            background-color: #0d2b1e;
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 40px;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-
-        .timeline-item h3 {
-            color: #0d2b1e;
-            margin-bottom: 10px;
-        }
-
-        /* Use Cases */
-        .use-cases {
-            background: white;
-        }
-
-        .use-case-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin-top: 40px;
-        }
-
-        .use-case-item {
-            padding: 25px;
-            background: linear-gradient(135deg, #f8f9fa 0%, #f0f5f3 100%);
-            border-radius: 8px;
-            border-left: 4px solid #22c55e;
-        }
-
-        .use-case-item h4 {
-            color: #0d2b1e;
-            margin-bottom: 10px;
-            font-size: 1.2em;
-        }
-
-        .use-case-item p {
-            color: #666;
-            line-height: 1.7;
-        }
-
-        /* FAQ Section */
-        .faq {
-            background-color: #f8f9fa;
-        }
-
-        .faq-container {
-            max-width: 800px;
-            margin-top: 50px;
-        }
-
-        .faq-item {
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
-
-        .faq-question {
-            padding: 20px;
-            background-color: #f8f9fa;
-            cursor: pointer;
-            font-weight: 600;
-            color: #0d2b1e;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            user-select: none;
-        }
-
-        .faq-question:hover {
-            background-color: #f0f5f3;
-        }
-
-        .faq-question::after {
-            content: '▼';
-            color: #22c55e;
-            transition: transform 0.3s;
-        }
-
-        .faq-item.open .faq-question::after {
-            transform: rotate(-180deg);
-        }
-
-        .faq-answer {
-            padding: 20px;
-            color: #666;
-            line-height: 1.8;
-            display: none;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        .faq-item.open .faq-answer {
-            display: block;
-        }
-
-        /* Compatibility Section */
-        .compatibility {
-            background: white;
-        }
-
-        .compat-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 20px;
-            margin-top: 40px;
-        }
-
-        .compat-item {
-            padding: 20px;
-            text-align: center;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            border: 1px solid #e5e7eb;
-        }
-
-        .compat-item .version {
-            font-weight: 700;
-            color: #0d2b1e;
-            font-size: 1.3em;
-            margin-bottom: 10px;
-        }
-
-        .compat-item .status {
-            color: #22c55e;
-            font-weight: 600;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, #0d2b1e 0%, #1a4d2e 100%);
-            color: white;
-            padding: 80px 20px;
-            text-align: center;
-        }
-
-        .cta-section h2 {
-            color: white;
-            margin-bottom: 20px;
-        }
-
-        .cta-section p {
-            font-size: 1.2em;
-            margin-bottom: 30px;
-            opacity: 0.95;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background-color: #22c55e;
-            color: white;
-            padding: 15px 50px;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: 600;
-            font-size: 1.1em;
-            transition: background-color 0.3s;
-        }
-
-        .cta-button:hover {
-            background-color: #16a34a;
-        }
-
-        /* Footer */
-        footer {
-            background-color: #0d2b1e;
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-        }
-
-        footer p {
-            margin-bottom: 10px;
-            opacity: 0.9;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5em;
-            }
-
-            .hero .subtitle {
-                font-size: 1.1em;
-            }
-
-            section h2 {
-                font-size: 2em;
-            }
-
-            .stats-strip {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-        }
-
-        /* Badge */
-        .badge {
-            display: inline-block;
-            background-color: #22c55e;
-            color: #0d2b1e;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.9em;
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
-    </style>
+/* Footer */
+.footer { background: #0f3460; color: #a0aec0; text-align: center; padding: 40px 40px; }
+.footer-brand { color: #fff; font-size: 20px; font-weight: 800; letter-spacing: 3px; margin-bottom: 8px; }
+.footer-tagline { color: #e74c3c; font-size: 14px; font-style: italic; margin-bottom: 16px; }
+.footer-info { font-size: 13px; }
+</style>
 </head>
 <body>
 
-<!-- Hero Section -->
-<section class="hero">
-    <div class="container">
-        <div class="badge">Budget Control &amp; Spending Alerts</div>
-        <h1>Analytic Budget Alert & Variance Monitor</h1>
-        <p class="subtitle">Stop overspending before it happens. Set warn and block thresholds on analytic accounts, receive real-time email alerts, and prevent postings that exceed your budget.</p>
-        <a href="https://amadio.io" class="hero-cta">Learn More at AMADIO</a>
-    </div>
-</section>
+<!-- Brand Header -->
+<div class="brand-header">
+  <div>
+    <div class="brand-name">AMADIO</div>
+    <div class="brand-sub">Premium Odoo 18.0 Applications</div>
+  </div>
+  <a href="https://amadio.io" class="brand-url">amadio.io</a>
+</div>
 
-<!-- Stats Strip -->
-<section class="stats-strip">
-    <div class="stat-item">
-        <h3>Minutes</h3>
-        <p>Set thresholds in minutes</p>
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-inner">
+    <div>
+      <h1>Analytic Budget Alert & Variance Monitor</h1>
+      <p>Set spend limits on analytic accounts and receive automatic alerts before budgets are breached — with hard blocks when you need them.</p>
     </div>
-    <div class="stat-item">
-        <h3>Real-time</h3>
-        <p>Monitor % spent live</p>
-    </div>
-    <div class="stat-item">
-        <h3>2 Modes</h3>
-        <p>Warn + Block thresholds</p>
-    </div>
-    <div class="stat-item">
-        <h3>Email</h3>
-        <p>Auto-alerts to recipients</p>
-    </div>
-</section>
+    <div class="badges"><span class="badge">Warn & Block Thresholds</span><span class="badge">Email Alerts</span><span class="badge">Live Variance</span><span class="badge">Per-Account Config</span></div>
+  </div>
+</div>
 
-<!-- Features Section -->
-<section class="container">
-    <h2>Powerful Budget Features</h2>
-    <p class="section-subtitle">Complete control over analytic account spending with intelligent alerts and posting blocks</p>
+<!-- The Challenge -->
+<div class="section section-white">
+  <div class="section-inner">
+    <h2>The Challenge</h2>
+    <p class="section-sub">Why organizations need Analytic Budget Alert & Variance Monitor</p>
+    <div class="problems-grid">
+        <div class="problem-card">
+            <div class="problem-title">Surprise Budget Overruns</div>
+            <p>Finance teams discover budget overruns at month-end when reconciling — too late to course-correct. The spending happened weeks ago.</p>
+        </div>
+        <div class="problem-card">
+            <div class="problem-title">No Granular Controls</div>
+            <p>Standard Odoo budget features apply broadly. Organizations need per-project, per-department, or per-cost-center budget controls that trigger in real time.</p>
+        </div>
+        <div class="problem-card">
+            <div class="problem-title">Manual Monitoring</div>
+            <p>Budget managers export reports and compare to budgets manually. By the time they flag an issue, the next overspending entry has already posted.</p>
+        </div></div>
+  </div>
+</div>
 
+<!-- Features -->
+<div class="section section-gray">
+  <div class="section-inner">
+    <h2>What Analytic Budget Alert & Variance Monitor Does</h2>
+    <p class="section-sub">Six capabilities built specifically for this problem</p>
     <div class="features-grid">
         <div class="feature-card">
-            <div class="icon">⚙️</div>
-            <h3>Threshold Configuration</h3>
-            <p>Set custom warn and block percentages per analytic account. Define exactly when alerts should fire and when posting should be prevented.</p>
+            <div class="feature-icon" style="background:#e74c3c">⚠️</div>
+            <div class="feature-content">
+                <h4>Configurable Warn Threshold</h4>
+                <p>Set a percentage (default 80%) at which an email alert fires to designated stakeholders — early warning before the budget is actually exceeded.</p>
+            </div>
         </div>
-
         <div class="feature-card">
-            <div class="icon">⚠️</div>
-            <h3>Warn Mode</h3>
-            <p>Receive email alerts when spending approaches your warn threshold. Stay informed of budget status without blocking transactions.</p>
+            <div class="feature-icon" style="background:#e74c3c">🚫</div>
+            <div class="feature-content">
+                <h4>Hard Block Threshold</h4>
+                <p>Set a block percentage (default 100%) at which journal entry posting is refused. Accounting cannot post entries that would breach the configured limit.</p>
+            </div>
         </div>
-
         <div class="feature-card">
-            <div class="icon">🚫</div>
-            <h3>Block Mode</h3>
-            <p>Prevent posting of transactions that would exceed the block threshold. Full control prevents budget overruns.</p>
+            <div class="feature-icon" style="background:#e74c3c">📊</div>
+            <div class="feature-content">
+                <h4>Live Variance Dashboard</h4>
+                <p>Each analytic account shows real-time budget spent, remaining, and percentage consumed — directly on the account form, no report required.</p>
+            </div>
         </div>
-
         <div class="feature-card">
-            <div class="icon">📧</div>
-            <h3>Email Alerts</h3>
-            <p>Configure multiple alert recipients. System automatically sends emails with detailed budget status and spending information.</p>
+            <div class="feature-icon" style="background:#e74c3c">📧</div>
+            <div class="feature-content">
+                <h4>Stakeholder Email Alerts</h4>
+                <p>Configure any number of internal contacts to receive budget alert emails. Emails include account name, current spend, budget limit, and percentage consumed.</p>
+            </div>
         </div>
-
         <div class="feature-card">
-            <div class="icon">📅</div>
-            <h3>Budget Periods</h3>
-            <p>Support for monthly, quarterly, annual, and custom date ranges. Calculate budgets on your organization's fiscal calendar.</p>
+            <div class="feature-icon" style="background:#e74c3c">📅</div>
+            <div class="feature-content">
+                <h4>Flexible Budget Periods</h4>
+                <p>Set budgets by month, quarter, year, or custom date range. The system resets automatically at the start of each period.</p>
+            </div>
         </div>
-
         <div class="feature-card">
-            <div class="icon">📊</div>
-            <h3>Progress Tracking</h3>
-            <p>Visual progress bar shows percent spent. Monitor budget status at a glance from the analytic account form.</p>
-        </div>
-    </div>
-</section>
+            <div class="feature-icon" style="background:#e74c3c">🔧</div>
+            <div class="feature-content">
+                <h4>Per-Account Configuration</h4>
+                <p>Every analytic account can have its own budget amount, warn threshold, block threshold, and alert contacts — independent of other accounts.</p>
+            </div>
+        </div></div>
+  </div>
+</div>
 
 <!-- How It Works -->
-<section class="how-it-works">
-    <div class="container">
-        <h2>How It Works</h2>
-        <p class="section-subtitle">Simple 4-step workflow for complete budget control</p>
-
-        <div class="timeline">
-            <div class="timeline-item">
-                <div class="step-number">1</div>
-                <h3>Enable Budget</h3>
-                <p>Turn on budget control for an analytic account and set your total budget amount and period.</p>
-            </div>
-
-            <div class="timeline-item">
-                <div class="step-number">2</div>
-                <h3>Set Thresholds</h3>
-                <p>Configure warn percentage (e.g., 80%) and block percentage (e.g., 100%). Add email recipients.</p>
-            </div>
-
-            <div class="timeline-item">
-                <div class="step-number">3</div>
-                <h3>Monitor Spending</h3>
-                <p>System automatically tracks spending as vendor bills and expenses are posted to the account.</p>
-            </div>
-
-            <div class="timeline-item">
-                <div class="step-number">4</div>
-                <h3>Get Alerts</h3>
-                <p>Receive email alerts when warn threshold is reached. Transactions are blocked if they exceed block threshold.</p>
-            </div>
+<div class="section section-white">
+  <div class="section-inner">
+    <h2>How It Works</h2>
+    <p class="section-sub">Operational in minutes — not weeks</p>
+    <div class="steps-grid">
+        <div class="step-card">
+            <div class="step-number" style="background:#e74c3c">1</div>
+            <h4>Configure Your Budget</h4>
+            <p>On any analytic account, enable the budget feature, set the budget amount, choose the period, and configure your warn and block percentages.</p>
         </div>
-    </div>
-</section>
+        <div class="step-card">
+            <div class="step-number" style="background:#e74c3c">2</div>
+            <h4>Post Journal Entries Normally</h4>
+            <p>Accounting staff post journal entries as they normally would. The system monitors cumulative spend against the budget in real time.</p>
+        </div>
+        <div class="step-card">
+            <div class="step-number" style="background:#e74c3c">3</div>
+            <h4>Alerts Fire Automatically</h4>
+            <p>When spend crosses the warn threshold, designated stakeholders receive an email. At the block threshold, posting is refused with a clear explanation.</p>
+        </div></div>
+  </div>
+</div>
 
 <!-- Use Cases -->
-<section class="container">
+<div class="section section-gray">
+  <div class="section-inner">
     <h2>Perfect For</h2>
-    <p class="section-subtitle">Organizations of all sizes managing project budgets and departmental spending</p>
-
-    <div class="use-case-list">
-        <div class="use-case-item">
-            <h4>Nonprofits</h4>
-            <p>Control spending across multiple grant-funded projects. Ensure compliance with grant budgets and prevent overspending on restricted funds.</p>
+    <p class="section-sub">Industries and organizations that rely on Analytic Budget Alert & Variance Monitor</p>
+    <div class="usecases-grid">
+        <div class="usecase-card">
+            <div class="usecase-icon">🏗️</div>
+            <h4>Project Accounting</h4>
+            <p>Project managers set per-project budgets on analytic accounts. Cost overruns are flagged before they happen — not discovered at project close.</p>
         </div>
-
-        <div class="use-case-item">
-            <h4>Project-Based Organizations</h4>
-            <p>Monitor spending per project or phase. Allocate budgets to specific work streams and track actuals against estimates.</p>
+        <div class="usecase-card">
+            <div class="usecase-icon">🏥</div>
+            <h4>Department Budget Control</h4>
+            <p>Finance teams assign budgets to departmental analytic accounts. Procurement and AP are blocked from posting beyond approved limits.</p>
         </div>
+        <div class="usecase-card">
+            <div class="usecase-icon">🤝</div>
+            <h4>Grant Management</h4>
+            <p>Nonprofits and grant-funded organizations enforce spend limits per grant or funding source — with alerts to grant managers before any threshold is breached.</p>
+        </div></div>
+  </div>
+</div>
 
-        <div class="use-case-item">
-            <h4>Churches &amp; Ministries</h4>
-            <p>Manage departmental budgets for ministries, missions, and programs. Control spending on restricted ministry funds.</p>
-        </div>
-
-        <div class="use-case-item">
-            <h4>Small &amp; Medium Businesses</h4>
-            <p>Control departmental spending and internal project allocations. Prevent budget overruns without slowing approvals.</p>
-        </div>
-
-        <div class="use-case-item">
-            <h4>Cost Centers</h4>
-            <p>Track spending by department or cost center. Real-time visibility into cost center utilization against budget.</p>
-        </div>
-
-        <div class="use-case-item">
-            <h4>Contract Management</h4>
-            <p>Monitor contract spending against negotiated budgets. Alert when contracts approach limits before overages occur.</p>
-        </div>
-    </div>
-</section>
-
-<!-- FAQ Section -->
-<section class="faq">
-    <div class="container">
-        <h2>Frequently Asked Questions</h2>
-        <p class="section-subtitle">Common questions about the Budget Alert module</p>
-
-        <div class="faq-container">
-            <div class="faq-item">
-                <div class="faq-question">Does this affect already-posted entries?</div>
-                <div class="faq-answer">
-                    No. Budget checks only apply to new transactions being posted. Already-posted entries are not affected. You can retroactively enable budgets on analytic accounts without impacting historical data.
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">Can I have multiple analytic accounts with different budgets?</div>
-                <div class="faq-answer">
-                    Absolutely! Each analytic account has its own independent budget settings. You can set different thresholds, periods, and alert recipients for each account.
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">What happens if I try to post over the block threshold?</div>
-                <div class="faq-answer">
-                    The system will show a UserError message preventing the posting. The error message includes details about the current spend, block threshold, and would-be percentage. You can then adjust the transaction or modify the budget.
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">How often are spending calculations updated?</div>
-                <div class="faq-answer">
-                    Budget spent amounts are computed in real-time when viewing the analytic account form. Spending is recalculated every time you access the account, ensuring current information.
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">Can I disable alerts temporarily?</div>
-                <div class="faq-answer">
-                    Yes. Simply uncheck the "Enable Budget Control" checkbox on the analytic account. Budget checks will be skipped until you re-enable it.
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">What if I have multiple recipients for alerts?</div>
-                <div class="faq-answer">
-                    All configured alert recipients receive email notifications when thresholds are reached. Add as many partners as needed using the Many2many field on the Budget Alert tab.
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">What budget periods are supported?</div>
-                <div class="faq-answer">
-                    Monthly, quarterly, annual, and custom date ranges. For custom periods, specify exact "From" and "To" dates. The system calculates current-period spending based on your selection.
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">Does the module work with analytic distributions?</div>
-                <div class="faq-answer">
-                    Yes. When account move lines use analytic distributions (allocating costs across multiple accounts), each account's proportional share is checked against that account's budget.
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">Can I get alerts only for the warn threshold?</div>
-                <div class="faq-answer">
-                    Yes. Set your warn threshold to a reasonable percentage (e.g., 80%) and block threshold at 100%. You'll get alerts when approaching budget but transactions won't be blocked until you reach 100%.
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question">Are there activity logs for budget alerts?</div>
-                <div class="faq-answer">
-                    The module tracks the date of the last alert sent (Last Alert Date field). Email messages are stored in the mail system for audit purposes.
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Compatibility Section -->
-<section class="compatibility">
-    <div class="container">
-        <h2>Compatibility</h2>
-        <p class="section-subtitle">Built for modern Odoo with professional-grade reliability</p>
-
-        <div class="compat-grid">
-            <div class="compat-item">
-                <div class="version">Odoo 18.0</div>
-                <div class="status">✓ Supported</div>
-            </div>
-            <div class="compat-item">
-                <div class="version">PostgreSQL</div>
-                <div class="status">✓ Compatible</div>
-            </div>
-            <div class="compat-item">
-                <div class="version">Multi-Company</div>
-                <div class="status">✓ Supported</div>
-            </div>
-            <div class="compat-item">
-                <div class="version">Multi-Currency</div>
-                <div class="status">✓ Supported</div>
-            </div>
-        </div>
-
-        <p style="text-align: center; margin-top: 40px; color: #666;">
-            Requires: analytic, account, and mail modules (standard Odoo modules)
-        </p>
-    </div>
-</section>
-
-<!-- CTA Section -->
-<section class="cta-section">
-    <div class="container">
-        <h2>Stop Budget Overruns Today</h2>
-        <p>Take control of analytic account spending with real-time alerts and posting blocks.</p>
-        <a href="https://amadio.io" class="cta-button">Visit AMADIO</a>
-    </div>
-</section>
+<!-- Technical Specs -->
+<div class="section section-white">
+  <div class="section-inner">
+    <h2>Technical Specifications</h2>
+    <p class="section-sub">Compatibility and deployment details</p>
+    <table class="specs-table">
+      <tr><th>Odoo Version</th><td>18.0</td></tr>
+      <tr><th>Platform</th><td>Odoo.sh &amp; On-Premise</td></tr>
+      <tr><th>License</th><td>OPL-1</td></tr>
+      <tr><th>Author</th><td>AMADIO</td></tr>
+      <tr><th>Support</th><td>info@amadio.io</td></tr>
+      <tr><th>Website</th><td>amadio.io</td></tr>
+    </table>
+  </div>
+</div>
 
 <!-- Footer -->
-<footer>
-    <p>&copy; 2024 AMADIO. All rights reserved.</p>
-    <p><strong>Analytic Budget Alert & Variance Monitor</strong> — Odoo Accounting Module</p>
-    <p>Built with professional standards for nonprofits, project organizations, and growing businesses.</p>
-    <p>📧 support@amadio.io | 🌐 https://amadio.io</p>
-</footer>
-
-<script>
-    // FAQ accordion functionality
-    document.querySelectorAll('.faq-question').forEach(question => {
-        question.addEventListener('click', function() {
-            const faqItem = this.closest('.faq-item');
-            faqItem.classList.toggle('open');
-        });
-    });
-</script>
+<div class="footer">
+  <div class="footer-brand">AMADIO</div>
+  <div class="footer-tagline">Premium Odoo Consulting &amp; Applications</div>
+  <div class="footer-info">amadio.io &nbsp;|&nbsp; info@amadio.io<br><br>Built by consultants who deploy Odoo every day.</div>
+</div>
 
 </body>
 </html>

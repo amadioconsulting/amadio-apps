@@ -14,6 +14,6 @@
     "application": True,
     "summary": "Centralized contract tracking with renewal alerts. Configure notice periods, auto-alert owners and legal teams before expiry. Track amendments, parties, value, and auto-renew clauses.",
     "description": "Centralized contract tracking with renewal alerts. Configure notice periods, auto-alert owners and legal teams before expiry. Track amendments, parties, value, and auto-renew clauses.",
-    "images": ["static/description/icon.png"],
+    "images": ["static/description/banner.png", "static/description/icon.png"],
     "external_dependencies": {"python": [], "bin": []},
 }

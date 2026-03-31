@@ -39,7 +39,7 @@ Compatibility
     """,
     'author': 'AMADIO',
     'website': 'https://amadio.io',
-    'license': 'LGPL-3',
+    'license': 'OPL-1',
     'depends': ['account', 'mail'],
     'data': [
         'security/ir.model.access.csv',
@@ -48,7 +48,7 @@ Compatibility
         'views/res_config_settings_views.xml',
         'report/deposit_slip_report.xml',
     ],
-    'images': ['static/description/icon.png'],
+    'images': ['static/description/banner.png', 'static/description/icon.png'],
     'installable': True,
     'application': False,
     'auto_install': False,

@@ -14,6 +14,6 @@
     "application": True,
     "summary": "Rate vendors on delivery punctuality, quality, pricing accuracy, and service. Scorecards auto-update from PO receipts. Dashboard KPIs surface your best and worst performers.",
     "description": "Rate vendors on delivery punctuality, quality, pricing accuracy, and service. Scorecards auto-update from PO receipts. Dashboard KPIs surface your best and worst performers.",
-    "images": ["static/description/icon.png"],
+    "images": ["static/description/banner.png", "static/description/icon.png"],
     "external_dependencies": {"python": [], "bin": []},
 }

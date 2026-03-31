@@ -14,6 +14,6 @@
     "application": True,
     "summary": "Structured onboarding workflows for new hires — HR tasks, IT provisioning, document collection, policy acknowledgments. Auto-launch on employee creation.",
     "description": "Structured onboarding workflows for new hires — HR tasks, IT provisioning, document collection, policy acknowledgments. Auto-launch on employee creation.",
-    "images": ["static/description/icon.png"],
+    "images": ["static/description/banner.png", "static/description/icon.png"],
     "external_dependencies": {"python": [], "bin": []},
 }

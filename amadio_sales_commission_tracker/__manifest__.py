@@ -14,6 +14,6 @@
     "application": True,
     "summary": "Configure commission rules by sales rep, team, product category, or customer. Auto-calculate commissions on paid invoices. Monthly commission statements with approval workflow.",
     "description": "Configure commission rules by sales rep, team, product category, or customer. Auto-calculate commissions on paid invoices. Monthly commission statements with approval workflow.",
-    "images": ["static/description/icon.png"],
+    "images": ["static/description/banner.png", "static/description/icon.png"],
     "external_dependencies": {"python": [], "bin": []},
 }
