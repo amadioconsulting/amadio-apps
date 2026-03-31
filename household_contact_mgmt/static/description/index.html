@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Household &amp; Family Contact Management — AMADIO</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:#f4f6fb;color:#1e2535;line-height:1.65}
+  .hero{background:linear-gradient(135deg,#0d2340 0%,#1a4a8a 55%,#1e5599 100%);color:#fff;padding:56px 40px 52px;text-align:center}
+  .hero h1{font-size:2.3em;font-weight:800;letter-spacing:-.5px;margin-bottom:14px}
+  .hero h1 span{color:#f0c84a}
+  .hero p{font-size:1.15em;color:#a8c8f0;max-width:680px;margin:0 auto 24px}
+  .badge-row{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+  .badge{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:6px 16px;font-size:.85em;color:#d0e8ff;font-weight:600}
+  .section{max-width:900px;margin:0 auto;padding:48px 24px}
+  .section h2{font-size:1.65em;font-weight:800;color:#0d2340;margin-bottom:20px;padding-bottom:10px;border-bottom:3px solid #1a4a8a}
+  .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+  .feature-card{background:#fff;border-radius:12px;padding:22px;box-shadow:0 2px 12px rgba(13,35,64,.08);border-top:3px solid #1a4a8a}
+  .feature-icon{font-size:2em;margin-bottom:10px}
+  .feature-card h3{font-size:1em;font-weight:700;color:#0d2340;margin-bottom:7px}
+  .feature-card p{font-size:.88em;color:#4a5568}
+  .stat-strip{background:#0d2340;color:#fff;padding:36px 24px}
+  .stats{display:flex;justify-content:center;gap:0;flex-wrap:wrap;max-width:800px;margin:0 auto}
+  .stat{flex:1;min-width:150px;text-align:center;padding:16px 20px;border-right:1px solid rgba(255,255,255,.1)}
+  .stat:last-child{border:none}
+  .stat-number{font-size:2em;font-weight:800;color:#f0c84a}
+  .stat-label{font-size:.82em;color:#a8c8f0;margin-top:4px;text-transform:uppercase;letter-spacing:.5px}
+  .demo{background:#fff;border-radius:14px;padding:28px;margin:0 0 20px;box-shadow:0 2px 16px rgba(13,35,64,.09)}
+  .demo h3{font-size:1.1em;font-weight:700;color:#0d2340;margin-bottom:18px}
+  .hh-card{border:2px solid #1a4a8a;border-radius:10px;overflow:hidden;margin-bottom:16px}
+  .hh-header{background:#1a4a8a;color:#fff;padding:10px 16px;font-weight:700;font-size:.95em;display:flex;justify-content:space-between}
+  .hh-body{padding:12px 16px;font-size:.85em}
+  .hh-member{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid #eef2f8}
+  .hh-member:last-child{border:none}
+  .hh-role{background:#e8f0ff;color:#1a4a8a;font-size:.75em;font-weight:700;padding:2px 8px;border-radius:10px}
+  .hh-addr{color:#666;font-size:.82em;margin-top:8px;padding-top:8px;border-top:1px solid #eef2f8}
+  .use-cases{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+  .use-case{background:#fff;border-radius:10px;padding:18px;box-shadow:0 1px 8px rgba(13,35,64,.07);display:flex;gap:12px}
+  .use-case-icon{font-size:1.6em;flex-shrink:0}
+  .use-case h4{font-size:.93em;font-weight:700;color:#0d2340;margin-bottom:4px}
+  .use-case p{font-size:.83em;color:#555}
+  .compat{background:#f4f6fb;padding:32px 24px;text-align:center}
+  .compat-tags{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:12px}
+  .compat-tag{background:#fff;border:2px solid #c8d4f0;border-radius:20px;padding:6px 18px;font-size:.85em;font-weight:600;color:#0d2340}
+  .cta{background:linear-gradient(135deg,#0d2340,#1a4a8a);color:#fff;text-align:center;padding:48px 24px}
+  .cta h2{font-size:1.75em;font-weight:800;margin-bottom:12px}
+  .cta p{color:#a8c8f0;font-size:1.05em;margin-bottom:24px}
+  .cta-link{display:inline-block;background:#f0c84a;color:#0d2340;padding:14px 32px;border-radius:8px;font-weight:800;font-size:1em;text-decoration:none}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Household &amp; <span>Family</span> Contact Management</h1>
+  <p>Odoo's contact model was built for businesses. This module adds the family layer — households, combined salutations, member roles, and shared addresses, all in a few clicks.</p>
+  <div class="badge-row">
+    <span class="badge">🏠 Household Records</span>
+    <span class="badge">👨‍👩‍👧 Combined Salutations</span>
+    <span class="badge">📬 Shared Address</span>
+    <span class="badge">⛪ Ideal for Churches</span>
+    <span class="badge">💌 Odoo 18.0</span>
+  </div>
+</div>
+
+<div class="stat-strip">
+  <div class="stats">
+    <div class="stat"><div class="stat-number">Auto</div><div class="stat-label">"Mr. &amp; Mrs. Smith" salutation generation</div></div>
+    <div class="stat"><div class="stat-number">5</div><div class="stat-label">Member roles (Primary, Spouse, Child…)</div></div>
+    <div class="stat"><div class="stat-number">1</div><div class="stat-label">Address for the whole family</div></div>
+    <div class="stat"><div class="stat-number">Zero</div><div class="stat-label">Migration needed — extends standard contacts</div></div>
+  </div>
+</div>
+
+<!-- DEMO -->
+<div class="section">
+  <h2>What It Looks Like</h2>
+  <div class="demo">
+    <h3>Sample Household Records</h3>
+    <div class="hh-card">
+      <div class="hh-header">
+        <span>🏠 John &amp; Mary Smith</span>
+        <span style="font-weight:400;font-size:.85em">The Smith Family · Parish member since 2018</span>
+      </div>
+      <div class="hh-body">
+        <div class="hh-member"><span>John Smith</span><span class="hh-role">Primary</span></div>
+        <div class="hh-member"><span>Mary Smith</span><span class="hh-role">Spouse</span></div>
+        <div class="hh-member"><span>Emma Smith</span><span class="hh-role">Child</span></div>
+        <div class="hh-addr">📍 42 Maple Street, Toronto, ON M4B 1T8 · ☎ (416) 555-0123</div>
+      </div>
+    </div>
+    <div class="hh-card" style="border-color:#e85550">
+      <div class="hh-header" style="background:#c0392b;">
+        <span>🏠 The Johnson-Williams Family</span>
+        <span style="font-weight:400;font-size:.85em">Custom salutation override · Anniversary: June 14</span>
+      </div>
+      <div class="hh-body">
+        <div class="hh-member"><span>Robert Johnson</span><span class="hh-role" style="background:#fff0f0;color:#c0392b">Primary</span></div>
+        <div class="hh-member"><span>Sarah Williams</span><span class="hh-role" style="background:#fff0f0;color:#c0392b">Spouse</span></div>
+        <div class="hh-addr">📍 7 Oak Avenue, Mississauga, ON L5B 2G4 · 📧 family@johnson-williams.ca</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div class="section" style="padding-top:0">
+  <h2>Key Features</h2>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🏠</div>
+      <h3>Household Records</h3>
+      <p>A dedicated Household model that groups any number of contacts under one shared address, phone, and email. One record — entire family.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">✍️</div>
+      <h3>Auto-Generated Salutations</h3>
+      <p>Automatically builds "John &amp; Mary Smith" from member names. Override with any custom salutation — "The Smith Family", "Rev. &amp; Mrs. Chahinian", etc.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">👥</div>
+      <h3>Member Roles</h3>
+      <p>Assign roles: Primary Contact, Spouse/Partner, Child, Dependent, Other. Filter and report by role for targeted outreach or age-group ministry.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📬</div>
+      <h3>Address Inheritance</h3>
+      <p>When a contact is linked to a household, the address is automatically suggested from the household record — keeping all members in sync.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📅</div>
+      <h3>Key Date Tracking</h3>
+      <p>Store wedding anniversary, membership/registration date, individual birth dates, and baptism dates — all searchable and reportable.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔍</div>
+      <h3>Search Any Member</h3>
+      <p>Find a household by searching for any member's first or last name — even if they're a child or secondary contact.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💬</div>
+      <h3>Chatter &amp; Activity Tracking</h3>
+      <p>Full Odoo chatter on every household record — log notes, schedule follow-ups, and track changes with full audit history.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🧩</div>
+      <h3>Extends Standard Contacts</h3>
+      <p>No data migration. The Household field appears directly on existing res.partner records — link any existing contact to a household instantly.</p>
+    </div>
+  </div>
+</div>
+
+<!-- USE CASES -->
+<div class="section" style="padding-top:0">
+  <h2>Who Uses This</h2>
+  <div class="use-cases">
+    <div class="use-case">
+      <div class="use-case-icon">⛪</div>
+      <div><h4>Churches &amp; Religious Orgs</h4><p>Parish family records, combined donation tracking, family mass registrations, sacramental record linking.</p></div>
+    </div>
+    <div class="use-case">
+      <div class="use-case-icon">🎗️</div>
+      <div><h4>Nonprofits &amp; Charities</h4><p>Donor family records with combined giving history and household-level giving summaries.</p></div>
+    </div>
+    <div class="use-case">
+      <div class="use-case-icon">🎓</div>
+      <div><h4>Private Schools</h4><p>One billing contact per family, all children linked, parent communication directed to the household email.</p></div>
+    </div>
+    <div class="use-case">
+      <div class="use-case-icon">🏛️</div>
+      <div><h4>Clubs &amp; Associations</h4><p>Family memberships managed under a single household record with individual member tracking.</p></div>
+    </div>
+    <div class="use-case">
+      <div class="use-case-icon">⚖️</div>
+      <div><h4>Legal &amp; Financial Advisors</h4><p>Household wealth management — one file per family, individual members as separate contacts for compliance.</p></div>
+    </div>
+    <div class="use-case">
+      <div class="use-case-icon">🏥</div>
+      <div><h4>Healthcare Providers</h4><p>Family patient records — household as billing contact, individual members with their own appointment histories.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="compat">
+  <strong style="font-size:1.05em;color:#0d2340">Compatibility &amp; Requirements</strong>
+  <div class="compat-tags">
+    <span class="compat-tag">Odoo 18.0</span>
+    <span class="compat-tag">Depends: Contacts</span>
+    <span class="compat-tag">Depends: Discuss (mail)</span>
+    <span class="compat-tag">On-Premise ✓</span>
+    <span class="compat-tag">Odoo.sh ✓</span>
+    <span class="compat-tag">No Migration Needed ✓</span>
+    <span class="compat-tag">LGPL-3 License</span>
+  </div>
+</div>
+
+<div class="cta">
+  <h2>Every Family Deserves a Single Record.</h2>
+  <p>Built by AMADIO — Odoo specialists for organizations that serve people, not just companies.</p>
+  <a href="https://amadio.io" class="cta-link">amadio.io →</a>
+</div>
+
+</body>
+</html>
