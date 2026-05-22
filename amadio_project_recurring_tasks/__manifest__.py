@@ -1,6 +1,6 @@
 {
     "name": "Project Recurring Tasks",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "category": "Project",
     "sequence": 1,
     "author": "AMADIO",
@@ -9,6 +9,11 @@
     "price": 49,
     "currency": "EUR",
     "depends": ["project", "mail"],
+    "data": [
+        "security/ir.model.access.csv",
+        "views/amadio_project_recurring_tasks_views.xml",
+        "views/amadio_project_recurring_tasks_menu.xml",
+    ],
     "installable": True,
     "auto_install": False,
     "application": True,

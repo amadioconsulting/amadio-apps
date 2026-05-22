@@ -1,1 +1,1 @@
-# Import all models
+from . import models

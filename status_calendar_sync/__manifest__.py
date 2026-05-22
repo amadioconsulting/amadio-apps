@@ -1,6 +1,6 @@
 {
     'name': 'Status-to-Calendar Automation',
-    'version': '18.0.1.0.0',
+    'version': '18.0.1.0.1',
     'summary': 'Automatically create calendar events when records change status or stage—workflow automation for service businesses.',
     'description': """Status-to-Calendar Automation for Odoo
 =====================================
@@ -50,10 +50,10 @@ For AMADIO customers: P09 standard configuration, fully white-label ready.
         'calendar',
         'base_automation',
     ],
-    'data': [
-        'security/ir.model.access.csv',
-        'data/menu_data.xml',
-        'views/calendar_sync_rule_views.xml',
+    "data": [
+        "security/ir.model.access.csv",
+        "data/menu_data.xml",
+        "views/calendar_sync_rule_views.xml",
     ],
     'images': ['static/description/banner.png', 'static/description/icon.png'],
     'installable': True,

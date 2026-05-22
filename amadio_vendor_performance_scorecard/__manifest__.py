@@ -1,6 +1,6 @@
 {
     "name": "Vendor Performance Scorecard",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "category": "Purchase",
     "sequence": 1,
     "author": "AMADIO",
@@ -9,6 +9,11 @@
     "price": 79,
     "currency": "EUR",
     "depends": ["purchase", "stock", "mail"],
+    "data": [
+        "security/ir.model.access.csv",
+        "views/amadio_vendor_performance_scorecard_views.xml",
+        "views/amadio_vendor_performance_scorecard_menu.xml",
+    ],
     "installable": True,
     "auto_install": False,
     "application": True,

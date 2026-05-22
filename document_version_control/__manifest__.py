@@ -1,6 +1,6 @@
 {
     'name': 'Document Version Control',
-    'version': '18.0.1.0',
+    'version': '18.0.1.0.1',
     'summary': 'Attach versioned documents to any Odoo record — track revisions, view full history, and optionally require approval before a new version goes live.',
     'category': 'Document Management',
     'author': 'AMADIO',
@@ -10,9 +10,9 @@
         'mail',
         'base',
     ],
-    'data': [
-        'security/ir_model_access.csv',
-        'views/document_version_views.xml',
+    "data": [
+        "security/ir.model.access.csv",
+        "views/document_version_views.xml",
     ],
     'installable': True,
     'application': False,

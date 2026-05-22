@@ -1,6 +1,6 @@
 {
     "name": "Stock Expiry Alert",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "category": "Inventory",
     "sequence": 1,
     "author": "AMADIO",
@@ -9,6 +9,11 @@
     "price": 69,
     "currency": "EUR",
     "depends": ["stock", "mail"],
+    "data": [
+        "security/ir.model.access.csv",
+        "views/amadio_stock_expiry_alert_views.xml",
+        "views/amadio_stock_expiry_alert_menu.xml",
+    ],
     "installable": True,
     "auto_install": False,
     "application": True,

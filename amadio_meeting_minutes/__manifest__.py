@@ -1,6 +1,6 @@
 {
     "name": "Meeting Minutes",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "category": "Discuss",
     "sequence": 1,
     "author": "AMADIO",
@@ -9,6 +9,11 @@
     "price": 59,
     "currency": "EUR",
     "depends": ["calendar", "mail"],
+    "data": [
+        "security/ir.model.access.csv",
+        "views/amadio_meeting_minutes_views.xml",
+        "views/amadio_meeting_minutes_menu.xml",
+    ],
     "installable": True,
     "auto_install": False,
     "application": True,

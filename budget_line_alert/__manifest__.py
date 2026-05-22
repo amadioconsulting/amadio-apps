@@ -1,6 +1,6 @@
 {
     'name': 'Analytic Budget Alert & Variance Monitor',
-    'version': '18.0.1.0.0',
+    'version': '18.0.1.0.1',
     'summary': 'Set warn/block thresholds on analytic accounts — get email alerts when spending approaches budget and block over-budget postings before they happen.',
     'category': 'Accounting/Accounting',
     'depends': [
@@ -8,9 +8,9 @@
         'account',
         'mail',
     ],
-    'data': [
-        'security/ir.model.access.csv',
-        'views/analytic_account_views.xml',
+    "data": [
+        "security/ir.model.access.csv",
+        "views/analytic_account_views.xml",
     ],
     'installable': True,
     'auto_install': False,

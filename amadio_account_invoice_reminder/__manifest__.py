@@ -1,6 +1,6 @@
 {
     "name": "Account Invoice Reminder",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "category": "Accounting",
     "sequence": 1,
     "author": "AMADIO",
@@ -9,6 +9,11 @@
     "price": 59,
     "currency": "EUR",
     "depends": ["account", "mail"],
+    "data": [
+        "security/ir.model.access.csv",
+        "views/amadio_account_invoice_reminder_views.xml",
+        "views/amadio_account_invoice_reminder_menu.xml",
+    ],
     "installable": True,
     "auto_install": False,
     "application": True,

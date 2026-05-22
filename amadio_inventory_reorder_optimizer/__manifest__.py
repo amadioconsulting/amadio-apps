@@ -1,6 +1,6 @@
 {
     "name": "Inventory Reorder Optimizer",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "category": "Inventory",
     "sequence": 1,
     "author": "AMADIO",
@@ -9,6 +9,11 @@
     "price": 79,
     "currency": "EUR",
     "depends": ["stock", "purchase"],
+    "data": [
+        "security/ir.model.access.csv",
+        "views/amadio_inventory_reorder_optimizer_views.xml",
+        "views/amadio_inventory_reorder_optimizer_menu.xml",
+    ],
     "installable": True,
     "auto_install": False,
     "application": True,

@@ -1,6 +1,6 @@
 {
     "name": "Purchase Approval Matrix",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "category": "Purchase",
     "sequence": 1,
     "author": "AMADIO",
@@ -9,6 +9,11 @@
     "price": 89,
     "currency": "EUR",
     "depends": ["purchase", "mail"],
+    "data": [
+        "security/ir.model.access.csv",
+        "views/amadio_purchase_approval_matrix_views.xml",
+        "views/amadio_purchase_approval_matrix_menu.xml",
+    ],
     "installable": True,
     "auto_install": False,
     "application": True,

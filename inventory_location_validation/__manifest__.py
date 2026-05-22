@@ -33,17 +33,17 @@ A confirmation wizard allows users to acknowledge and override warnings if neede
 integrates seamlessly with Odoo's standard picking workflow and respects user permissions via
 manager/user role separation.
     ''',
-    'version': '18.0.1.0.0',
+    'version': '18.0.1.0.1',
     'category': 'Inventory/Warehouse',
     'author': 'AMADIO',
     'website': 'https://amadio.io',
     'license': 'OPL-1',
     'depends': ['stock'],
-    'data': [
-        'security/ir.model.access.csv',
-        'views/stock_location_rule_views.xml',
-        'views/stock_picking_views.xml',
-        'views/stock_location_validation_wizard_views.xml',
+    "data": [
+        "security/ir.model.access.csv",
+        "views/stock_location_rule_views.xml",
+        "views/stock_location_validation_wizard_views.xml",
+        "views/stock_picking_views.xml",
     ],
     'installable': True,
     'application': False,

@@ -1,6 +1,6 @@
 {
     "name": "Asset Maintenance Scheduler",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "category": "Accounting",
     "sequence": 1,
     "author": "AMADIO",
@@ -9,6 +9,11 @@
     "price": 89,
     "currency": "EUR",
     "depends": ["account", "mail"],
+    "data": [
+        "security/ir.model.access.csv",
+        "views/amadio_asset_maintenance_scheduler_views.xml",
+        "views/amadio_asset_maintenance_scheduler_menu.xml",
+    ],
     "installable": True,
     "auto_install": False,
     "application": True,

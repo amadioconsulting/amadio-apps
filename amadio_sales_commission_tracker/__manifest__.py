@@ -1,6 +1,6 @@
 {
     "name": "Sales Commission Tracker",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "category": "Sales",
     "sequence": 1,
     "author": "AMADIO",
@@ -9,6 +9,11 @@
     "price": 99,
     "currency": "EUR",
     "depends": ["sale", "account", "mail"],
+    "data": [
+        "security/ir.model.access.csv",
+        "views/amadio_sales_commission_tracker_views.xml",
+        "views/amadio_sales_commission_tracker_menu.xml",
+    ],
     "installable": True,
     "auto_install": False,
     "application": True,

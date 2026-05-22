@@ -1,6 +1,6 @@
 {
     'name': 'SOP Checklist Builder',
-    'version': '18.0.1.0.0',
+    'version': '18.0.1.0.1',
     'summary': 'Create reusable SOP checklist templates and launch them on any Odoo record — track step-by-step completion with timestamps, responsible users, and workflow blocking on critical steps.',
     'category': 'Project',
     'author': 'AMADIO',
@@ -10,15 +10,15 @@
     'price': 69.00,
     'currency': 'EUR',
     'depends': ['mail', 'base'],
+    "data": [
+        "security/ir.model.access.csv",
+        "views/sop_checklist_views.xml",
+        "views/sop_template_views.xml",
+    ],
     'external_dependencies': {
         'python': [],
         'bin': [],
     },
-    'data': [
-        'security/ir.model.access.csv',
-        'views/sop_template_views.xml',
-        'views/sop_checklist_views.xml',
-    ],
     'installable': True,
     'auto_install': False,
     'application': True,

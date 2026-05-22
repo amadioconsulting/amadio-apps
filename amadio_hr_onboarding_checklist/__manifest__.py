@@ -1,6 +1,6 @@
 {
     "name": "Hr Onboarding Checklist",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "category": "Human Resources",
     "sequence": 1,
     "author": "AMADIO",
@@ -9,6 +9,11 @@
     "price": 79,
     "currency": "EUR",
     "depends": ["hr", "mail"],
+    "data": [
+        "security/ir.model.access.csv",
+        "views/amadio_hr_onboarding_checklist_views.xml",
+        "views/amadio_hr_onboarding_checklist_menu.xml",
+    ],
     "installable": True,
     "auto_install": False,
     "application": True,

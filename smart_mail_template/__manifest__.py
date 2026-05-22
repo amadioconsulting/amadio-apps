@@ -1,6 +1,6 @@
 {
     'name': 'Smart Email Template Selector',
-    'version': '18.0.1.0.0',
+    'version': '18.0.1.0.1',
     'category': 'Discuss',
     'summary': 'Auto-suggest relevant email templates in mail composer — smart template selector for productivity.',
     'description': '''
@@ -49,10 +49,10 @@ Compatible with Odoo 18.0 Community and Enterprise editions.
     'price': 59.00,
     'currency': 'EUR',
     'depends': ['mail'],
-    'data': [
-        'security/ir.model.access.csv',
-        'views/smart_mail_template_rule_views.xml',
-        'views/mail_compose_message_views.xml',
+    "data": [
+        "security/ir.model.access.csv",
+        "views/mail_compose_message_views.xml",
+        "views/smart_mail_template_rule_views.xml",
     ],
     'images': ['static/description/banner.png', 'static/description/icon.png'],
     'installable': True,

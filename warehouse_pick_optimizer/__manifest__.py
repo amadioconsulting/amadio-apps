@@ -1,6 +1,6 @@
 {
     'name': 'Warehouse Pick Path Optimizer',
-    'version': '18.0.1.0.0',
+    'version': '18.0.1.0.1',
     'category': 'Inventory/Warehouse',
     'summary': 'Optimize pick paths by reordering move lines by shelf location sequence for faster warehouse picking and efficient pick route planning.',
     'description': '''
@@ -40,11 +40,11 @@ This module extends stock.location and stock.picking models:
     'price': 79.00,
     'currency': 'EUR',
     'depends': ['stock'],
-    'data': [
-        'security/ir.model.access.csv',
-        'views/stock_location_views.xml',
-        'views/stock_picking_views.xml',
-        'report/pick_list_report.xml',
+    "data": [
+        "security/ir.model.access.csv",
+        "views/stock_location_views.xml",
+        "views/stock_picking_views.xml",
+        "report/pick_list_report.xml",
     ],
     'images': ['static/description/banner.png', 'static/description/icon.png'],
     'installable': True,

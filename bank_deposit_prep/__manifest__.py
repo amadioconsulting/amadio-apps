@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Bank Deposit Preparation & Slip Generator',
-    'version': '18.0.1.0.0',
+    'version': '18.0.1.0.1',
     'category': 'Accounting/Accounting',
     'summary': (
         'Group payments into bank deposit batches, generate printable deposit slips, '
@@ -41,12 +41,12 @@ Compatibility
     'website': 'https://amadio.io',
     'license': 'OPL-1',
     'depends': ['account', 'mail'],
-    'data': [
-        'security/ir.model.access.csv',
-        'data/deposit_sequence.xml',
-        'views/bank_deposit_views.xml',
-        'views/res_config_settings_views.xml',
-        'report/deposit_slip_report.xml',
+    "data": [
+        "security/ir.model.access.csv",
+        "data/deposit_sequence.xml",
+        "views/bank_deposit_views.xml",
+        "views/res_config_settings_views.xml",
+        "report/deposit_slip_report.xml",
     ],
     'images': ['static/description/banner.png', 'static/description/icon.png'],
     'installable': True,

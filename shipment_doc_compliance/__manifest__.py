@@ -1,6 +1,6 @@
 {
     'name': 'Pre-Shipment Document Compliance',
-    'version': '18.0.1.0.0',
+    'version': '18.0.1.0.1',
     'category': 'Inventory/Warehouse',
     'summary': 'Block outgoing shipment validation until required compliance documents are confirmed. Enforces customs declarations, SDS sheets, invoices, and certifications with a mandatory acknowledgment checkpoint and full audit trail.',
     'description': """
@@ -52,12 +52,12 @@ Depends: stock, sale_stock, mail
         'sale_stock',
         'mail',
     ],
-    'data': [
-        'security/ir.model.access.csv',
-        'data/mail_template_data.xml',
-        'views/stock_picking_views.xml',
-        'views/res_partner_views.xml',
-        'views/stock_operation_type_views.xml',
+    "data": [
+        "security/ir.model.access.csv",
+        "data/mail_template_data.xml",
+        "views/res_partner_views.xml",
+        "views/stock_operation_type_views.xml",
+        "views/stock_picking_views.xml",
     ],
     'images': ['static/description/banner.png', 'static/description/icon.png'],
     'installable': True,

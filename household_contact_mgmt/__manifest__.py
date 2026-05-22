@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Household & Family Contact Management',
-    'version': '18.0.1.0.0',
+    'version': '18.0.1.0.1',
     'category': 'Sales/CRM',
     'summary': (
         'Model households as a single contact with multiple members, '
@@ -46,10 +46,10 @@ Compatibility
     'website': 'https://amadio.io',
     'license': 'OPL-1',
     'depends': ['contacts', 'mail'],
-    'data': [
-        'security/ir.model.access.csv',
-        'views/household_views.xml',
-        'views/res_partner_views.xml',
+    "data": [
+        "security/ir.model.access.csv",
+        "views/household_views.xml",
+        "views/res_partner_views.xml",
     ],
     'images': ['static/description/banner.png', 'static/description/icon.png'],
     'installable': True,
