@@ -1,6 +1,6 @@
 {
     "name": "Contract Lifecycle Mgr",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "category": "Sales",
     "sequence": 1,
     "author": "AMADIO",
@@ -9,6 +9,11 @@
     "price": 89,
     "currency": "EUR",
     "depends": ["sale", "mail"],
+    "data": [
+        "security/ir.model.access.csv",
+        "views/contract_views.xml",
+        "views/contract_menu.xml",
+    ],
     "installable": True,
     "auto_install": False,
     "application": True,
